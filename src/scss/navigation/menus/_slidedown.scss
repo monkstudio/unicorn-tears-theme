@@ -1,0 +1,62 @@
+//overlay menu
+/*
+
+.menu-toggle,
+.main-navigation.toggled ul {
+	display: inline-block;
+}
+*/
+
+.slidedown {
+
+	//the default styles
+	@include media("<=menu") {
+		transition:.5s linear all;
+		position: fixed;
+		top:0;
+		left:0;
+		padding:0;
+		z-index: 100;
+		width: 100%;
+		max-height: 0;
+		overflow-y:hidden;
+		background-color:$brand-secondary;
+
+        .menu {
+            text-align: center;
+            visibility: hidden;
+            opacity: 0;
+            transition:.5s linear all;
+            transition-delay: .2s;
+        }
+
+		.toggled & {
+			background-color:$brand-secondary;
+			transition:.5s linear all;
+			z-index: 100;
+			width: 100%;
+			max-height: 1000px;
+			overflow-y: visible;
+			overflow-y: auto;
+
+			.menu {
+				text-align: center;
+				visibility: visible;
+				opacity: 1;
+				transition:.5s linear all;
+				transition-delay: .2s;
+			}
+		}
+
+		.overlay-content {
+			position: relative;
+			width: 100%;
+			text-align: center;
+			height: 100%;
+			display: table;
+		}
+	}
+
+
+}
+

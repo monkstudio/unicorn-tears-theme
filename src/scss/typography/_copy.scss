@@ -1,0 +1,52 @@
+p {
+    margin-bottom: 1.5em;
+    margin-top: 0;
+}
+
+dfn,
+cite,
+em,
+i {
+    font-style: italic;
+}
+
+blockquote {
+    margin: 0 1.5em;
+}
+
+address {
+    margin: 0 0 1.5em;
+}
+
+pre {
+    background: $brand-lightgrey;
+    font-family: $brand-code;
+    margin-bottom: 1.6em;
+    max-width: 100%;
+    overflow: auto;
+    padding: 1.6em;
+}
+
+code,
+kbd,
+tt,
+var {
+    font-family: $brand-code;
+}
+
+abbr,
+acronym {
+    border-bottom: 1px dotted $brand-primary;
+    cursor: help;
+}
+
+mark,
+ins {
+    background: $brand-lightgrey;
+    text-decoration: none;
+    padding: 0 .2em;
+}
+
+big {
+    font-size: 125%;
+}

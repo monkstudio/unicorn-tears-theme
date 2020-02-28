@@ -1,0 +1,50 @@
+//overlay menu
+/*
+
+.menu-toggle,
+.main-navigation.toggled ul {
+	display: inline-block;
+}
+*/
+
+.overlay {
+
+	//the default styles
+	@include media("<=menu") {
+	  	opacity:0;
+		transition:.5s linear all;
+		position: fixed;
+		top:0;
+		right:0;
+		padding:50px;
+		visibility:hidden;
+		width: 100%;
+        height: 100%;
+		text-align: center;
+        overflow: auto;
+        z-index: 100;
+
+        .toggled & {
+            background-color:#FFF;
+            transition:.5s linear all;
+            opacity:1;
+            visibility:visible;
+            z-index: 100;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+        }
+
+    //     .overlay-content {
+    // //		height: 100%;
+    // //		display: table;
+    // //		margin: 0 auto;
+
+    // //		.menu {
+    // //			text-align: center;
+    // //			vertical-align: middle;
+    // //			display: table-cell;
+    // //		}
+    //     }
+	}
+}

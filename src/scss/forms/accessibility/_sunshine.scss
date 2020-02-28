@@ -1,0 +1,67 @@
+//default minimizy label
+.sunshine li {
+	margin: 1em 0em 0em;
+    position: relative;
+
+    input:not([type=checkbox]):not([type=radio]),
+    textarea {
+//        padding: 0.4em 0.25em;
+        width: 100%;
+//        background: transparent;
+        color: $brand-secondary;
+        padding: 25px 10px 5px;
+    }
+
+    label {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        text-align: left;
+        pointer-events: none;
+        display: inline-block;
+        vertical-align: middle;
+        padding: 15px 10px;
+        width: 100%;
+        color: $brand-primary;
+        font-weight: bold;
+        -webkit-font-smoothing: antialiased;
+        user-select: none;
+        transition: .3s ease all;
+        @include font-size(1.4);
+
+        &:before,
+        &:after {
+            content: '';
+            position: absolute;
+            left: 0;
+            z-index: -1;
+            width: 100%;
+            transition: transform 0.3s;
+        }
+
+        &:before {
+            top: 0;
+        }
+
+        &:after {
+            bottom: 0;
+        }
+
+        .label-content {
+            transition: transform 0.3s;
+        }
+    }
+
+    //active state
+    &.active {
+
+        label {
+            transform: translate3d(5px, 0px, 0);
+            padding: 5px;
+            font-size: 92%;
+            transition: .3s ease all;
+            color: $brand-lightgrey;
+            font-size: 70%;
+        }
+    }
+}

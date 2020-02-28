@@ -1,0 +1,27 @@
+h1, h2, h3, h4, h5, h6 {
+    font-weight: normal;
+}
+//variables found in _variables.scss
+h1 {
+    margin: 0 0 .5em;
+    &.section-title {
+        text-align: center;
+        padding: 0;
+        margin: 1em auto;
+    }
+}
+h2 {
+    margin: 0 0 .5em;
+}
+h3 {
+    margin: 0 0 .5em;
+}
+h4 {
+    margin: 0 0 .5em;
+}
+h5 {
+    margin: 0 0 .5em;
+}
+h6 {
+    margin: 0 0 .5em;
+}

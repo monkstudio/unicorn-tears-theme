@@ -1,0 +1,55 @@
+@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+    @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+        /* IE10+ CSS styles go here */
+        body,
+        button,
+        input,
+        select,
+        textarea,
+        .btn,
+        button,
+        label,
+        .main-navigation a,
+        .label,
+        input[type=submit] {
+            font-size: 16px;
+            font-size: 1rem;
+        }
+
+        body {
+            &:before {
+                content: "This website is not optimised for Internet Explorer. Please download or use a more modern browser such as Google Chrome to view the entirety of the website.";
+                background: rgba(255, 255, 255, 0.95);
+                padding: 20px;
+                position: fixed;
+                top: 0;
+                left: 0;
+                z-index: 1000;
+                width: 100%;
+                text-align: center;
+                color: $brand-primary;
+            }
+        }
+
+        h1 {
+            font-size: 5rem;
+        }
+        h2{
+            font-size: 2.5rem;
+        }
+        h3 {
+            font-size: 1.8rem;
+        }
+        h4 {
+            font-size: 1.2rem;
+        }
+    }
+
+    @supports (-ms-accelerator:true) {
+        /* IE Edge 12+ CSS styles go here */
+    }
+}
+
+@supports (-ms-accelerator:true) {
+    /* IE Edge 12+ CSS styles go here */
+}

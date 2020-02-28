@@ -1,0 +1,317 @@
+
+.icon {
+    position: relative;
+}
+.icon:before, .icon:after {
+    content: '';
+    position: absolute;
+    display: block;
+}
+
+//an arrow
+// .arrow {
+// 	border: 1px solid $brand-primary;
+// 	border-width: 0 0 1px 1px;
+// 	width: 10px;
+// 	height: 10px;
+// 	margin:5px;
+// 	display: inline-block;
+
+// 	&-down {
+// 		@extend .arrow;
+// 		transform: rotate(-45deg);
+// 	}
+// 	&-up {
+// 		@extend .arrow;
+// 		transform: rotate(130deg);
+// 	}
+// 	&-left {
+// 		@extend .arrow;
+// 		transform: rotate(45deg);
+// 	}
+// 	&-right {
+// 		@extend .arrow;
+// 		transform: rotate(-140deg);
+// 	}
+// }
+// //play outline
+// .play.icon {
+//     margin-left: 5px;
+//     margin-top: 4px;
+//     width: 1px;
+//     height: 13px;
+//     background-color: $brand-primary;
+
+//     &:before,
+//     &:after {
+//         left: 1px;
+//         width: 12px;
+//         height: 1px;
+//         background-color: $brand-primary;
+//     }
+
+//     &:before {
+//         top: 0;
+//         transform-origin: left top;
+//         transform: rotate(30deg);
+//     }
+
+//     &:after {
+//         bottom: 0;
+//         transform-origin: left bottom;
+//         transform: rotate(-30deg);
+//     }
+// }
+// //filled play
+// .play-filled.icon {
+//     margin-left: 5px;
+//     margin-top: 3px;
+//     width: 0;
+//     height: 0;
+//     border-left: solid 11px $brand-primary;
+//     border-top: solid 7px transparent;
+//     border-bottom: solid 7px transparent;
+// }
+//close {
+//.close.icon {
+//    color: $brand-primary;
+//    position: absolute;
+//    margin-top: 0;
+//    margin-left: 0;
+//    width: 21px;
+//    height: 21px;
+//
+//    &:before {
+//        content: '';
+//        position: absolute;
+//        top: 10px;
+//        width: 21px;
+//        height: 1px;
+//        background-color: currentColor;
+//        -webkit-transform: rotate(-45deg);
+//        transform: rotate(-45deg);
+//    }
+//
+//    &:after {
+//        content: '';
+//        position: absolute;
+//        top: 10px;
+//        width: 21px;
+//        height: 1px;
+//        background-color: currentColor;
+//        -webkit-transform: rotate(45deg);
+//        transform: rotate(45deg);
+//    }
+//
+//}
+////plus
+.plus.icon {
+   color: $brand-primary;
+//    position: absolute;
+//    margin-left: 3px;
+//    margin-top: 10px;
+   width: 20px;
+   height: 20px;
+   display: flex;
+   align-items: center;
+
+   &:before {
+       content: '';
+       position: absolute;
+       width: 15px;
+       height: 1px;
+       background-color: currentColor;
+   }
+
+   &:after {
+       content: '';
+       position: absolute;
+       width: 15px;
+       height: 1px;
+       background-color: currentColor;
+       -webkit-transform: rotate(90deg);
+       transform: rotate(90deg);
+   }
+}
+//
+////menu
+//.menu.icon {
+//    color: $brand-primary;
+//    position: absolute;
+//    margin-left: 2px;
+//    margin-top: 10px;
+//    width: 17px;
+//    height: 1px;
+//    background-color: currentColor;
+//
+//    &:before {
+//        content: '';
+//        position: absolute;
+//        top: -5px;
+//        left: 0;
+//        width: 17px;
+//        height: 1px;
+//        background-color: currentColor;
+//    }
+//
+//    &:after {
+//        content: '';
+//        position: absolute;
+//        top: 5px;
+//        left: 0;
+//        width: 17px;
+//        height: 1px;
+//        background-color: currentColor;
+//    }
+//}
+//
+////tick
+//.check.icon {
+//    color: $brand-primary;
+//    position: absolute;
+//    margin-left: 3px;
+//    margin-top: 4px;
+//    width: 14px;
+//    height: 8px;
+//    border-bottom: solid 1px currentColor;
+//    border-left: solid 1px currentColor;
+//    -webkit-transform: rotate(-45deg);
+//    transform: rotate(-45deg);
+//}
+//
+//
+////search
+//.search.icon {
+//    color: $brand-primary;
+//    position: absolute;
+//    margin-top: 2px;
+//    margin-left: 3px;
+//    width: 12px;
+//    height: 12px;
+//    border: solid 1px currentColor;
+//    border-radius: 100%;
+//    -webkit-transform: rotate(-45deg);
+//    transform: rotate(-45deg);
+//
+//    &:before {
+//        content: '';
+//        position: absolute;
+//        top: 12px;
+//        left: 5px;
+//        height: 6px;
+//        width: 1px;
+//        background-color: currentColor;
+//    }
+//}
+//
+//
+////pin
+//.pin-solid.icon {
+//    color: $brand-primary;
+//    position: absolute;
+//    margin-left: 4px;
+//    margin-top: 2px;
+//    width: 12px;
+//    height: 12px;
+//    border: solid 1px currentColor;
+//    border-radius: 7px 7px 7px 0;
+//    background-color: currentColor;
+//    -webkit-transform: rotate(-45deg);
+//    transform: rotate(-45deg);
+//
+//    &:before {
+//        content: '';
+//        position: absolute;
+//        left: 3px;
+//        top: 3px;
+//        width: 4px;
+//        height: 4px;
+//        color: white;
+//        border: solid 1px currentColor;
+//        border-radius: 3px;
+//        background-color: currentColor;
+//    }
+//}
+//
+////filled heart
+//.heart-solid.icon {
+//    color: $brand-primary;
+//    position: absolute;
+//    margin-top: 6px;
+//    margin-left: 5px;
+//    width: 9px;
+//    height: 9px;
+//    border-left: solid 1px currentColor;
+//    border-bottom: solid 1px currentColor;
+//    background-color: currentColor;
+//    -webkit-transform: rotate(-45deg);
+//    transform: rotate(-45deg);
+//
+//    &:before {
+//        content: '';
+//        position: absolute;
+//        top: -5px;
+//        left: -1px;
+//        width: 8px;
+//        height: 5px;
+//        border-radius: 5px 5px 0 0;
+//        border-top: solid 1px currentColor;
+//        border-left: solid 1px currentColor;
+//        border-right: solid 1px currentColor;
+//        background-color: currentColor;
+//    }
+//
+//    &:after {
+//        content: '';
+//        position: absolute;
+//        top: 0px;
+//        left: 8px;
+//        width: 5px;
+//        height: 8px;
+//        border-radius: 0 5px 5px 0;
+//        border-top: solid 1px currentColor;
+//        border-right: solid 1px currentColor;
+//        border-bottom: solid 1px currentColor;
+//        background-color: currentColor;
+//    }
+//}
+////heart outline
+//.heart.icon {
+//        color: $brand-primary;
+//        position: absolute;
+//        margin-top: 6px;
+//        margin-left: 5px;
+//        width: 9px;
+//        height: 9px;
+//        border-left: solid 1px currentColor;
+//        border-bottom: solid 1px currentColor;
+//        -webkit-transform: rotate(-45deg);
+//        transform: rotate(-45deg);
+//
+//    &:before {
+//        content: '';
+//      position: absolute;
+//      top: -5px;
+//      left: -1px;
+//      width: 8px;
+//      height: 5px;
+//      border-radius: 5px 5px 0 0;
+//      border-top: solid 1px currentColor;
+//      border-left: solid 1px currentColor;
+//      border-right: solid 1px currentColor;
+//    }
+//
+//    &:after {
+//        content: '';
+//        position: absolute;
+//        top: 0px;
+//        left: 8px;
+//        width: 5px;
+//        height: 8px;
+//        border-radius: 0 5px 5px 0;
+//        border-top: solid 1px currentColor;
+//        border-right: solid 1px currentColor;
+//        border-bottom: solid 1px currentColor;
+//    }
+//}
+

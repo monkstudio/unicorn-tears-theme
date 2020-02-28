@@ -1,0 +1,36 @@
+button,
+input[type="button"],
+input[type="reset"],
+input[type="submit"],
+.btn,
+.button {
+	appearance: none;
+	border:none;
+	padding: 10px 20px;
+	transition:.3s ease background-color;
+	background-color:$brand-primary;
+	color: #FFF;
+	display: table;
+	margin: 30px auto;
+
+	&:visited {
+		background-color:$brand-primary;
+		color: #FFF;
+	}
+
+	&:hover {
+		background-color:$brand-secondary;
+		color:#FFF;
+		border: none;
+		transition:.3s ease background-color;
+		cursor:pointer;
+	}
+
+	&:focus {
+		outline: 1px solid $brand-secondary;
+	}
+	svg {
+		fill: #FFF;
+	}
+
+}

@@ -1,0 +1,80 @@
+/**
+* Remove unit from a number so we can math.
+*/
+@function fv-strip-unit($value) {
+    @return $value / ($value * 0 + 1);
+  }
+
+  /**
+  * We use a percentage value when instead of a rem value on the fluid font size
+  * so that it plays nice with IE and Safari.
+  */
+  @function fv-rem-to-percent($percent) {
+      $value: fv-strip-unit($percent);
+      @return #{( $value * 100 ) + '%'};
+  }
+
+  /**
+  * Convert line height to percentage for cross browser compatibility.
+  */
+  @function fv-line-height($line-height) {
+    @return #{( $line-height * 100 ) + '%'};
+  }
+
+
+// Mixin to create fluid type based on options provided - defaults to base options.
+  @mixin fluid($options: $fluid-base) {
+    font-size: map-get($options, min-fs);
+    line-height: fv-line-height(map-get($options, line-height));
+
+    //We assume that browsers default font is 16px.
+    $min-vw: (fv-strip-unit(map-get($options, min-vw)) / 16) * 1rem;
+    $max-vw: (fv-strip-unit(map-get($options, max-vw)) / 16) * 1rem;
+    $min-fs: (fv-strip-unit(map-get($options, min-fs)) / 16) * 1rem;
+    $max-fs: (fv-strip-unit(map-get($options, max-fs)) / 16) * 1rem;
+
+    @media screen and (min-width: $min-vw) {
+      font-size: 1rem;
+      font-size: calc(#{fv-rem-to-percent($min-fs)} + #{fv-strip-unit($max-fs - $min-fs)} * ((100vw - #{fv-rem-to-percent($min-vw)}) / #{fv-strip-unit($max-vw - $min-vw)}));
+    }
+
+    @media screen and (min-width: $max-vw) {
+      font-size: 1rem;
+      font-size: $max-fs;
+    }
+  }
+
+  /**
+  * Helper function to get a key value from the base options map.
+  */
+  @function fv-base($key) {
+      @return map-get($fluid-base, $key);
+  }
+
+  /**
+  * Helper function to convert px to rem for the baseline. This will help keep things fluid.
+  */
+  @function fv-px-to-rem($pxval, $base: fv-strip-unit(fv-base(max-fs))) {
+    @if not unitless($pxval) {
+      $pxval: fv-strip-unit($pxval);
+    }
+
+    @return $pxval / $base + rem;
+  }
+
+  /**
+  * Optional mixin to help create a nice vertical rythm. Search "vertical ryhtm golden ratio".
+  */
+  @mixin fluid-baseline( $size, $cap-height, $scale: 2 ) {
+    $rhythm: fv-base(line-height) * $size / $scale;
+    $lines: ceil(($size + 0.001px) / $rhythm);
+    $line-height: $rhythm * $lines / $size;
+
+    line-height: #{( $line-height * 100 ) + '%'};
+    font-size: fv-px-to-rem($size);
+
+    $baseline-distance: (fv-base(line-height) - $cap-height) / 2;
+
+    padding-top: $baseline-distance + rem;
+    margin-bottom: fv-base(line-height) - $baseline-distance + rem;
+  }

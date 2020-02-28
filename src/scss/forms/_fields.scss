@@ -1,0 +1,138 @@
+input[type="text"],
+input[type="email"],
+input[type="url"],
+input[type="password"],
+input[type="search"],
+input[type="number"],
+input[type="tel"],
+input[type="range"],
+input[type="date"],
+input[type="month"],
+input[type="week"],
+input[type="time"],
+input[type="datetime"],
+input[type="datetime-local"],
+input[type="color"],
+input[type="submit"],
+textarea {
+	color: $brand-primary;
+	appearance: none;
+	border: none;
+	border: 1px solid $brand-primary;
+	border-radius: 0;
+	padding: 5px 10px;
+	margin: .3em 0;
+	background-color: transparent;
+
+	&:focus {
+		outline: 2px solid $brand-primary;
+	}
+}
+
+input[type="radio"] {
+    display: inline-block;
+}
+
+select {
+	appearance: none;
+	background: none;
+	padding: 5px 10px;
+	border: 1px solid $brand-primary;
+	border-radius: 0;
+	&:focus {
+		outline: 1px dotted $brand-primary;
+	}
+}
+
+textarea {
+	max-height: 200px;
+	width: 100%;
+	&:focus {
+		outline: 1px dotted $brand-primary;
+	}
+}
+
+label {
+    margin: .5em 0;
+    display: block;
+    font-weight: bold;
+}
+
+
+
+[type=checkbox] {
+  position: absolute; // take it out of document flow
+  opacity: 0; // hide it
+	& + span {
+		display: inline-flex;
+    align-items: center;
+	}
+	& + label,
+	& + span {
+    position: relative;
+    cursor: pointer;
+    padding: 0;
+  }
+
+  // Box.
+	& + label:before,
+	& + span:before {
+    content: '';
+		margin-right: 10px;
+		display: inline-block;
+		vertical-align: text-top;
+		width: 20px;
+		height: 20px;
+		border: 1px solid currentColor;
+	}
+  // Box hover
+  // &:hover + label:before {
+  //   background-color: $brand-lightgrey;
+  // }
+
+  // Box focus
+	&:focus + label:before,
+	&:focus + span:before {
+    box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.12);
+  }
+
+  // Box checked
+  &:checked + label:before {
+    background: #f35429;
+  }
+
+  // Disabled state label.
+	&:disabled + label,
+	&:disabled + span {
+    background-color:$brand-secondary;
+    cursor: auto;
+  }
+
+  // Disabled box.
+	&:disabled + label:before,
+	&:disabled + span:before {
+    box-shadow: none;
+    background-color:$brand-lightgrey;
+  }
+
+  // Checkmark. Could be replaced with an image
+	&:checked + label:after,
+	&:checked + span:after {
+    content: '';
+    position: absolute;
+    left: 4px;
+    top: 10px;
+    background-color: currentColor;
+    width: 2px;
+    height: 2px;
+    box-shadow:
+      	2px 0 0 currentColor,
+      	4px 0 0 currentColor,
+      	4px -2px 0 currentColor,
+      	4px -4px 0 currentColor,
+      	4px -6px 0 currentColor,
+		4px -8px 0 currentColor,
+		4px -10px 0 currentColor;
+    transform: rotate(45deg);
+  }
+}

@@ -1,0 +1,47 @@
+
+.container {
+    max-width: 1600px;
+    margin: auto;
+    padding: 0 80px;
+
+    @include media("<=laptop") {
+        padding: 0 50px;
+    }
+    @include media("<=tablet") {
+        padding: 0 20px;
+    }
+    &.compact {
+        max-width: 700px;
+    }
+}
+
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    @include media("<=tablet") {
+        flex-direction: column;
+        > * {
+            flex-basis: 100%;
+        }
+    }
+    &.align-top {
+        align-items: flex-start;
+    }
+    &.align-center {
+        align-items: center;
+    }
+    &.align-bottom {
+        align-items: flex-end;
+    }
+    &.justify-top {
+        justify-content: flex-start;
+    }
+    &.space-between {
+        justify-content: space-between;
+    }
+    &.justify-bottom {
+        justify-content: flex-end;
+    }
+}
+

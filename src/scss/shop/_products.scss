@@ -1,0 +1,90 @@
+/**
+ * Products
+ */
+ul.products {
+	// @include clearfix;
+	width: 100%;
+	margin: 0;
+	padding: 0;
+	margin: auto;
+	column-gap: 5vw;
+	row-gap: 30px;
+	@include media("<=tablet") {
+		grid-template-columns: 100%;
+	}
+	li.product {
+		list-style: none;
+		position: relative;
+		margin-bottom: 2em;
+		display: inline-block;
+		width: 33%;
+		@include media("<=tablet") {
+			width: 100%;
+		}
+
+		.woocommerce-loop-product-title {
+			font-size: 1rem;
+		}
+
+		img {
+			display: block;
+			margin: 1em auto;
+		}
+
+		.button {
+			display:table;
+		}
+	}
+
+}
+.button {
+
+	&.loading {
+		opacity: .5;
+		cursor: progress;
+	}
+}
+.added_to_cart {
+	@extend %allcaps;
+	margin: auto;
+	display: table;
+	text-align: center;
+}
+
+
+// @media screen and (min-width: 48em) {
+// 	ul.products {
+// 		li.product {
+// 			@include column-width(3);
+// 			float: left;
+// 			margin-right: $columns-margin;
+
+// 			&.first {
+// 				clear: both;
+// 			}
+
+// 			&.last {
+// 				margin-right: 0;
+// 			}
+// 		}
+// 	}
+
+// 	.columns-1 {
+// 		ul.products {
+// 			li.product {
+// 				float: none;
+// 				width: 100%;
+// 			}
+// 		}
+// 	}
+
+// 	@for $i from 2 through 6 {
+// 		.columns-#{$i} {
+// 			ul.products {
+// 				li.product {
+// 					@include column-width( $i );
+// 				}
+// 			}
+// 		}
+// 	}
+// }

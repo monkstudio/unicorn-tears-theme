@@ -1,0 +1,66 @@
+.accordion-list {
+	.col {
+		&:last-child {
+			flex: 1;
+			padding-left: 50px;
+		}
+	}
+}
+
+
+.accordion {
+	display: block;
+
+	svg {
+		stroke: currentColor;
+	}
+
+	.panel-header {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		border-bottom: 1px solid $brand-lightgrey;
+		//@extend %allcaps;
+		padding: 10px 0;
+		&:hover {
+			cursor: pointer;
+		}
+
+		.product-wrapper &{
+		text-transform: uppercase;
+		font-size: 1.2rem;
+		}	
+	}
+	.panel-content {
+		display: none;
+		padding: 10px 0;
+
+		.attribute{
+		font-family: $brand-heading;
+		@include font-size(2.2);
+		line-height: 1.2;
+		text-transform: capitalize;
+		}
+	}
+
+	.attr-content{
+		position: relative;
+	}
+
+	.panel {
+		&.active {
+
+			.plus.icon:after{
+				display: none;
+			}
+			.panel-content {
+				display: block;
+			}
+			.icon {
+				&:after {
+					content: none;
+				}
+			}
+		}
+	}
+}

@@ -1,0 +1,14 @@
+.site-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.site-branding {
+    position: relative;
+    z-index: 101;
+}
+
+.logo {
+    width: 200px;
+}

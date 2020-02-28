@@ -1,0 +1,299 @@
+.main-navigation {
+	display: block;
+	text-align: right;
+
+    @include media("<=menu") {
+        text-align: right;
+    }
+
+    svg {
+        stroke: currentColor;
+        transition: .3s ease all;
+    }
+	ul {
+		list-style: none;
+		margin: 0;
+        padding: 0;
+
+		ul {
+			box-shadow: 0 3px 10px rgba($brand-darkgrey, 0.3);
+			float: left;
+			position: absolute;
+			top: 50px;
+			left: -999em;
+			z-index: 99999;
+            background-color: #FFF;
+            padding-left: 10px;
+            min-width: 200px;
+
+            @include media("<=menu") {
+                position: relative;
+                float: none;
+                left: auto;
+                top: auto;
+            }
+
+			ul {
+				left: -999em;
+				top: 0;
+
+                @include media("<=menu") {
+                    left: initial;
+                }
+			}
+
+			li {
+				&:hover > ul,
+				&.focus > ul {
+					left: 100%;
+
+                    @include media("<=menu") {
+                        left: initial;
+                    }
+				}
+			}
+
+			a {
+//				width: 200px;
+			}
+
+			:hover > a,
+			.focus > a {
+			}
+
+			a:hover,
+			a.focus {
+			}
+		}
+
+		li:hover > ul,
+		li.focus > ul {
+			left: auto;
+		}
+	}
+
+	li {
+		position: relative;
+        text-align: left;
+        display: inline-flex;
+        align-items: center;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        width: 100%;
+        margin: 0;
+		&:hover > a,
+		&.focus > a {
+            background-color: $brand-secondary;
+            color: $brand-primary;
+		}
+	}
+
+
+	a {
+		display: inline-block;
+        vertical-align: middle;
+		text-decoration: none;
+        padding: 5px 20px;
+        border: none;
+        // width: 100%;
+	}
+
+	.current_page_item > a,
+	.current-menu-item > a,
+	.current_page_ancestor > a,
+	.current-menu-ancestor > a {
+        border-bottom: 2px solid $brand-primary;
+	}
+
+    .sub-menu {
+        width: 200px;
+        padding: 0;
+        margin: 0;
+
+        display: none;
+        @include media("<=menu") {
+            width: 100%;
+        }
+
+        li {
+            width: 100%;
+        }
+    }
+
+    @include media("<=menu") {
+        .sub-menu {
+            display: none;
+        }
+        .toggled-on .sub-menu {
+            display: block;
+        }
+    }
+
+    .dropdown-toggle {
+        display: inline-flex;
+        svg {
+            fill: none;
+        }
+// //        margin: 5px;
+//         display: none;
+//         cursor: pointer;
+// //        float: right;
+//         @include media("<=menu") {
+//             display: inline-flex;   
+//         }
+    }
+}
+
+
+//.nav-menu {
+//    > li > a,
+//    > li > button > a {
+//        padding: 30px 15px;
+//        @include media("<=desktop") {
+//            padding: 30px 10px;
+//        }
+//        @include media("<=menu") {
+//            padding: 20px;
+//        }
+//        @include media("<=phone") {
+//            padding: 15px;
+//        }
+//    }
+//}
+.cross.icon {
+   color:currentColor;
+    width: 21px;
+    height: 21px;
+    display: block;
+    position: relative;
+   &:before {
+       content: '';
+       position: absolute;
+       top: 50%;
+       left: 0;
+       width: 21px;
+       height: 1px;
+       background-color: currentColor;
+   }
+
+   &:after {
+       content: '';
+       position: absolute;
+       top: 50%;
+       left: 0;
+       width: 21px;
+       height: 1px;
+       background-color: currentColor;
+       transform: rotate(90deg);
+   }
+   .toggled-on & {
+       &:after {
+           content: none;
+       }
+   }
+}
+.comment-navigation,
+.posts-navigation,
+.post-navigation {
+
+	// .site-main & {
+	// 	margin: 0 0 1.5em;
+	// 	overflow: hidden;
+	// }
+    display: flex;
+    justify-content: space-between;
+    
+// 	.nav-previous {
+// 		float: left;
+// //		width: 50%;
+// 	}
+
+// 	.nav-next {
+// 		// float: right;
+// 		text-align: right;
+// //		width: 50%;
+// 	}
+}
+
+.ancestor-wrapper {
+    display: flex;
+    align-items: center;
+}
+
+#menu-social {
+    padding: 0;
+    list-style: none; 
+    display: flex;
+
+    li {
+        margin: 0 .2em;
+
+        svg {
+            fill: currentColor;
+            transition: .3s ease all;
+        }
+        &:hover {
+            svg {
+                fill: $brand-secondary;
+                transition: .3s ease all;
+            }
+        }
+    }
+}
+
+//Mobile menu global styles
+// ==================================================
+
+
+//media query to hide/show the mobile menu
+@include media(">menu") {
+    #mobile-menu {
+		display: none;
+	}
+	.main-navigation ul {
+		display: block;
+	}
+}
+
+
+//applied to body and html tags
+.menu-open {
+    // position: fixed;
+	height: 100vh;
+	overflow: hidden;
+}
+
+button#mobile-menu {
+	position: relative;
+	z-index: 101;
+    margin: 20px auto;
+
+    @include media("<=menu") {
+        display: table;
+    }
+
+}
+.toggled {
+	transition:.5s linear all;
+}
+
+// ======================================================================================
+
+// Mobile menu types (Remove or comment out what you don’t need)
+// TO USE:
+// 1. Add the name as a class to the menu wrapper in header.php
+//    eg. <div class="menu-wrapper slideup">
+// 2. Make sure the corresponding sass file is being imported
+// 3. Change styles
+// Sidenote: Everything inside the menu wrapper will be contained within the mobile menu
+
+// ======================================================================================
+
+@import "menus/overlay";
+//@import "menus/slidedown";
+// @import "menus/slideleft";
+//@import "menus/slideright";
+//@import "menus/dropdown";
+//@import "menus/pushleft"; //no need to add .push to .menu-wrapper -- make sure to js/menus/push.js is enqueued
+//@import "menus/pushright";  //no need to add .push to .menu-wrapper -- make sure to js/menus/push.js is enqueued
+//@import "menus/pushtop";  //no need to add .push to .menu-wrapper -- make sure to js/menus/push.js is enqueued

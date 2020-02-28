@@ -1,0 +1,113 @@
+//overlay menu
+/*
+
+.menu-toggle,
+.main-navigation.toggled ul {
+	display: inline-block;
+}
+*/
+
+.slideright {
+
+	//the default styles
+	@include media("<=menu") {
+		transition:.5s linear all;
+		position: fixed;
+		top:0;
+		left:0;
+		padding:0;
+		z-index: -1;
+		width: 0;
+        min-width: 0;
+		height: 100%;
+		overflow-x:hidden;
+		background-color: $brand-lightgrey;//keep the same value as the toggled style to maintain opacity during the transition
+        transition-delay: .3s;
+        z-index: 100;
+
+        .overlay-content {
+            position: relative;
+            width: 100%;
+//            min-width: 300px;
+            text-align: center;
+            height: 100%;
+            display: table;
+            opacity: 0;
+            visibility: hidden;
+            transition: .5s ease all;
+        }
+
+        .menu-main-menu-container {
+            display: table-cell;
+//            vertical-align: middle;
+            padding: 50px 0;
+        }
+
+        .toggled & {
+            background-color:rgba($brand-darkgrey, .98);
+            transition:.5s linear all;
+            z-index: 100;
+            width: 50%;
+            min-width: 300px;
+            height: 100%;
+            overflow-x: auto;
+
+            @media ( max-height: 600px ){
+                overflow-y: auto; //make sure there's a scrollbar visible for devices under 300px tall
+
+            }
+
+            .overlay-content {
+                opacity: 1;
+                visibility: visible;
+                transition: .4s ease all;
+                transition-delay: .5s;
+            }
+        }
+
+	}
+
+}
+
+
+.site {
+	position: relative;
+	top:0;
+	left:0;
+	transition:.5s ease all;
+	min-height: 100vh;
+}
+//.push {
+//    transform:translate($menu-width,0);
+//	transition:.5s ease all;
+//	position: fixed;
+//}
+.site-content:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0);
+    visibility: hidden;
+    transition: .2s linear all;
+    transform: translate3d(0,0,0);
+    backface-visibility: hidden;
+    perspective: 1000;
+}
+.menu-open .site-content:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    transition: .2s linear all;
+    z-index: 50;
+    visibility: visible;
+    transform: translate3d(0,0,0);
+    backface-visibility: hidden;
+    perspective: 1000;
+}

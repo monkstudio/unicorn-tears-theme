@@ -1,0 +1,36 @@
+/**
+ * Checkout
+ */
+ .woocommerce-cart .woocommerce {
+	 width: 80%;
+	 margin: auto;
+	 @include media("<=tablet") {
+		width: 100%;
+	}
+ }
+ .woocommerce-checkout .woocommerce {
+	 max-width: 700px;
+	 margin: auto;
+ }
+ .methods {
+	 padding: 0;
+	 margin: 0;
+ }
+@media screen and (min-width: 768px) {
+	.col2-set {
+		.form-row-first {
+			float: left;
+			margin-right: $columns-margin;
+		}
+
+		.form-row-last {
+			float: right;
+			margin-right: 0;
+		}
+
+		.form-row-first,
+		.form-row-last {
+			@include column-width(2);
+		}
+	}
+}

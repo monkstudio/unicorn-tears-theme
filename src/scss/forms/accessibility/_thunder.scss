@@ -1,0 +1,60 @@
+//overlay on focus
+.thunder li {
+
+    input:not([type=checkbox]):not([type=radio]),
+    textarea {
+        z-index: auto;
+        padding: 0.85em 1.5em;
+        width: 100%;
+        color: $brand-primary;
+    }
+
+    label {
+        z-index: 0;
+        margin: 1em 0 .3em;
+        width: 100%;
+        text-align: left;
+        display: block;
+
+        &:after {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            width: 100%;
+            height: 100%;
+            background: rgba($brand-darkgrey, 0.3);
+            opacity: 0;
+            transition: opacity 0.3s;
+            pointer-events: none;
+        }
+    }
+
+    .label-content {
+        padding: 0.5em 0;
+    }
+
+    &.active {
+        input:not([type=checkbox]):not([type=radio]),
+        textarea {
+            z-index: 10000;
+            background-color: #FFF;
+            position: relative;
+        }
+
+
+        .label-content {
+//            color: #FFF;
+            z-index: 10000;
+            position: relative;
+        }
+
+        label {
+
+            &:after {
+                opacity: 1;
+            }
+        }
+    }
+}

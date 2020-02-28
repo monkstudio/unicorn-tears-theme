@@ -1,0 +1,117 @@
+$menu-width: 250px;
+
+.main-navigation {
+    @include media("<=menu") {
+        text-align: right;
+    }
+}
+
+.menu-wrapper {
+
+	@include media("<=menu") {
+		position: fixed;
+		top:0;
+		right:0;
+		width: $menu-width;
+		height:100%;
+		transition:.5s ease all;
+		transform: translate($menu-width,0);
+		z-index: 100;
+        background-color: $brand-secondary;
+        text-align: center;
+
+        .toggled & {
+            right:0;
+            width: $menu-width;
+            transition:.5s ease all;
+
+            .overlay-content {
+                height: 100%;
+            }
+        }
+	}
+
+}
+
+//list animations
+@include media("<=menu") {
+
+//    $i: 8; //number of menu items
+//    @for $i from 1 through $i {
+//        .main-navigation li:nth-child(#{$i}) {
+//            transform: translate3d(0,(0 + ($i * 500)+px,0));
+//
+//        }
+//    }
+
+    .nav-menu > li {
+//        visibility: hidden;
+//        opacity: 0;
+        transform: translate3d(0,1500px,0);
+        transition: transform 0s 0.4s;
+        transition-timing-function: cubic-bezier(0.7,0.3,0.5,1);
+
+//        &.fadein {
+//            transform: translate3d(0,0,0);
+//            transition: transform 0.8s;
+//            transition-timing-function: cubic-bezier(0.7,0.3,0.5,1);
+//            visibility: visible;
+//            opacity: 1;
+//            transition: .5s ease all;
+//        }
+
+        &.slideup {
+            transform: translate3d(0,0,0);
+            transition: transform 0.8s;
+            transition-timing-function: cubic-bezier(0.7,0.3,0.5,1);
+//            visibility: visible;
+//            opacity: 1;
+        }
+    }
+
+}
+
+//page styles
+
+
+.site {
+	position: relative;
+	top:0;
+	right:0;
+	transition:.5s ease all;
+	min-height: 100vh;
+}
+.push {
+    transform:translate($menu-width,0);
+	transition:.5s ease all;
+	position: fixed;
+}
+.site-content:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0);
+    visibility: hidden;
+    transition: .3s linear all;
+    transform: translate3d(0,0,0);
+    backface-visibility: hidden;
+    perspective: 1000;
+}
+.push .site-content:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    transition: .3s linear all;
+    z-index: 100;
+    visibility: visible;
+    transform: translate3d(0,0,0);
+    backface-visibility: hidden;
+    perspective: 1000;
+}

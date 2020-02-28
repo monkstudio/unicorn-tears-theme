@@ -1,0 +1,64 @@
+//overlay menu
+/*
+
+.menu-toggle,
+.main-navigation.toggled ul {
+	display: inline-block;
+}
+*/
+
+.slideleft {
+
+	//the default styles
+	@include media("<=menu") {
+		transition:.6s;
+		position: fixed;
+		top:0;
+		right:0;
+		padding:0;
+		z-index: -1;
+		width: 0;
+		height: 100%;
+		overflow-x:hidden;
+		background-color:pink;//keep the same value as the toggled style to maintain opacity during the transition
+        transition-delay: .2s;
+
+        .overlay-content {
+            position: relative;
+            width: 100%;
+            text-align: center;
+            height: 100%;
+            display: table;
+            opacity: 0;
+            visibility: hidden;
+            transition: .5s ease all;
+        }
+
+        .menu-main-menu-container {
+            display: table-cell;
+            vertical-align: middle;
+        }
+
+		.toggled & {
+			background-color:pink;
+			transition:.6s;
+			z-index: 100;
+			width: 100%;
+			height: 100%;
+			overflow-x: visible;
+
+			@media ( max-height: 300px ){
+				overflow-y: auto; //make sure there's a scrollbar visible for devices under 300px tall
+			}
+
+			.overlay-content {
+				opacity: 1;
+				visibility: visible;
+				transition: .5s ease all;
+				transition-delay: .3s;
+			}
+		}
+	}
+
+}
+

@@ -1,0 +1,154 @@
+$menu-width: 250px;
+
+
+@include media("<=menu") {
+
+    .main-navigation {
+        text-align: left;
+    }
+
+    body {
+        overflow-x: hidden;
+    }
+}
+
+.menu-wrapper {
+
+    &::-webkit-scrollbar {
+        width: 5px;
+    }
+
+    &::-webkit-scrollbar-track {
+        background-color: $brand-secondary;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: $brand-primary;
+    }
+
+
+	@include media("<=menu") {
+		position: fixed;
+		top:0;
+		left:0;
+		width: $menu-width;
+		height:100vh;
+		transition:.5s ease all;
+        transform: translate(-#{$menu-width},0);
+		z-index: 100;
+        background-color: $brand-secondary;
+        text-align: center;
+        overflow: auto;
+	}
+
+
+//    @include media("<=phone") {
+//        width: 100%;
+//        transform: translate(-100%,0);
+//        height: 100vh;
+//        overflow: auto;
+//    }
+    .overlay-content {
+        padding: 5vh 0;
+    }
+
+    .toggled & {
+        left:0;
+        width: $menu-width;
+        transition:.5s ease all;
+//        position: fixed;
+        .overlay-content {
+            height: 100%;
+            padding: 5vh 0;
+        }
+//        @include media("<=phone") {
+//            width: 100%;
+//        }
+    }
+}
+
+//list animations
+@include media("<=menu") {
+
+//    $i: 8; //number of menu items
+//    @for $i from 1 through $i {
+//        .main-navigation li:nth-child(#{$i}) {
+//            transform: translate3d(0,(0 + ($i * 500)+px,0));
+//
+//        }
+//    }
+
+    .nav-menu > li {
+//        visibility: hidden;
+//        opacity: 0;
+        transform: translate3d(0,1500px,0);
+        transition: transform 0s 0.2s;
+        transition-timing-function: cubic-bezier(0.7,0.3,0.5,1);
+
+//        &.fadein {
+//            transform: translate3d(0,0,0);
+//            transition: transform 0.8s;
+//            transition-timing-function: cubic-bezier(0.7,0.3,0.5,1);
+//            visibility: visible;
+//            opacity: 1;
+//            transition: .5s ease all;
+//        }
+
+        &.slideup {
+            transform: translate3d(0,0,0);
+            transition: transform 0.7s;
+            transition-timing-function: cubic-bezier(0.7,0.3,0.5,1);
+//            visibility: visible;
+//            opacity: 1;
+        }
+    }
+
+}
+
+//page styles
+
+.site {
+	position: relative;
+	top:0;
+	left:0;
+	transition:.5s ease all;
+	min-height: 100vh;
+}
+.push {
+    transform:translate($menu-width,0);
+	transition:.5s ease all;
+	position: fixed;
+
+//    @include media("<=phone") {
+//        transform:translate(100vw,0);
+//    }
+}
+.site-content:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(darken($brand-primary,20%), 0);
+    visibility: hidden;
+    transition: .3s linear all;
+    transform: translate3d(0,0,0);
+    backface-visibility: hidden;
+    perspective: 1000;
+}
+.push .site-content:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(darken($brand-primary,20%), 0.6);
+    transition: .3s linear all;
+    z-index: 100;
+    visibility: visible;
+    transform: translate3d(0,0,0);
+    backface-visibility: hidden;
+    perspective: 1000;
+}

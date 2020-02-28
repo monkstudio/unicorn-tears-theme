@@ -1,0 +1,482 @@
+.gform_ajax_spinner {
+    display: none;
+}
+
+// The class .gform isn't actually used by Gravity Forms but acts as a prefix for all it's parent elements. Thus serves here to simply enclose the css structure.
+.gform {
+
+    // The encapsulating wrapping div for all forms. So far I used it to target common elements that would be used form-wide such as buttons and input tags.
+    &_wrapper {
+        margin-bottom: 1em;
+
+        // General class assigned to all button & input[type="submit"] tags in the form
+        // .button {
+        //     @extend .btn;
+
+        //     &[type="submit"] {
+        //         @extend .btn !optional;
+        //     }
+        // }
+
+        // Target all typing input tags and extend Bootstrap's .form-control class to all of them. Also prevent browsers from overriding our styles by setting appearance to none.
+        // input[type="text"],
+        // input[type="email"],
+        // input[type="url"],
+        // input[type="password"],
+        // input[type="search"],
+        // input[type="number"],
+        // input[type="tel"],
+        // input[type="range"],
+        // input[type="date"],
+        // input[type="month"],
+        // input[type="week"],
+        // input[type="time"],
+        // input[type="datetime"],
+        // input[type="datetime-local"],
+        // input[type="color"],
+        // textarea,
+        // select {
+        //     appearance: none;
+        //     width: 100%;
+        //     margin: 0;
+        // }
+
+        // textarea {
+        //     //            margin-bottom: -6px;
+        // }
+    }
+
+    // On the off chance the form prints a ul list, target .gform_fields to make sure the default <ul> styles arn't applied.
+    &_fields {
+        padding: 0;
+        //        margin: 1em;
+        list-style: none;
+    }
+
+    // The wrapping div for the form's title & description.
+    &_heading {
+        margin-bottom: 1em;
+    }
+
+    // The forms title
+    &_title {}
+
+    // The forms description
+    &_description {}
+
+    // The wrapping div for the form's actual fields.
+    &_body {
+        margin-bottom: 1em;
+
+        .gsection {
+            &_title {}
+
+            &_description {
+                // @extend .help-block !optional;
+            }
+        }
+
+        .gfield {
+
+            //            margin-bottom: 10px;
+            &.gform_validation_container {
+                // display: none !important;
+            }
+
+            &_label {
+                font-weight: bold;
+            }
+
+            &_required {
+                position: relative;
+                top: -2px;
+                right: -2px;
+                color: $brand-primary;
+            }
+
+            &_error {
+                .validation_message {
+                    background-color: $brand-primary;
+                    color: #FFF;
+                    //                    border-radius: 3px;
+                    padding: 5px 15px;
+
+                    // &.instruction {
+                    //     @extend .alert-info !optional;
+                    // }
+                }
+            }
+
+            &_html {}
+
+            &_checkbox,
+            &_radio {
+                list-style: none;
+                margin: 0;
+                padding: 0;
+
+                >li {
+                    //@extend .checkbox;
+                    padding-left: 0;
+                    margin-left: 0;
+
+                    label {
+                        margin-left: 0;
+                    }
+                }
+            }
+        }
+
+        .ginput {
+            &_container {
+                &_textarea {
+                    line-height: 0;
+                }
+            }
+
+            &_complex {
+                display: flex;
+                width: 100%;
+
+                >span {
+                    padding-right: 15px;
+                    width: 100%;
+
+                    &:last-of-type {
+                        padding-right: 0;
+                    }
+                }
+
+                >.ginput {
+                    &_full {
+                        display: block;
+                        flex: 1;
+                        width: 100%;
+                        padding-right: 0;
+                    }
+
+                    &_left {
+                        display: block;
+                        flex: 1;
+                        width: 50%;
+                    }
+
+                    &_right {
+                        display: block;
+                        flex: 1;
+                        width: 50%;
+                    }
+                }
+            }
+        }
+
+        .validation_message {
+            // @extend .alert !optional;
+            background-color: $brand-primary;
+            color: #FFF;
+            padding: 5px;
+        }
+    }
+
+    &_page_footer {
+        background: $brand-lightgrey;
+
+        // .button {
+        //     @extend .btn-link !optional;
+        // }
+
+        // @include clearfix;
+    }
+
+    &_next_button {
+        float: right;
+    }
+
+    &_prev_button {
+        float: left;
+    }
+
+    &_footer {}
+
+    .validation_error {
+        font-size: 80%;
+        margin: 1.5em 0;
+    }
+}
+
+.gform_ajax_spinner {
+    display: none;
+}
+
+#ui-datepicker-div {
+    background: #FFF;
+    padding: 10px;
+    text-align: center;
+    border: 2px solid $brand-secondary;
+    display: none;
+    margin: -2px auto;
+    box-shadow: 0px 2px 15px rgba($brand-darkgrey, .6);
+
+    select {
+        padding: 2px 10px;
+        margin: 10px 5px;
+    }
+
+    .ui-corner-all {
+        //        margin: 0 10px;
+    }
+}
+
+.form_saved_message_emailform form {
+    padding: 2em 0 0;
+    flex-wrap: wrap;
+    display: flex;
+
+    input[type="email"] {
+        width: 60%;
+
+        @include media("<=phone") {
+            width: 57%;
+        }
+    }
+}
+
+.validation_message {
+    flex-basis: 100%;
+}
+
+
+// Credit Card
+
+// [class^="icon-"]:before,
+// [class*=" icon-"]:before,
+// article.hentry.sticky:before,
+// .icon-after:after,
+.ls-nav-right a:before,
+.ls-nav-left a:before,
+.wc_payment_method label:before,
+label[for="stripe-card-number"]:after,
+label[for="stripe-card-cvc"]:after,
+.ui-icon:after,
+.ui-icon:before,
+.gform_card_icon_container div:before,
+.ginput_card_security_code_icon:before {
+    font-family: 'icomoon';
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale
+}
+
+// .icon:before {
+//     margin-right: .25em;
+// }
+
+// .icon-replacment:before {
+//     margin-right: 0;
+// }
+
+// .icon-search:before {
+//     content: "\e900";
+// }
+
+// .icon-pin:before,
+// article.hentry.sticky:before {
+//     content: "\e906";
+// }
+
+// .icon-google-plus:before {
+//     content: "\e901";
+// }
+
+// .icon-instagram:before {
+//     content: "\e902";
+// }
+
+// .icon-linkedin:before {
+//     content: "\e903";
+// }
+
+// .icon-facebook:before {
+//     content: "\e904";
+// }
+
+// .icon-twitter:before {
+//     content: "\e905";
+// }
+
+// .icon-rss:before {
+//     content: "\e907";
+// }
+
+// .icon-new-window:before,
+// .content .icon-new-window:after {
+//     content: "\e908";
+// }
+
+// .icon-pinterest:before {
+//     content: "\e604";
+// }
+
+// .icon-vimeo:before {
+//     content: "\e909";
+// }
+
+// .icon-youtube:before {
+//     content: "\e90a";
+// }
+
+// .icon-calendar:before {
+//     content: "\e918";
+// }
+
+// .icon-arrow-right:before,
+// .ls-nav-right a:before,
+// .ui-icon-circle-triangle-e:after {
+//     content: "\e994";
+// }
+
+// .icon-arrow-left:before,
+// .ls-nav-left a:before,
+// .ui-icon-circle-triangle-w:before {
+//     content: "\e995";
+// }
+
+//.icon-replacement, .ls-nav-right a, .ls-nav-left a, .ui-icon-circle-triangle-e, .ui-icon-circle-triangle-w {text-indent:-999em; overflow:hidden; display:block; position:relative;}
+//.icon-replacement:before, .ls-nav-right a:before, .ls-nav-left a:before, .ui-icon-circle-triangle-e:after, .ui-icon-circle-triangle-w:before {position:absolute; left:0; top:0; text-indent:0; width:100%; text-align:center;}
+//button.icon-search.icon-replacement:before {width:auto;}
+// .icon-after:before {
+//     content: "";
+//     display: none;
+// }
+
+// .icon-after:after {
+//     margin-left: .25em;
+// }
+
+.ginput_container_creditcard {
+	background-color: $muted;
+    padding: 20px; // border-radius: 5px;
+}
+
+.ginput_container_creditcard input{
+    background-color: #FFF;
+    width: 100%;
+    margin: .5em 0;
+}
+
+.ginput_container_creditcard select {
+    background-color: #FFF;
+    width: 48%;
+    margin: 1em 0;
+}
+
+.ginput_cardinfo_left {
+    width: 70%;
+
+    @include media("<=phone") {
+        width: 100%;
+    }
+}
+
+.gform_card_icon_container div {
+    @include font-size(1.4);
+    float: left;
+    text-indent: -99em;
+    position: relative;
+    display: block;
+}
+
+.gform_card_icon_container div:before {
+    position: absolute;
+    left: 0;
+    top: 0;
+    text-indent: 0;
+}
+
+.gform_card_icon_container div {
+    @include font-size(1.4);
+    float: left;
+    text-indent: -99em;
+    position: relative;
+    display: block;
+    width: 1.5em;
+    color: $brand-darkgrey;
+}
+
+.ginput_card_security_code_icon:before {
+    content: "\e911";
+}
+
+.icon-cc-paypal:before {
+    content: "\e913";
+}
+
+.gform_card_icon_amex:before {
+    content: "\e914";
+}
+
+.gform_card_icon_discover:before {
+    content: "\e915";
+}
+
+.gform_card_icon_mastercard:before {
+    content: "\e916";
+}
+
+.gform_card_icon_visa:before {
+    content: "\e917";
+}
+
+.ginput_cardinfo_left,
+.ginput_cardinfo_right {
+    float: left;
+}
+
+.ginput_cardinfo_right {
+    // margin-left: 10px;
+    width: calc(30% - 10px);
+    display: flex;
+    align-items: center;
+
+    @include media("<=phone") {
+        margin: 0;
+        width: 100%;
+    }
+
+    input {
+        margin: 1em ;
+    }
+}
+
+span.ginput_card_security_code_icon {
+    font-size: 1.5em;
+    float: left;
+    color: #666;
+    line-height: 1.2;
+}
+
+.gfield_creditcard_warning_message {
+    background: #bf0421;
+    color: #FFF;
+    padding: 1em .75em;
+    border-radius: 3px;
+    font-size: 80%;
+    margin-bottom: 1em;
+}
+
+.gfield_error .ginput_container_creditcard label {
+    color: #000;
+}
+
+.ginput_container_creditcard .ginput_full {
+    clear: both;
+    display: block;
+}
+
+// .field_sublabel_above .ginput_container_creditcard .ginput_full:first-of-type {
+//     margin-bottom: 2em;
+// }
