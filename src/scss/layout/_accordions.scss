@@ -1,9 +1,6 @@
 .accordion-list {
-	.col {
-		&:last-child {
-			flex: 1;
-			padding-left: 50px;
-		}
+	.row {
+		grid-template-columns: minmax(200px, auto) 1fr;
 	}
 }
 
@@ -63,4 +60,18 @@
 			}
 		}
 	}
+}
+
+
+.panel-title-wrapper {
+	display: flex;
+	align-items: center;
+	background-color: $brand-lightgrey;
+	padding: 7px 10px;
+}
+.panel-body {
+	font-family: $brand-heading;
+	padding: 10px 25px;
+	font-weight: 800;
+	break-inside: avoid;
 }

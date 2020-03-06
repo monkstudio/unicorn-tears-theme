@@ -9,7 +9,7 @@ $counter = 0;
       <div class="col">
         <div class="sidebar">
           <h4><?php echo $section_title;?></h4>
-          <?php echo sanitize_title($section_title);?>-panel<?php echo $counter;?>">
+          <!-- <?php //echo sanitize_title($section_title);?>-panel<?php //echo $counter;?>"> -->
         </div>
       </div>
       <div class="col">
@@ -25,7 +25,7 @@ $counter = 0;
                 <?php echo $item['content'];?>
                 </div>
             </div>
-            </div>
+          </div>
           <?php endforeach;?>
         </div>
       </div>

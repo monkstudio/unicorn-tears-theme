@@ -2,13 +2,11 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding: 20px;
 }
 
 .site-branding {
     position: relative;
     z-index: 101;
-}
-
-.logo {
     width: 200px;
 }

@@ -10,14 +10,15 @@
         stroke: currentColor;
         transition: .3s ease all;
     }
+    
 	ul {
 		list-style: none;
 		margin: 0;
         padding: 0;
 
 		ul {
-			box-shadow: 0 3px 10px rgba($brand-darkgrey, 0.3);
-			float: left;
+			// box-shadow: 0 3px 10px rgba($brand-darkgrey, 0.3);
+			// float: left;
 			position: absolute;
 			top: 50px;
 			left: -999em;
@@ -67,8 +68,13 @@
 		}
 
 		li:hover > ul,
-		li.focus > ul {
-			left: auto;
+        li.focus > ul,
+        li.toggled-on > ul {
+            left: auto;
+            display: block;
+            @include media("<=menu") {
+                display: none;
+            }
 		}
 	}
 
@@ -80,7 +86,10 @@
         flex-wrap: wrap;
         justify-content: space-between;
         width: 100%;
-        margin: 0;
+        margin: 0 15px;
+        @include media("<=menu") {
+            margin: 20px 0;
+        }
 		&:hover > a,
 		&.focus > a {
             background-color: $brand-secondary;
@@ -93,7 +102,7 @@
 		display: inline-block;
         vertical-align: middle;
 		text-decoration: none;
-        padding: 5px 20px;
+        padding: 15px;
         border: none;
         // width: 100%;
 	}
@@ -117,19 +126,20 @@
 
         li {
             width: 100%;
+            margin: 0;
         }
-    }
 
-    @include media("<=menu") {
+    }
+    .toggled-on {
         .sub-menu {
-            display: none;
-        }
-        .toggled-on .sub-menu {
             display: block;
         }
+        .dropdown-toggle {
+            transform: rotate(180deg);
+        }
     }
-
     .dropdown-toggle {
+        padding: 20px;
         display: inline-flex;
         svg {
             fill: none;
@@ -139,12 +149,30 @@
 //         cursor: pointer;
 // //        float: right;
 //         @include media("<=menu") {
-//             display: inline-flex;   
+//             display: inline-flex;
 //         }
     }
 }
 
+.ancestor-wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    a {
+        display: block;
+        flex: 1;
+    }
+}
 
+// #primary {
+//     > li {
+//         &:hover {
+//             .dropdown-toggle {
+//                 transform: rotate(180deg);
+//             }
+//         }
+//     }
+// }
 //.nav-menu {
 //    > li > a,
 //    > li > button > a {
@@ -202,7 +230,7 @@
 	// }
     display: flex;
     justify-content: space-between;
-    
+
 // 	.nav-previous {
 // 		float: left;
 // //		width: 50%;
@@ -222,7 +250,7 @@
 
 #menu-social {
     padding: 0;
-    list-style: none; 
+    list-style: none;
     display: flex;
 
     li {
@@ -252,21 +280,20 @@
 	}
 	.main-navigation ul {
 		display: block;
-	}
+    }
 }
 
-
-//applied to body and html tags
-.menu-open {
-    // position: fixed;
-	height: 100vh;
-	overflow: hidden;
+@include media("<=menu") {
+    .menu-open {
+        // position: fixed;
+        height: 100vh;
+        overflow: hidden;
+    }   
 }
-
 button#mobile-menu {
 	position: relative;
 	z-index: 101;
-    margin: 20px auto;
+    margin: auto;
 
     @include media("<=menu") {
         display: table;
@@ -294,6 +321,6 @@ button#mobile-menu {
 // @import "menus/slideleft";
 //@import "menus/slideright";
 //@import "menus/dropdown";
-//@import "menus/pushleft"; //no need to add .push to .menu-wrapper -- make sure to js/menus/push.js is enqueued
-//@import "menus/pushright";  //no need to add .push to .menu-wrapper -- make sure to js/menus/push.js is enqueued
-//@import "menus/pushtop";  //no need to add .push to .menu-wrapper -- make sure to js/menus/push.js is enqueued
+//@import "menus/pushleft";
+//@import "menus/pushright";
+//@import "menus/pushtop";

@@ -110,78 +110,89 @@ function unicorn_tears_widgets_init() {
 add_action( 'widgets_init', 'unicorn_tears_widgets_init' );
 
 
-
 /**
  * Enqueue scripts and styles.
  */
 function unicorn_tears_scripts() {
 
-		wp_deregister_script( 'jquery-core' );
-    wp_register_script( 'jquery-core', "https://code.jquery.com/jquery-3.1.1.min.js", array(), '3.1.1' );
-    wp_deregister_script( 'jquery-migrate' );
-		wp_register_script( 'jquery-migrate', "https://code.jquery.com/jquery-migrate-3.0.0.min.js", array(), '3.0.0' );
+	wp_deregister_script( 'jquery-core' );
+	wp_register_script( 'jquery-core', "https://code.jquery.com/jquery-3.1.1.min.js", array(), '3.1.1' );
+	wp_deregister_script( 'jquery-migrate' );
+	wp_register_script( 'jquery-migrate', "https://code.jquery.com/jquery-migrate-3.0.0.min.js", array(), '3.0.0' );
 
-    //localize data
-    // Register the scripts
-    if(ON_MONK) {
-		//if any es6 scripts are used
-		// wp_register_script( 'unicorn-tears-scripts', get_template_directory_uri() . '/dist/js/imports.js', array('jquery'), null, true);
-				wp_register_style( 'unicorn-tears-styles', get_template_directory_uri() . '/dist/css/style.css',  array(), date("dmY") );
-        wp_register_script( 'unicorn-tears-scripts', get_template_directory_uri() . '/dist/js/script.js', array('jquery'), date("dmY"));
-    } else {
-		// wp_register_script( 'unicorn-tears-scripts', get_template_directory_uri() . '/dist/js/imports.js', array('jquery'), null, true);
-				wp_register_style( 'unicorn-tears-styles', get_template_directory_uri() . '/dist/css/style.min.css', array(), date("dmY")  );
-        wp_register_script( 'unicorn-tears-scripts', get_template_directory_uri() . '/dist/js/script.min.js', array('jquery'), date("dmY"));
-    };
+	//localize data
+	// Register the scripts
+	if(ON_MONK) {
+	//if any es6 scripts are used
+	// wp_register_script( 'unicorn-tears-scripts', get_template_directory_uri() . '/dist/js/imports.js', array('jquery'), null, true);
+			wp_register_style( 'unicorn-tears-styles', get_template_directory_uri() . '/dist/css/style.css',  '', date("dmY") );
+			wp_register_script( 'unicorn-tears-scripts', get_template_directory_uri() . '/dist/js/script.js', array('jquery-core'), date("dmY"), true);
+	} else {
+	// wp_register_script( 'unicorn-tears-scripts', get_template_directory_uri() . '/dist/js/imports.js', array('jquery'), null, true);
+			wp_register_style( 'unicorn-tears-styles', get_template_directory_uri() . '/dist/css/style.min.css', '', date("dmY")  );
+			wp_register_script( 'unicorn-tears-scripts', get_template_directory_uri() . '/dist/js/script.min.js', array('jquery-core'), date("dmY"), true);
+	};
 
-    // Localize the script with data
-    //theme url
-		$site = array( 'url' => get_template_directory_uri() );
-		wp_localize_script( 'unicorn-tears-scripts', 'site', $site );
 
-    //nav menu
-    $navcontent = array(
-			'has_navigation' => 'false',
-		);
-    if ( has_nav_menu( 'primary' ) ) {
-        $navcontent['has_navigation'] = 'true';
-        $navcontent['expand']         = __( 'Expand child menu', 'unicorn-tears' );
-        $navcontent['collapse']       = __( 'Collapse child menu', 'unicorn-tears' );
-				$navcontent['iconOpen']           = '<span class="icon cross" aria-hidden="true"></span>';
-        // $navcontent['iconClose']           = get_icon('cross_close',20);
-    }
-    wp_localize_script( 'unicorn-tears-scripts', 'navcontent', $navcontent );
+	//enqueue scripts and styles
+	//css
+	wp_enqueue_style( 'typekit', 'https://use.typekit.net/gdx2ftb.css' );
+	wp_enqueue_style( 'unicorn-tears-styles');
 
-    //gmaps vars
-    if ( get_field( 'map_styles','option' ) || get_field( 'map_icon_colour','option' )  ) {
-        $gmaps['mapstyles'] = get_field( 'map_styles','option');
-        $gmaps['mapicon']   = get_field( 'map_icon_colour','option');
+	//js
+	wp_enqueue_script('jquery');
+	wp_enqueue_script('jquery-migrate');
+	// wp_enqueue_script('google-maps', 'https://maps.googleapis.com/maps/api/js?key=key', ['jquery'], date("dmY"), true );
+	wp_enqueue_script('unicorn-tears-scripts');
 
-    wp_localize_script( 'unicorn-tears-scripts', 'gmaps', $gmaps );
+	if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
+			wp_enqueue_script( 'comment-reply' );
 	}
 
+	/*!
+	♡♡♡♡♡♡♡♡♡♡♡
+	♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥
+	Localization
+	♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥
+	♡♡♡♡♡♡♡♡♡♡♡
+	*/
+	//theme url
+	$site = array( 'url' => get_template_directory_uri() );
+	wp_localize_script( 'unicorn-tears-scripts', 'site', $site );
 
-		//enqueue scripts and styles
-	// wp_enqueue_style( 'typekit', 'https://use.typekit.net/gdx2ftb.css' );
-	// wp_enqueue_script('google-maps', 'https://maps.googleapis.com/maps/api/js?key=key', ['jquery'], date("dmY"), true );
+	//nav menu
+	$navcontent = array(
+		'has_navigation' => 'false',
+	);
+	if ( has_nav_menu( 'primary' ) ) {
+			$navcontent['has_navigation'] = 'true';
+			$navcontent['expand']         = __( 'Expand child menu', 'unicorn-tears' );
+			$navcontent['collapse']       = __( 'Collapse child menu', 'unicorn-tears' );
+			$navcontent['iconOpen']           = '<span class="icon cross" aria-hidden="true"></span>';
+			// $navcontent['iconClose']           = get_icon('cross_close',20);
+	}
+	wp_localize_script( 'unicorn-tears-scripts', 'navcontent', $navcontent );
 
-		wp_enqueue_style( 'unicorn-tears-styles');
-		wp_enqueue_script('unicorn-tears-scripts');
+	//gmaps vars
+	if ( get_field( 'map_styles','option' ) || get_field( 'map_icon_colour','option' )  ) {
+			$gmaps['mapstyles'] = get_field( 'map_styles','option');
+			$gmaps['mapicon']   = get_field( 'map_icon_colour','option');
 
-		if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
-				wp_enqueue_script( 'comment-reply' );
-		}
+	wp_localize_script( 'unicorn-tears-scripts', 'gmaps', $gmaps );
+}
+
 }
 
 add_action( 'wp_enqueue_scripts', 'unicorn_tears_scripts' );
 
-function add_jquery_cdn_attributes( $html, $handle ) {
-	if ( 'jquery' === $handle ) {
-			return str_replace( "type='text/javascript'", 'type="text/javascript" integrity="sha256-pasqAKBDmFT4eHoN2ndd6lN370kFiGUFyTiUHWhU7k8=" crossorigin="anonymous"', $html );
-	}
-	return $html;
-}
-add_filter( 'script_loader_tag', 'add_jquery_cdn_attributes', 10, 2 );
+// function add_jquery_cdn_attributes( $html, $handle ) {
+// if ( 'jquery' === $handle ) {
+// 		return str_replace( "type='text/javascript'", 'type="text/javascript" integrity="sha256-pasqAKBDmFT4eHoN2ndd6lN370kFiGUFyTiUHWhU7k8=" crossorigin="anonymous"', $html );
+// }
+// return $html;
+// }
+// add_filter( 'script_loader_tag', 'add_jquery_cdn_attributes', 10, 2 );
+
 
 
 /**
@@ -309,39 +320,17 @@ function custom_theme_assets() {
 }
 add_action( 'wp_enqueue_scripts', 'custom_theme_assets', 100 );
 
-
-/**
- * Archives
- */
-/**
- * Filters the archive title and styles the word before the first colon.
- *
- * @param string $title Current archive title.
- *
- * @return string $title Current archive title.
- */
-function unicorn_tears_get_the_archive_title( $title ) {
-
-	$regex = apply_filters(
-		'unicorn_tears_get_the_archive_title_regex',
-		array(
-			'pattern'     => '/(\A[^\:]+\:)/',
-			'replacement' => '<span class="color-accent">$1</span>',
-		)
-	);
-
-	if ( empty( $regex ) ) {
-
-		return $title;
-
+//remove archive prefix
+add_filter( 'get_the_archive_title', function ($title) {
+    if ( is_category() ) {
+		$title = single_cat_title( '', false );
+	} elseif ( is_tag() ) {
+		$title = single_tag_title( '', false );
+	} elseif ( is_author() ) {
+		$title = '<span class="vcard">' . get_the_author() . '</span>' ;
 	}
-
-	return preg_replace( $regex['pattern'], $regex['replacement'], $title );
-
-}
-
-add_filter( 'get_the_archive_title', 'unicorn_tears_get_the_archive_title' );
-
+    return $title;
+});
 
 function get_page_ID() {
 	if ( is_home() ) {
@@ -464,6 +453,41 @@ function button_shortcode( $atts ) {
 	return '<a href="'. $atts['url'] . '" class="btn" target="_' . $atts['target'].'">' . $atts['title'] . '</a>';
 }
 add_shortcode( 'button', 'button_shortcode' );
+
+
+
+
+/**
+ * Archives
+ */
+/**
+ * Filters the archive title and styles the word before the first colon.
+ *
+ * @param string $title Current archive title.
+ *
+ * @return string $title Current archive title.
+ */
+function unicorn_tears_get_the_archive_title( $title ) {
+
+	$regex = apply_filters(
+		'unicorn_tears_get_the_archive_title_regex',
+		array(
+			'pattern'     => '/(\A[^\:]+\:)/',
+			'replacement' => '<span class="color-accent">$1</span>',
+		)
+	);
+
+	if ( empty( $regex ) ) {
+
+		return $title;
+
+	}
+
+	return preg_replace( $regex['pattern'], $regex['replacement'], $title );
+
+}
+
+add_filter( 'get_the_archive_title', 'unicorn_tears_get_the_archive_title' );
 
 
 

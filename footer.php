@@ -45,7 +45,7 @@
 
 	</footer><!-- #colophon -->
 </div><!-- #page -->
-
+<div class="screen-overlay" aria-hidden="true"></div>
 <?php wp_footer(); ?>
 
 </body>

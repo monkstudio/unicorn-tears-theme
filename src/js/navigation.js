@@ -111,14 +111,14 @@
 	function initMainNavigation( container ) {
 
 		//check if $navcontent in functions.php is false
-		if ( navcontent.has_navigation == 'true') {
-			// Add dropdown toggle that displays child menu items.
-			var dropdownToggle = '<div class="dropdown-toggle" aria-expanded="false" aria-label="Toggle Menu">'+navcontent.iconOpen+'<span class="screen-reader-text">Expand</span></div>'
-	}
+	// 	if ( navcontent.has_navigation == 'true') {
+	// 		// Add dropdown toggle that displays child menu items.
+	// 		var dropdownToggle = '<div class="dropdown-toggle" aria-expanded="false" aria-label="Toggle Menu">'+navcontent.iconOpen+'<span class="screen-reader-text">Expand</span></div>'
+	// }
 
-		// container.find( '.menu-item-has-children > .sub-menu, .page_item_has_children > .sub-menu' ).before( dropdownToggle );
+	// 	// container.find( '.menu-item-has-children > .sub-menu, .page_item_has_children > .sub-menu' ).before( dropdownToggle );
 
-//		container.find( '.menu-item-has-children > a, .page_item_has_children > a' ).after( dropdownToggle );
+	// 	container.find( '.menu-item-has-children > a, .page_item_has_children > a' ).after( dropdownToggle );
 
 		// Toggle buttons and submenu items with active children menu items.
 		// container.find( '.current-menu-ancestor > button' ).addClass( 'toggled-on' );
@@ -128,6 +128,11 @@
 		container.find( '.menu-item-has-children, .page_item_has_children' ).attr( 'aria-haspopup', 'true' );
 
 		container.find( '.dropdown-toggle' ).click( function( e ) {
+			if ( 	$('body').hasClass('menu-open')) {
+				$('body').removeClass('menu-open');
+			} else {
+				$('body').addClass('menu-open');
+			}
 			var _this            = $( this ),
 				screenReaderSpan = _this.find( '.screen-reader-text' );
 

@@ -17,7 +17,7 @@
 		<?php the_title(); ?>
 	</h1>
 <?php elseif ( is_search() ) : ?>
-	<h1 class="section-title">Search</h1>
+	<h1 class="section-title"><?php printf( esc_html__( 'Search Results for: %s', 'unicorn-tears' ), '<span>' . get_search_query() . '</span>' ); ?></h1>
 <?php elseif ( is_home() ) : ?>
 	<?php $title = get_the_title( get_option('page_for_posts') );?>
 	<h1 class="section-title">

@@ -11,7 +11,8 @@ jQuery(document).ready(function ($) {
 
         //menu
         $menu       = $(".main-navigation"),
-        $submenu    = $(".main-navigation"),
+        $menuitems    = $(".menu-item"),
+        $screenOverlay = $(".screen-overlay"),
 
         //media
         $lightbox   = $('.lightbox'),
@@ -33,10 +34,11 @@ jQuery(document).ready(function ($) {
     function closeMenu() {
         $site.removeClass("menu-open");
         $menu.removeClass("toggled");
-        $submenu.removeClass('toggled-on');
+        $menuitems.removeClass('toggled-on');
         $hamburger.removeClass("is-active");
     }
-    $content.on('click', closeMenu);
+    $screenOverlay.on('click', closeMenu);
+
     $(document).bind('keydown', function(e) {
         if (e.which == 27) {
             closeMenu();
@@ -164,6 +166,9 @@ jQuery(document).ready(function ($) {
         return mq(query);
     }
 
+    if ( ! is_touch_device()) {
+        $site.addClass('no-touch');
+    }
     /*!
     ♡♡♡♡♡♡♡♡♡♡♡
     ♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥
@@ -208,30 +213,30 @@ jQuery(document).ready(function ($) {
 // var ex2 = document.getElementsByClassName("blocks-gallery-item");
 // // console.log(ex1, ex2);
 
-    // function video() {
-    //     var video = $('.video-wrapper'),
-    //         wrapperWidth = $(window).width(),
-    //         videoWidth = video.outerWidth(),
-    //         videoHeight = video.outerHeight();
+function video() {
+    var video = document.querySelector('.video-wrapper');
 
-    //     //this is to get around the elastic url bar on mobiles like ios...
-    //     if ( $(window).width() < 768 ) {
-    //         var wrapperHeight = $(window).height() + 100;
-    //     } else {
-    //         var wrapperHeight = $(window).height();
-    //     }
+    if (video !== null) {
+      var wrapperWidth = window.outerWidth,
+          videoWidth = video.offsetWidth,
+          videoHeight = video.offsetHeight; //this is to get around the elastic url bar on mobiles like ios...
 
-    //     var scale = Math.max(
-    //         wrapperWidth/videoWidth,
-    //         wrapperHeight/videoHeight
-    //     );
-    //     // console.log(scale);
-    //     video.css({
-    //         transform: "translate(-50%, -50%) " + "scale(" + scale + ")"
-    //     });
-    // }
-    // video();
-    // $(window).on('resize', function() {
-    //     video();
-    // });
+      if (wrapperWidth < 1024) {
+        var wrapperHeight = window.innerHeight + 100;
+      } else {
+        var wrapperHeight = window.innerHeight;
+      }
+
+      var scale = Math.max(wrapperWidth / videoWidth, wrapperHeight / videoHeight);
+      document.querySelector('.video-wrapper').style.transform = "translate(-50%, -50%) " + "scale(" + scale + ")";
+    }
+  }
+
+  video();
+
+  //update the video's scale as the browser resizes
+  $(window).on('resize', function () {
+    video();
+  });
+  
 });

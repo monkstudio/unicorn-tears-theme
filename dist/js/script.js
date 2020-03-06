@@ -116,19 +116,24 @@
 
   function initMainNavigation(container) {
     //check if $navcontent in functions.php is false
-    if (navcontent.has_navigation == 'true') {
-      // Add dropdown toggle that displays child menu items.
-      var dropdownToggle = '<div class="dropdown-toggle" aria-expanded="false" aria-label="Toggle Menu">' + navcontent.iconOpen + '<span class="screen-reader-text">Expand</span></div>';
-    } // container.find( '.menu-item-has-children > .sub-menu, .page_item_has_children > .sub-menu' ).before( dropdownToggle );
-    //		container.find( '.menu-item-has-children > a, .page_item_has_children > a' ).after( dropdownToggle );
+    // 	if ( navcontent.has_navigation == 'true') {
+    // 		// Add dropdown toggle that displays child menu items.
+    // 		var dropdownToggle = '<div class="dropdown-toggle" aria-expanded="false" aria-label="Toggle Menu">'+navcontent.iconOpen+'<span class="screen-reader-text">Expand</span></div>'
+    // }
+    // 	// container.find( '.menu-item-has-children > .sub-menu, .page_item_has_children > .sub-menu' ).before( dropdownToggle );
+    // 	container.find( '.menu-item-has-children > a, .page_item_has_children > a' ).after( dropdownToggle );
     // Toggle buttons and submenu items with active children menu items.
     // container.find( '.current-menu-ancestor > button' ).addClass( 'toggled-on' );
     // container.find( '.current-menu-ancestor > .sub-menu' ).addClass( 'toggled-on' );
     // Add menu items with submenus to aria-haspopup="true".
-
-
     container.find('.menu-item-has-children, .page_item_has_children').attr('aria-haspopup', 'true');
     container.find('.dropdown-toggle').click(function (e) {
+      if ($('body').hasClass('menu-open')) {
+        $('body').removeClass('menu-open');
+      } else {
+        $('body').addClass('menu-open');
+      }
+
       var _this = $(this),
           screenReaderSpan = _this.find('.screen-reader-text'); // if ( document.body.clientWidth < 1024 || 'ontouchstart' in window   ) {
       //     e.preventDefault();
@@ -189,6 +194,163 @@
     }, false);
   }
 })();
+"use strict";
+
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+/**
+ * author Christopher Blum
+ *    - based on the idea of Remy Sharp, http://remysharp.com/2009/01/26/element-in-view-event-plugin/
+ *    - forked from http://github.com/zuk/jquery.inview/
+ */
+(function (factory) {
+  if (typeof define == 'function' && define.amd) {
+    // AMD
+    define(['jquery'], factory);
+  } else if ((typeof exports === "undefined" ? "undefined" : _typeof(exports)) === 'object') {
+    // Node, CommonJS
+    module.exports = factory(require('jquery'));
+  } else {
+    // Browser globals
+    factory(jQuery);
+  }
+})(function ($) {
+  var inviewObjects = [],
+      viewportSize,
+      viewportOffset,
+      d = document,
+      w = window,
+      documentElement = d.documentElement,
+      timer;
+  $.event.special.inview = {
+    add: function add(data) {
+      inviewObjects.push({
+        data: data,
+        $element: $(this),
+        element: this
+      }); // Use setInterval in order to also make sure this captures elements within
+      // "overflow:scroll" elements or elements that appeared in the dom tree due to
+      // dom manipulation and reflow
+      // old: $(window).scroll(checkInView);
+      //
+      // By the way, iOS (iPad, iPhone, ...) seems to not execute, or at least delays
+      // intervals while the user scrolls. Therefore the inview event might fire a bit late there
+      //
+      // Don't waste cycles with an interval until we get at least one element that
+      // has bound to the inview event.
+
+      if (!timer && inviewObjects.length) {
+        timer = setInterval(checkInView, 250);
+      }
+    },
+    remove: function remove(data) {
+      for (var i = 0; i < inviewObjects.length; i++) {
+        var inviewObject = inviewObjects[i];
+
+        if (inviewObject.element === this && inviewObject.data.guid === data.guid) {
+          inviewObjects.splice(i, 1);
+          break;
+        }
+      } // Clear interval when we no longer have any elements listening
+
+
+      if (!inviewObjects.length) {
+        clearInterval(timer);
+        timer = null;
+      }
+    }
+  };
+
+  function getViewportSize() {
+    var mode,
+        domObject,
+        size = {
+      height: w.innerHeight,
+      width: w.innerWidth
+    }; // if this is correct then return it. iPad has compat Mode, so will
+    // go into check clientHeight/clientWidth (which has the wrong value).
+
+    if (!size.height) {
+      mode = d.compatMode;
+
+      if (mode || !$.support.boxModel) {
+        // IE, Gecko
+        domObject = mode === 'CSS1Compat' ? documentElement : // Standards
+        d.body; // Quirks
+
+        size = {
+          height: domObject.clientHeight,
+          width: domObject.clientWidth
+        };
+      }
+    }
+
+    return size;
+  }
+
+  function getViewportOffset() {
+    return {
+      top: w.pageYOffset || documentElement.scrollTop || d.body.scrollTop,
+      left: w.pageXOffset || documentElement.scrollLeft || d.body.scrollLeft
+    };
+  }
+
+  function checkInView() {
+    if (!inviewObjects.length) {
+      return;
+    }
+
+    var i = 0,
+        $elements = $.map(inviewObjects, function (inviewObject) {
+      var selector = inviewObject.data.selector,
+          $element = inviewObject.$element;
+      return selector ? $element.find(selector) : $element;
+    });
+    viewportSize = viewportSize || getViewportSize();
+    viewportOffset = viewportOffset || getViewportOffset();
+
+    for (; i < inviewObjects.length; i++) {
+      // Ignore elements that are not in the DOM tree
+      if (!$.contains(documentElement, $elements[i][0])) {
+        continue;
+      }
+
+      var $element = $($elements[i]),
+          elementSize = {
+        height: $element[0].offsetHeight,
+        width: $element[0].offsetWidth
+      },
+          elementOffset = $element.offset(),
+          inView = $element.data('inview'); // Don't ask me why because I haven't figured out yet:
+      // viewportOffset and viewportSize are sometimes suddenly null in Firefox 5.
+      // Even though it sounds weird:
+      // It seems that the execution of this function is interferred by the onresize/onscroll event
+      // where viewportOffset and viewportSize are unset
+
+      if (!viewportOffset || !viewportSize) {
+        return;
+      }
+
+      if (elementOffset.top + elementSize.height > viewportOffset.top && elementOffset.top < viewportOffset.top + viewportSize.height && elementOffset.left + elementSize.width > viewportOffset.left && elementOffset.left < viewportOffset.left + viewportSize.width) {
+        if (!inView) {
+          $element.data('inview', true).trigger('inview', [true]);
+        }
+      } else if (inView) {
+        $element.data('inview', false).trigger('inview', [false]);
+      }
+    }
+  }
+
+  $(w).on("scroll resize scrollstop", function () {
+    viewportSize = viewportOffset = null;
+  }); // IE < 9 scrolls to focused elements without firing the "scroll" event
+
+  if (!documentElement.addEventListener && documentElement.attachEvent) {
+    documentElement.attachEvent("onfocusin", function () {
+      viewportOffset = null;
+    });
+  }
+});
 "use strict";
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -2899,86 +3061,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
 });
 "use strict";
 
-var yall = function () {
-  "use strict";
-
-  return function (e) {
-    var n = (e = e || {}).lazyClass || "lazy",
-        t = e.lazyBackgroundClass || "lazy-bg",
-        o = "idleLoadTimeout" in e ? e.idleLoadTimeout : 200,
-        i = e.observeChanges || !1,
-        r = e.events || {},
-        a = window,
-        s = "requestIdleCallback",
-        u = "IntersectionObserver",
-        c = ["srcset", "src", "poster"],
-        d = [],
-        queryDOM = function queryDOM(e, o) {
-      return d.slice.call((o || document).querySelectorAll(e || "img." + n + ",video." + n + ",iframe." + n + ",." + t));
-    },
-        yallLoad = function yallLoad(n) {
-      var o = n.parentNode;
-      "PICTURE" == o.nodeName && yallApplyFn(queryDOM("source", o), yallFlipDataAttrs), "VIDEO" == n.nodeName && yallApplyFn(queryDOM("source", n), yallFlipDataAttrs), yallFlipDataAttrs(n), n.autoplay && n.load();
-      var i = n.classList;
-      i.contains(t) && (i.remove(t), i.add(e.lazyBackgroundLoaded || "lazy-bg-loaded"));
-    },
-        yallBindEvents = function yallBindEvents(e) {
-      for (var n in r) {
-        e.addEventListener(n, r[n].listener || r[n], r[n].options || void 0);
-      }
-    },
-        yallFlipDataAttrs = function yallFlipDataAttrs(e) {
-      var _loop = function _loop(n) {
-        c[n] in e.dataset && a.requestAnimationFrame(function () {
-          e.setAttribute(c[n], e.dataset[c[n]]);
-        });
-      };
-
-      for (var n in c) {
-        _loop(n);
-      }
-    },
-        yallApplyFn = function yallApplyFn(e, n) {
-      for (var t = 0; t < e.length; t++) {
-        n instanceof a[u] ? n.observe(e[t]) : n(e[t]);
-      }
-    },
-        yallIntersectionObserve = function yallIntersectionObserve(e) {
-      if (e.isIntersecting || e.intersectionRatio) {
-        var t = e.target;
-        s in a && o ? a[s](function () {
-          yallLoad(t);
-        }, {
-          timeout: o
-        }) : yallLoad(t), t.classList.remove(n), f.unobserve(t), (l = l.filter(function (e) {
-          return e != t;
-        })).length || i || f.disconnect();
-      }
-    },
-        yallMutationObserve = function yallMutationObserve(e) {
-      l.indexOf(e) < 0 && (l.push(e), yallBindEvents(e), f.observe(e));
-    },
-        l = queryDOM();
-
-    if (/baidu|(?:google|bing|yandex|duckduck)bot/i.test(navigator.userAgent)) yallApplyFn(l, yallLoad);else if (u in a && u + "Entry" in a) {
-      var f = new a[u](function (e) {
-        yallApplyFn(e, yallIntersectionObserve);
-      }, {
-        rootMargin: ("threshold" in e ? e.threshold : 200) + "px 0%"
-      });
-      yallApplyFn(l, yallBindEvents), yallApplyFn(l, f), i && yallApplyFn(queryDOM(e.observeRootSelector || "body"), function (n) {
-        new MutationObserver(function () {
-          yallApplyFn(queryDOM(), yallMutationObserve);
-        }).observe(n, e.mutationObserverOptions || {
-          childList: !0,
-          subtree: !0
-        });
-      });
-    }
-  };
-}();
-"use strict";
-
 console.log('🥑 %cMade by Monk', 'background: #616a2e; color: #f4e9e2; padding: 5px 17px; border-radius: 3px;');
 console.log(' %chttp://monk.com.au ', 'padding: 5px 13px;');
 jQuery(document).ready(function ($) {
@@ -2988,7 +3070,8 @@ jQuery(document).ready(function ($) {
       $content = $('.site-content'),
       //menu
   $menu = $(".main-navigation"),
-      $submenu = $(".main-navigation"),
+      $menuitems = $(".menu-item"),
+      $screenOverlay = $(".screen-overlay"),
       //media
   $lightbox = $('.lightbox'),
       $slider = $('.slider'),
@@ -3008,11 +3091,11 @@ jQuery(document).ready(function ($) {
   function closeMenu() {
     $site.removeClass("menu-open");
     $menu.removeClass("toggled");
-    $submenu.removeClass('toggled-on');
+    $menuitems.removeClass('toggled-on');
     $hamburger.removeClass("is-active");
   }
 
-  $content.on('click', closeMenu);
+  $screenOverlay.on('click', closeMenu);
   $(document).bind('keydown', function (e) {
     if (e.which == 27) {
       closeMenu();
@@ -3130,6 +3213,10 @@ jQuery(document).ready(function ($) {
     var query = ['(', prefixes.join('touch-enabled),('), 'heartz', ')'].join('');
     return mq(query);
   }
+
+  if (!is_touch_device()) {
+    $site.addClass('no-touch');
+  }
   /*!
   ♡♡♡♡♡♡♡♡♡♡♡
   ♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥
@@ -3166,29 +3253,30 @@ jQuery(document).ready(function ($) {
   // var ex1 = document.querySelectorAll(".blocks-gallery-item");
   // var ex2 = document.getElementsByClassName("blocks-gallery-item");
   // // console.log(ex1, ex2);
-  // function video() {
-  //     var video = $('.video-wrapper'),
-  //         wrapperWidth = $(window).width(),
-  //         videoWidth = video.outerWidth(),
-  //         videoHeight = video.outerHeight();
-  //     //this is to get around the elastic url bar on mobiles like ios...
-  //     if ( $(window).width() < 768 ) {
-  //         var wrapperHeight = $(window).height() + 100;
-  //     } else {
-  //         var wrapperHeight = $(window).height();
-  //     }
-  //     var scale = Math.max(
-  //         wrapperWidth/videoWidth,
-  //         wrapperHeight/videoHeight
-  //     );
-  //     // console.log(scale);
-  //     video.css({
-  //         transform: "translate(-50%, -50%) " + "scale(" + scale + ")"
-  //     });
-  // }
-  // video();
-  // $(window).on('resize', function() {
-  //     video();
-  // });
 
+
+  function video() {
+    var video = document.querySelector('.video-wrapper');
+
+    if (video !== null) {
+      var wrapperWidth = window.outerWidth,
+          videoWidth = video.offsetWidth,
+          videoHeight = video.offsetHeight; //this is to get around the elastic url bar on mobiles like ios...
+
+      if (wrapperWidth < 1024) {
+        var wrapperHeight = window.innerHeight + 100;
+      } else {
+        var wrapperHeight = window.innerHeight;
+      }
+
+      var scale = Math.max(wrapperWidth / videoWidth, wrapperHeight / videoHeight);
+      document.querySelector('.video-wrapper').style.transform = "translate(-50%, -50%) " + "scale(" + scale + ")";
+    }
+  }
+
+  video(); //update the video's scale as the browser resizes
+
+  $(window).on('resize', function () {
+    video();
+  });
 });

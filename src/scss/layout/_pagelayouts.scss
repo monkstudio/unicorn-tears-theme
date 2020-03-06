@@ -1,5 +1,6 @@
 //features
 $feature-height:60vh;
+$feature-height-home:100vh;
 $feature-height-sm:600px;
 
 :focus {
@@ -10,6 +11,9 @@ $feature-height-sm:600px;
 .feature {
     height: $feature-height;
     position: relative;
+    .home & {
+        height: $feature-height-home;
+    }
     @include media("<=tablet") {
         height: $feature-height-sm;
     }
@@ -21,7 +25,7 @@ $feature-height-sm:600px;
     &.video {
         @extend %background-styles;
         position: relative;
-        height: auto;
+        overflow: hidden;
 
         .play {
             background-color: #FFF;
@@ -78,109 +82,31 @@ $feature-height-sm:600px;
     }
 }
 
-.video-bg {
-    height: 0;
-    padding-top: 56.25%;
-    @extend %background-styles;
-    position: relative;
-    #video {
-        position: absolute;
-        top: 0%;
-        left: 0;
-        width: 100%;
-        height: 100%;
-    }
-    iframe {
-        width: 100%;
-        height: 100%;
-        pointer-events: none;
-    }
-}
-
-/* Video Overlay */
-.vid-overlay {
-//    display: none;
-    background-color:$brand-lightgrey;
-    height: 700px;
-    left:0;
-    position:relative;
-    transition:background-color 300ms ease;
-    width:100%;
-    overflow: hidden;
-
-    @include media("<=desktop") {
-        height: 550px;
-    }
-    @include media("<=laptop") {
-        height: 320px;
-    }
-    @include media("<=tablet") {
-        height: 180px;
-    }
-}
-
-a.title-link {
+.video-wrapper {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     display: block;
-    border-bottom: 3px solid $brand-secondary;
-    // padding: 10px;
-    text-transform: uppercase;
-    font-family: $brand-heading;
-    text-align: center;
-    @include font-size(2.4);
-    letter-spacing: .07em;
-    color: $brand-primary;
-    font-weight: 800;
-
-    @include media("<=laptop") {
-        @include font-size(2.2);
-    }
-
-    &.collapsed {
-        color: $brand-primary;
-
-        .plus {
-            &:after {
-                content: "";
-            }
-        }
-    }
-
-    .close-wrapper {
-        border: 2px solid $brand-secondary;
-        border-radius: 50%;
-        padding: 3px;
-        display: block;
-        margin-right: 30px;
-        text-align: center;
-        width: 32px;
-        height: 32px;
-
-        .inverse & {
-            border-color: #FFF;
-        }
-    }
-    .plus{
-        border-color: #FFF;
-        margin-right: 30px;
-        display: table;
-
-        &:after {
-            content: none;
-        }
+    height: 0;
+    width: 100%;
+    padding: 0;
+    padding-bottom: 56.25%;
+    iframe {
+        // opacity: .6;
+        height: calc(100% + 100px);
+        width: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        pointer-events: none;
+        margin-top: -50px;
     }
 }
-
-.panel-title-wrapper {
-    display: flex;
-    align-items: center;
-    background-color: $brand-lightgrey;
-    padding: 7px 10px;
-}
-.panel-body {
-    font-family: $brand-heading;
-    padding: 10px 25px;
-    font-weight: 800;
-    break-inside: avoid;
+.video-bg.cover {
+    height: 100%;
+    @extend %background-styles;
 }
 
 
@@ -253,7 +179,7 @@ a.title-link {
         height: auto;
         position: relative;
         background-color: $brand-secondary;
-        max-width: 1000px;
+        max-width: 800px;
         margin: 20px auto;
         @include media("<=tablet") {
             width: calc(100% - 40px);
@@ -282,13 +208,6 @@ a.title-link {
             margin: 0;
         }
     }
-    .col {
-        @include column-width(2);
-        margin-right: $columns-margin;
-        &:last-child {
-            margin: 0;
-        }
-    }
     img {
         display: block;
         height: 100%;
@@ -298,19 +217,6 @@ a.title-link {
         @include media("<=desktop") {
             padding: 0 20px;
             height: auto;
-        }
-    }
-}
-
-.three_columns {
-    .col {
-        @include column-width(3);
-        margin-right: $columns-margin;
-        &:last-child {
-            margin-right: 0;
-        }
-        @include media("<=laptop") {
-            flex-basis: 100%;
         }
     }
 }

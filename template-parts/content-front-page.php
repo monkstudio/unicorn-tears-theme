@@ -13,8 +13,10 @@
 
 <?php if ( get_post()->post_content == ! '' ) : ?>
 <section id="intro">
-    <div class="entry-content">
-        <?php the_content(); ?>
+    <div class="container">
+        <div class="entry-content">
+            <?php the_content(); ?>
+        </div>
     </div>
 </section>
 <?php endif; ?>

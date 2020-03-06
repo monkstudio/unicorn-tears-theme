@@ -33,7 +33,7 @@ if ( !empty($ID) && !empty($feature) ) : ?>
     <?php elseif ( $feature === 'video' ) : ?>
         <?php
         if ( get_field('player_options',$ID) === 'vi') :
-            $videoid = get_field('feature_video_id');
+            $videoid = get_field('feature_video_url');
             $videourl = 'http://player.vimeo.com/video/' . $videoid;
 
             $args =
@@ -55,7 +55,7 @@ if ( !empty($ID) && !empty($feature) ) : ?>
             </div>
         </div>
         <?php else :
-        $videoid = get_field('feature_video_id',$ID);
+        $videoid = get_field('feature_video_url',$ID);
         $videourl = 'https://www.youtube.com/embed/' . $videoid;
         $args =
         add_query_arg( array(
