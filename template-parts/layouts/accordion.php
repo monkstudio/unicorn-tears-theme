@@ -5,7 +5,7 @@ $counter = 0;
 ?>
 <section class="accordion-list">
   <div class="container">
-    <div class="row auto-width">
+    <div class="row">
       <div class="col">
         <div class="sidebar">
           <h4><?php echo $section_title;?></h4>

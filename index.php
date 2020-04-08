@@ -19,7 +19,7 @@ get_header(); ?>
     get_template_part( 'template-parts/content', 'page');
 
     if ( have_posts() ) : ?>
-    <section class="cards page-layout">
+    <section class="posts">
         <div class="container">
             <div class="row">
             <?php while ( have_posts() ) : the_post();
@@ -36,7 +36,7 @@ get_header(); ?>
 
         <?php get_template_part( 'template-parts/modules/module', 'nav' );
 
-        else :
+            else :
 
             get_template_part( 'template-parts/content', 'none' );?>
 

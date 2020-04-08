@@ -1,8 +1,8 @@
 
 .container {
-    max-width: 1600px;
+    max-width:$grid-width;
     margin: auto;
-    padding: 0 80px;
+    padding: 0 $grid-padding;
 
     @include media("<=laptop") {
         padding: 0 50px;
@@ -16,35 +16,8 @@
 }
 
 .row {
-    // display: flex;
-    // flex-wrap: wrap;
-    // flex-direction: row;
     display: grid;
     grid-template-columns: repeat( auto-fit, minmax(250px, 1fr) );
-    grid-gap: 50px;
-    @include media("<=tablet") {
-        flex-direction: column;
-        > * {
-            flex-basis: 100%;
-        }
-    }
-    &.align-top {
-        align-items: flex-start;
-    }
-    &.align-center {
-        align-items: center;
-    }
-    &.align-bottom {
-        align-items: flex-end;
-    }
-    &.justify-top {
-        justify-content: flex-start;
-    }
-    &.space-between {
-        justify-content: space-between;
-    }
-    &.justify-bottom {
-        justify-content: flex-end;
-    }
+    grid-gap: $grid-gutter;
 }
 

@@ -1,25 +1,28 @@
 html {
 	box-sizing: border-box;
-		overflow-x: hidden;
-		font-size: 16px;
-    font-size:62.5%;
+	overflow-x: hidden;
+	font-size: 16px;
+	font-size: 62.5%;
 }
 
 *,
 *:before,
-*:after { /* Inherit box-sizing to make it easier to change the property for components that leverage other behavior; see http://css-tricks.com/inheriting-box-sizing-probably-slightly-better-best-practice/ */
+*:after {
+	/* Inherit box-sizing to make it easier to change the property for components that leverage other behavior; see http://css-tricks.com/inheriting-box-sizing-probably-slightly-better-best-practice/ */
 	box-sizing: inherit;
 }
 
 body {
-	background-color: #FFF;
+	background-color: $background;
 }
 
-blockquote, q {
-	quotes: "" "";
-    margin: 20px 0 20px 50px;
-    border-left: 10px solid $brand-lightgrey;
-    padding: 0 50px;
+blockquote,
+q {
+	quotes: """";
+	margin: 20px 0 20px 50px;
+	border-left: 10px solid $brand-lightgrey;
+	padding: 0 50px;
+
 	&:before,
 	&:after {
 		content: "";
@@ -34,10 +37,13 @@ hr {
 }
 
 img {
-	height: auto; /* Make sure images are scaled correctly. */
-	max-width: 100%; /* Adhere to container width. */
+	height: auto;
+	/* Make sure images are scaled correctly. */
+	max-width: 100%;
+	/* Adhere to container width. */
 	display: block;
 }
+
 .img {
 	width: 100%;
 	height: 100%;
@@ -63,5 +69,3 @@ img {
 @import "reusable";
 @import "tables";
 @import "icons";
-
-

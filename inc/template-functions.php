@@ -53,6 +53,13 @@ function unicorn_tears_body_classes( $classes ) {
 		$classes[] = 'has-no-pagination';
 	}
 
+	$detect = new Mobile_Detect;
+	if ( ! $detect->isMobile() ) {
+		$classes[] = 'is-touch';
+	} else {
+		$classes[] = 'no-touch';
+	}
+
 	return $classes;
 }
 add_filter( 'body_class', 'unicorn_tears_body_classes' );

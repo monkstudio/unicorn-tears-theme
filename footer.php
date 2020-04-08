@@ -18,12 +18,18 @@
 		<div class="container">
 			<div class="row">
 				<div class="col">
-					© Copyright <?php bloginfo('name'); ?> <?php
-							echo date_i18n(
-								/* translators: Copyright date format, see https://secure.php.net/date */
-								_x( 'Y', 'copyright date format', 'unicorn-tears' )
-							);
-							?> <span class="separator">|</span> Made by <a href="https://monk.com.au" target="_blank" rel="noreferrer">Monk</a>
+				<?php
+				printf(
+					/* translators: 1:Site title, 2: current year */
+					esc_html__( '© Copyright %1$s %2$s', 'unicorn-tears' ),
+					get_bloginfo( 'name' ),
+					date_i18n(
+						/* translators: Copyright date format, see https://secure.php.net/date */
+						_x( ' Y', 'copyright date format', 'unicorn-tears' )
+						)
+				);
+				?>
+				<span class="separator">|</span><?php _e( 'Made by <a href="https://monk.com.au" target="_blank" rel="noreferrer">Monk</a>', 'unicorn-tears' ); ?>
 				</div>
 				<div class="col">
 					<?php if ( has_nav_menu( 'social' ) ) : ?>

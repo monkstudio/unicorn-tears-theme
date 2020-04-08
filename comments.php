@@ -24,20 +24,22 @@ if ( post_password_required() ) {
 
 	<?php
 	// You can start editing here -- including this comment!
-	if ( have_comments() ) : ?>
+	if ( have_comments() ) :
+		?>
 		<h2 class="comments-title">
 			<?php
 				printf( // WPCS: XSS OK.
+					/* translators: 1: title. */
 					esc_html( _nx( 'One thought on &ldquo;%2$s&rdquo;', '%1$s thoughts on &ldquo;%2$s&rdquo;', get_comments_number(), 'comments title', 'unicorn-tears' ) ),
 					number_format_i18n( get_comments_number() ),
 					'<span>' . get_the_title() . '</span>'
 				);
 				$comment_count = get_comments_number();
-				if ( 1 === $comment_count ) {
-					printf(
+			if ( 1 === $comment_count ) {
+					sprintf(
 						/* translators: 1: title. */
-						esc_html_e( 'One thought on &ldquo;%1$s&rdquo;', 'unicorn-tears' ),
-						'<span>' . get_the_title() . '</span>'
+						esc_html_e( 'One thought on <span>%s</span>', 'unicorn-tears' ),
+						get_the_title()
 					);
 				} else {
 					printf( // WPCS: XSS OK.
@@ -88,7 +90,7 @@ if ( post_password_required() ) {
 
 
 	// If comments are closed and there are comments, let's leave a little note, shall we?
-	if ( ! comments_open() && get_comments_number() && post_typeunicorn-tearsupports( get_post_type(), 'comments' ) ) : ?>
+	if ( ! comments_open() && get_comments_number() && post_type_supports( get_post_type(), 'comments' ) ) : ?>
 
 		<p class="no-comments"><?php esc_html_e( 'Comments are closed.', 'unicorn-tears' ); ?></p>
 	<?php

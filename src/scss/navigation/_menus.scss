@@ -10,7 +10,7 @@
         stroke: currentColor;
         transition: .3s ease all;
     }
-    
+
 	ul {
 		list-style: none;
 		margin: 0;
@@ -44,7 +44,7 @@
 			}
 
 			li {
-				&:hover > ul,
+				// &:hover > ul,
 				&.focus > ul {
 					left: 100%;
 
@@ -67,7 +67,7 @@
 			}
 		}
 
-		li:hover > ul,
+		// li:hover > ul,
         li.focus > ul,
         li.toggled-on > ul {
             left: auto;
@@ -288,7 +288,7 @@
         // position: fixed;
         height: 100vh;
         overflow: hidden;
-    }   
+    }
 }
 button#mobile-menu {
 	position: relative;

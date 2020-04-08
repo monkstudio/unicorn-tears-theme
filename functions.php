@@ -194,7 +194,10 @@ add_action( 'wp_enqueue_scripts', 'unicorn_tears_scripts' );
 // add_filter( 'script_loader_tag', 'add_jquery_cdn_attributes', 10, 2 );
 
 
-
+/**
+ * Mobile detect
+ */
+require get_template_directory() . '/inc/mobile-detect.php';
 /**
  * Customizer additions.
  */
@@ -501,7 +504,7 @@ add_filter( 'get_the_archive_title', 'unicorn_tears_get_the_archive_title' );
  *
  * @return stdClass $args An object of wp_nav_menu() arguments.
  */
-function twentytwenty_add_sub_toggles_to_main_menu( $args, $item, $depth ) {
+function unicorn_tears_add_sub_toggles_to_main_menu( $args, $item, $depth ) {
 	// Wrap the menu item link contents in a div, used for positioning.
 	$args->before = '<div class="ancestor-wrapper">';
 	$args->after  = '';
@@ -512,7 +515,7 @@ function twentytwenty_add_sub_toggles_to_main_menu( $args, $item, $depth ) {
 		$toggle_target_string = '.menu-modal .menu-item-' . $item->ID . ' > .sub-menu';
 
 		// Add the sub menu toggle.
-		$args->after .= '<div class="dropdown-toggle" data-toggle-target="' . $toggle_target_string . '" aria-expanded="false"><span class="screen-reader-text">' . __( 'Show sub menu', 'unicorn_tears' ) . '</span>' . get_icon('arrow',15,'toggle-icon'). '</div>';
+		$args->after .= '<div class="dropdown-toggle" data-toggle-target="' . $toggle_target_string . '" aria-expanded="false"><span class="screen-reader-text">' . __( 'Show sub menu', 'unicorn-tears' ) . '</span>' . get_icon('arrow',15,'toggle-icon'). '</div>';
 
 	}
 
@@ -523,4 +526,11 @@ function twentytwenty_add_sub_toggles_to_main_menu( $args, $item, $depth ) {
 
 }
 
-add_filter( 'nav_menu_item_args', 'twentytwenty_add_sub_toggles_to_main_menu', 10, 3 );
+add_filter( 'nav_menu_item_args', 'unicorn_tears_add_sub_toggles_to_main_menu', 10, 3 );
+
+
+function jba_disable_editor_fullscreen_by_default() {
+	$script = "jQuery( window ).load(function() { const isFullscreenMode = wp.data.select( 'core/edit-post' ).isFeatureActive( 'fullscreenMode' ); if ( isFullscreenMode ) { wp.data.dispatch( 'core/edit-post' ).toggleFeature( 'fullscreenMode' ); } });";
+	wp_add_inline_script( 'wp-blocks', $script );
+}
+add_action( 'enqueue_block_editor_assets', 'jba_disable_editor_fullscreen_by_default' );

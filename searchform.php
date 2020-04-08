@@ -5,6 +5,6 @@
 	<label for="<?php echo esc_attr($unique_id); ?>">
 		<span class="screen-reader-text"><?php echo _x( 'Search for:', 'label', 'unicorn-tears' ); ?></span>
 	</label>
-	<input type="search" id="<?php echo $unique_id; ?>" class="search-field" placeholder="<?php echo esc_attr_x( 'Search', 'placeholder', 'unicorn_tears' ); ?>" value="<?php echo get_search_query(); ?>" name="s" />
-	<button type="submit" class="search-submit"><?php echo get_icon('search',20);?><span class="screen-reader-text"><?php echo _x( 'Search', 'submit button', 'unicorn_tears' ); ?></span></button>
+	<input type="search" id="<?php echo $unique_id; ?>" class="search-field" placeholder="<?php echo esc_attr_x( 'Search', 'placeholder', 'unicorn-tears' ); ?>" value="<?php echo get_search_query(); ?>" name="s" />
+	<button type="submit" class="btn search-submit"><?php echo get_icon('search',20);?><span class="screen-reader-text"><?php echo _x( 'Search', 'submit button', 'unicorn-tears' ); ?></span></button>
 </form>

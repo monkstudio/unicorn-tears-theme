@@ -1,14 +1,14 @@
 .alignleft {
-	display: inline-block;
-	margin-right: auto;
+	margin: 10px;
+	float: left;
 }
 
 .alignright {
-	display: inline-block;
-	margin-left: auto;
+	margin: 10px;
+	float: right;
 }
 
 .aligncenter {
 	display: block;
-	margin: 0 auto;
+	margin: 50px auto;
 }

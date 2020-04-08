@@ -148,20 +148,6 @@ $feature-height-sm:600px;
             justify-content: flex-end;
         }
     }
-
-    &:after {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: 0;
-        width:100%;
-        height: 20%;
-        z-index: 50;
-        pointer-events: none;
-        background-image: url('../images/pattern6.svg');
-        background-size: 20px;
-        transform: rotate(-180deg);
-    }
     img {
         display: block;
         object-fit: cover;
@@ -172,13 +158,13 @@ $feature-height-sm:600px;
         left: 0;
     }
     .inner {
-        border-radius: 10px;
+        // border-radius: 10px;
         width: calc(100% - 100px);
         padding: 30px;
         z-index: 0;
         height: auto;
         position: relative;
-        background-color: $brand-secondary;
+        // background-color: $brand-secondary;
         max-width: 800px;
         margin: 20px auto;
         @include media("<=tablet") {
@@ -285,21 +271,21 @@ $feature-height-sm:600px;
     }
 }
 .cards {
-    .col {
-        @include column-width(4);
-        margin-right: $columns-margin;
-        &:last-child {
-            margin-right: 0;
-        }
-        @include media("<=desktop") {
-            @include column-width(2);
-            margin-right: $columns-margin;
-            &:nth-child(even) {
-                margin-right: 0;
-            }
-        }
+    // .col {
+    //     @include column-width(4);
+    //     margin-right: $columns-margin;
+    //     &:last-child {
+    //         margin-right: 0;
+    //     }
+    //     @include media("<=desktop") {
+    //         @include column-width(2);
+    //         margin-right: $columns-margin;
+    //         &:nth-child(even) {
+    //             margin-right: 0;
+    //         }
+    //     }
 
-    }
+    // }
     .content {
         // width: 85%;
         margin: auto;
@@ -326,7 +312,7 @@ $feature-height-sm:600px;
     .img {
         height: 250px;
         width: 100%;
-        border-radius: 10px;
+        // border-radius: 10px;
         display: block;
         margin:0 auto 1.5em;
         box-shadow: none;

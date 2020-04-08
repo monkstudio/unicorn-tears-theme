@@ -68,7 +68,12 @@
 
 // Column width with margin
 @mixin column-width($numberColumns: 3) {
-    flex-basis: map-get($columns, $numberColumns) - (($columns-margin * ($numberColumns - 1)) / $numberColumns);
+    $width: map-get($columns, $numberColumns);
+    flex-basis: calc( #{$width} - #{$grid-gutter * ($numberColumns - 1) / $numberColumns});
+    // margin-right: #{$grid-gutter};
+    // &:nth-child(#{$numberColumns}n + #{$numberColumns}) {
+    //     margin-right: 0;
+    // }
 }
 
 /// Mixin to customize scrollbars

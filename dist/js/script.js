@@ -3196,27 +3196,23 @@ jQuery(document).ready(function ($) {
       }
     }
   }); //https://stackoverflow.com/questions/4817029/whats-the-best-way-to-detect-a-touch-screen-device-using-javascript
+  // function is_touch_device() {
+  //     var prefixes = ' -webkit- -moz- -o- -ms- '.split(' ');
+  //     var mq = function (query) {
+  //         return window.matchMedia(query).matches;
+  //     }
+  //     if (('ontouchstart' in window) || window.DocumentTouch && document instanceof DocumentTouch) {
+  //         return true;
+  //     }
+  //     // include the 'heartz' as a way to have a non matching MQ to help terminate the join
+  //     // https://git.io/vznFH
+  //     var query = ['(', prefixes.join('touch-enabled),('), 'heartz', ')'].join('');
+  //     return mq(query);
+  // }
+  // if ( ! is_touch_device()) {
+  //     $site.addClass('no-touch');
+  // }
 
-  function is_touch_device() {
-    var prefixes = ' -webkit- -moz- -o- -ms- '.split(' ');
-
-    var mq = function mq(query) {
-      return window.matchMedia(query).matches;
-    };
-
-    if ('ontouchstart' in window || window.DocumentTouch && document instanceof DocumentTouch) {
-      return true;
-    } // include the 'heartz' as a way to have a non matching MQ to help terminate the join
-    // https://git.io/vznFH
-
-
-    var query = ['(', prefixes.join('touch-enabled),('), 'heartz', ')'].join('');
-    return mq(query);
-  }
-
-  if (!is_touch_device()) {
-    $site.addClass('no-touch');
-  }
   /*!
   ♡♡♡♡♡♡♡♡♡♡♡
   ♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥
@@ -3253,7 +3249,6 @@ jQuery(document).ready(function ($) {
   // var ex1 = document.querySelectorAll(".blocks-gallery-item");
   // var ex2 = document.getElementsByClassName("blocks-gallery-item");
   // // console.log(ex1, ex2);
-
 
   function video() {
     var video = document.querySelector('.video-wrapper');

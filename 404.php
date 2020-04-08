@@ -9,16 +9,17 @@
 
 get_header(); ?>
 
-<div class="container">
-    <section id="404" class="page-layout">
-        <?php get_template_part( 'template-parts/modules/module', 'page-title' ); ?>
+
+<section id="404" class="page-layout">
+    <div class="container">
         <div class="page-content">
+            <?php get_template_part( 'template-parts/modules/module', 'page-title' ); ?>
             <a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home" class="btn">
                 Click here to go back home.
             </a>
         </div>
-    </section>
-</div>
+    </div>
+</section>
 
 <?php
 get_footer();
