@@ -184,16 +184,18 @@ $feature-height-sm:600px;
             align-items: center;
         }
     }
-    .row {
-        &.right-align {
-            .col:first-child {
-                order: 2;
+    .right-align {
+        .col:first-child {
+            order: 2;
+        }
+        .row {
+            @include media("<=tablet") {
+                margin: 0;
             }
         }
-        @include media("<=tablet") {
-            margin: 0;
-        }
     }
+
+
     img {
         display: block;
         height: 100%;

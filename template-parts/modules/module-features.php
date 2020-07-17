@@ -24,16 +24,17 @@ if ( !empty($ID) && !empty($feature) ) : ?>
             ?>
             <img src="<?php echo esc_url( $img_src ); ?>"
             srcset="<?php echo esc_attr( $img_srcset ); ?>"
-            sizes="(min-width: 768px) 100vw, 100vw"
+            sizes="(min-width: 768px) 1600px, 100vw"
             alt="<?php echo $alt; ?>"
-            class="img">
+            class="img"
+            loading="lazy">
         </div>
     </div>
 
     <?php elseif ( $feature === 'video' ) : ?>
         <?php
         if ( get_field('player_options',$ID) === 'vi') :
-            $videoid = get_field('feature_video_url');
+            $videoid = get_field('feature_video_id');
             $videourl = 'http://player.vimeo.com/video/' . $videoid;
 
             $args =
@@ -55,7 +56,7 @@ if ( !empty($ID) && !empty($feature) ) : ?>
             </div>
         </div>
         <?php else :
-        $videoid = get_field('feature_video_url',$ID);
+        $videoid = get_field('feature_video_id',$ID);
         $videourl = 'https://www.youtube.com/embed/' . $videoid;
         $args =
         add_query_arg( array(
@@ -146,9 +147,10 @@ if ( !empty($ID) && !empty($feature) ) : ?>
                             ?>
                             <img src="<?php echo esc_url( $img_src ); ?>"
                             srcset="<?php echo esc_attr( $img_srcset ); ?>"
-                            sizes="(min-width: 768px) 100vw, 100vw"
+                            sizes="(min-width: 768px) 1600px, 100vw"
                             alt="<?php echo $alt; ?>"
-                            class="img">
+                            class="img"
+                            loading="lazy">
                             <div class="caption-content">
                                 <?php echo $slide['slide']['content'];?>
                                 <?php if ( !empty($link) ) : ?>
@@ -162,5 +164,4 @@ if ( !empty($ID) && !empty($feature) ) : ?>
             <?php endif; ?>
         <?php endif; ?>
     <?php endif; ?>
-    </div>
 <?php endif; ?>

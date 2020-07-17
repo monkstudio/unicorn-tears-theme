@@ -3,6 +3,7 @@
     max-width:$grid-width;
     margin: auto;
     padding: 0 $grid-padding;
+    width: 100%;
 
     @include media("<=laptop") {
         padding: 0 50px;

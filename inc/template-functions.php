@@ -23,7 +23,7 @@ function unicorn_tears_body_classes( $classes ) {
 	}
 
 	// Adds a class of hfeed to non-singular pages.
-	if ( ! has_post_thumbnail() ) {
+	if ( has_post_thumbnail() ) {
 		$classes[] = 'has-featureimg';
 	}
 
@@ -43,7 +43,7 @@ function unicorn_tears_body_classes( $classes ) {
 
 	// Slim page template class names (class = name - file suffix).
 	if ( is_page_template() ) {
-		$classes[] = basename( get_page_template_slug(), '.php' );
+		$classes[] = basename( get_page_template_slug(), '-template' );
 	}
 
 	// Check if posts have single pagination.
@@ -53,8 +53,8 @@ function unicorn_tears_body_classes( $classes ) {
 		$classes[] = 'has-no-pagination';
 	}
 
-	$detect = new Mobile_Detect;
-	if ( ! $detect->isMobile() ) {
+
+	if ( wp_is_mobile() ) {
 		$classes[] = 'is-touch';
 	} else {
 		$classes[] = 'no-touch';

@@ -17,6 +17,8 @@ $spacing-unit: 50px;
 $grid-width: 1600px;
 $grid-gutter: 60px;
 $grid-padding: 100px;
+$grid-padding-md: 50px;
+$grid-padding-sm: 20px;
 $background-color: #FFF;
 
 
@@ -24,7 +26,6 @@ $background-color: #FFF;
 //common
 $brand-lightgrey: lighten(#000,95%);
 $brand-darkgrey: lighten(#000,20%);
-$background: #FFF;
 
 //brand
 $brand-primary: red;

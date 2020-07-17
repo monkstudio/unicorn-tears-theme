@@ -128,11 +128,11 @@
 		container.find( '.menu-item-has-children, .page_item_has_children' ).attr( 'aria-haspopup', 'true' );
 
 		container.find( '.dropdown-toggle' ).click( function( e ) {
-			if ( 	$('body').hasClass('menu-open')) {
-				$('body').removeClass('menu-open');
-			} else {
-				$('body').addClass('menu-open');
-			}
+			// if ( 	$('body').hasClass('menu-open')) {
+			// 	$('body').removeClass('menu-open');
+			// } else {
+			// 	$('body').addClass('menu-open');
+			// }
 			var _this            = $( this ),
 				screenReaderSpan = _this.find( '.screen-reader-text' );
 

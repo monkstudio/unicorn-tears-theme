@@ -8,8 +8,9 @@ a {
 	}
 	&:hover,
 	&:active {
-		color: $brand-secondary;
+		color: $brand-primary;
 		text-decoration: none;
+		border-bottom: 1px solid rgba($brand-primary,.6);
 	}
 	&:focus {
 		// outline: 2px dotted $brand-primary;

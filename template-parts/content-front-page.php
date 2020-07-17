@@ -9,8 +9,6 @@
 
 ?>
 
-<?php get_template_part( 'template-parts/modules/module', 'page-title' ); ?>
-
 <?php if ( get_post()->post_content == ! '' ) : ?>
 <section id="intro">
     <div class="container">

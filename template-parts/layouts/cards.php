@@ -26,7 +26,8 @@
                         srcset="<?php echo esc_attr( $img_srcset ); ?>"
                         sizes="(min-width: 768px) 400px, 100vw"
                         alt="<?php echo $alt; ?>"
-                        class="img">
+                        class="img"
+                        loading="lazy">
                     </div>
                     <?php endif;?>
                     <div class="content">

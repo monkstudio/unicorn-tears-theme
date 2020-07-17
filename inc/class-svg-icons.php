@@ -37,11 +37,12 @@ class SVG_Icons {
 			$class = 'svg-icon';
 		}
 		if ( array_key_exists( $icon, $arr ) ) {
-			$repl = sprintf( '<svg class="' . $class . '" width="%d" height="%d" aria-hidden="true" role="img" focusable="false" ', $size, $size );
-			// var_dump($repl);
-			$svg  = preg_replace( '/^<svg /', $repl, trim( $arr[ $icon ] ) ); // Add extra attributes to SVG code.
-			$svg  = preg_replace( "/([\n\t]+)/", ' ', $svg ); // Remove newlines & tabs.
-			$svg  = preg_replace( '/>\s*</', '><', $svg ); // Remove white space between SVG tags.
+			$format= preg_replace('/(^width="0*(?:[1-9][0-9]?|100)"|\swidth="0*(?:[1-9][0-9]?|100)")(^height="0*(?:[1-9][0-9]?|100)"|\sheight="0*(?:[1-9][0-9]?|100)")/','',$arr[ $icon ]);
+			$formatted = substr_replace($format,' class="' . $class . '" width="' . $size . '" height="' . $size . '" aria-hidden="true" role="img" focusable="false"',5,0);
+
+			// $svg  = preg_replace( '/^<svg /', $formatted, trim( $arr[ $icon ] ) ); // Add extra attributes to SVG code.
+			$svg  = preg_replace( "/([\n\t]+)/", ' ',  $formatted ); // Remove newlines & tabs.
+			$svg  = preg_replace( '/>\s*</', '><',  $svg ); // Remove white space between SVG tags.
 
 			//check if a title/description is set; if it is, insert it in the svg.
 			if ( $title && !$desc ) {

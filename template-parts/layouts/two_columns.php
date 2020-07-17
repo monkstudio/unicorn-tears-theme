@@ -1,6 +1,10 @@
 
-<div class="container <?php echo ( get_sub_field('options')['display_an_image'] === true ) ? 'has-image' : '' ;?>">
-    <div class="row <?php echo ( get_sub_field('options')['right_align'] === true ) ? 'right-align' : '' ;?> <?php echo ( get_sub_field('options')['center_the_content'] === true ) ? 'align-center' : '' ;?>">
+<div class="container
+<?php echo ( get_sub_field('options')['display_an_image'] === true ) ? ' has-image' : '' ;?>
+<?php echo ( get_sub_field('options')['right_align'] === true ) ? ' right-align' : '' ;?>
+<?php echo ( get_sub_field('options')['center_the_content'] === true ) ? ' align-center' : '' ;?>
+">
+    <div class="row">
         <div class="col">
                 <?php $options = get_sub_field('options');
                 if (get_sub_field('options')['display_an_image'] === true && $options['image'] ) : ?>
@@ -17,7 +21,8 @@
                     srcset="<?php echo esc_attr( $img_srcset ); ?>"
                     sizes="(min-width: 1024px) 50vw, 100vw"
                     alt="<?php echo $alt; ?>"
-                    class="img">
+                    class="img"
+                    loading="lazy">
                 <?php else :?>
                 <div class="content">
                     <?php the_sub_field('col_2'); ?>

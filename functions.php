@@ -114,7 +114,6 @@ add_action( 'widgets_init', 'unicorn_tears_widgets_init' );
  * Enqueue scripts and styles.
  */
 function unicorn_tears_scripts() {
-
 	wp_deregister_script( 'jquery-core' );
 	wp_register_script( 'jquery-core', "https://code.jquery.com/jquery-3.1.1.min.js", array(), '3.1.1' );
 	wp_deregister_script( 'jquery-migrate' );
@@ -194,10 +193,7 @@ add_action( 'wp_enqueue_scripts', 'unicorn_tears_scripts' );
 // add_filter( 'script_loader_tag', 'add_jquery_cdn_attributes', 10, 2 );
 
 
-/**
- * Mobile detect
- */
-require get_template_directory() . '/inc/mobile-detect.php';
+
 /**
  * Customizer additions.
  */
@@ -534,3 +530,19 @@ function jba_disable_editor_fullscreen_by_default() {
 	wp_add_inline_script( 'wp-blocks', $script );
 }
 add_action( 'enqueue_block_editor_assets', 'jba_disable_editor_fullscreen_by_default' );
+
+/**
+ * Debug function to show the name of the current template being used
+ */
+function show_template() {
+	global $template;
+	if ( is_user_logged_in() ) {
+		echo '<div style="background-color:#000;color:#fff">';
+		print_r( $template );
+		if ( is_single() ) {
+			echo ' (and using Post Format: ' . ucfirst( get_post_format() ? get_post_format() : 'standard' ) . ')';
+		}
+		echo '</div>';
+	}
+}
+// add_action( 'wp_head', 'show_template' );

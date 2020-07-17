@@ -17,18 +17,13 @@ jQuery(document).ready(function ($) {
         //media
         $lightbox   = $('.lightbox'),
         $slider     = $('.slider'),
-        $variableslider = $('.variable-slider');
+        $variableslider = $('.variable-slider'),
+        currentWidth = $(window).width();
 
     //mobile menu
     $hamburger.on("click", function () {
         $hamburger.toggleClass("is-active");
         $site.toggleClass("menu-open");
-        $("#primary > li").each(function(i) {
-            let elem = $(this);
-            setTimeout(function(){
-                elem.delay(200).toggleClass('fadein');
-            },150 * i);
-        });
     });
     //close menu with an outside click (basically anywhere on .site-content)
     function closeMenu() {
@@ -44,15 +39,33 @@ jQuery(document).ready(function ($) {
             closeMenu();
         }
     });
-    //add lightbox to image links
-    // $('a[href]').filter(function () {
-    //     return this.href && this.href.match(/\.(?:jpe?g|gif|bmp|a?png)$/i);
-    // }).addClass('lightbox');
-    // // $lightbox.swipebox();
 
-    // $lightbox.modaal({ type: 'image' });
-    // $lightboxvideo.modaal({type: 'video'});
+    function viewportHeight() {
+        if ( $(window).width() !== currentWidth ) {
+            let viewportHeight = window.innerHeight;
+            document.documentElement.style.setProperty('--header', viewportHeight + 'px');
+        }
+    }
+    viewportHeight();
 
+    $('a[href]').filter(function () {
+        return this.href && this.href.match(/\.(?:jpe?g|gif|bmp|a?png)$/i);
+    }).addClass('lightbox');
+    $lightbox.fancybox({
+        touch: {
+            vertical: true, // Allow to drag content vertically
+            momentum: true // Continue movement after releasing mouse/touch when panning
+          },
+    });
+    $('[data-fancybox]').fancybox({
+        youtube : {
+            controls : 0,
+            showinfo : 0
+        },
+        vimeo : {
+            color : '000'
+        }
+    });
     $('.animate').on('inview', function(event, isInView) {
         if (isInView) {
             $(this).addClass('fadein');
@@ -145,7 +158,7 @@ jQuery(document).ready(function ($) {
             }
         }
     });
-
+    AOS.init();
 
     //https://stackoverflow.com/questions/4817029/whats-the-best-way-to-detect-a-touch-screen-device-using-javascript
 	// function is_touch_device() {
@@ -237,6 +250,7 @@ jQuery(document).ready(function ($) {
   //update the video's scale as the browser resizes
   $(window).on('resize', function () {
     video();
+    viewportHeight();
   });
 
 });

@@ -10,10 +10,11 @@
     ?>
     <img src="<?php echo esc_url( $img_src ); ?>"
     srcset="<?php echo esc_attr( $img_srcset ); ?>"
-    sizes="(min-width: 1024px) 1200px, 700px"
+    sizes="(min-width: 1024px) 1600px, 1000px"
     alt="<?php echo $alt; ?>"
     title="<?php echo $title; ?>"
-    class="img">
+    class="img"
+    loading="lazy">
     <div class="inner">
         <?php the_sub_field('content'); ?>
     </div>
