@@ -62,6 +62,7 @@
 
 			// On li elements toggle the class .focus.
 			if ( 'li' === self.tagName.toLowerCase() ) {
+				console.log(self.className.indexOf( 'focus' ))
 				if ( -1 !== self.className.indexOf( 'focus' ) ) {
 					self.className = self.className.replace( ' focus', '' );
 				} else {

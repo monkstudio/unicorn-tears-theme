@@ -24,7 +24,9 @@ textarea {
 	background-color: transparent;
 
 	&:focus {
-		outline: 2px solid $brand-primary;
+		outline: 2px solid transparent;
+		box-shadow: 0 0 0 2px rgba($brand-primary,.3);
+    // outline-offset: 2px;
 	}
 }
 
@@ -39,7 +41,8 @@ select {
 	border: 1px solid $brand-primary;
 	border-radius: 0;
 	&:focus {
-		outline: 1px dotted $brand-primary;
+		outline: 2px solid transparent;
+		box-shadow: 0 0 0 2px rgba($brand-primary,.3);
 	}
 }
 
@@ -47,7 +50,8 @@ textarea {
 	max-height: 200px;
 	width: 100%;
 	&:focus {
-		outline: 1px dotted $brand-primary;
+		outline: 2px solid transparent;
+		box-shadow: 0 0 0 2px rgba($brand-primary,.3);
 	}
 }
 

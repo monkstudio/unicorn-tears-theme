@@ -44,38 +44,43 @@ You can build a social menu by making a new menu in the Appearance editor, and a
 ---
 
 ### Inline svg icon functions
-Commonly used SVG icons can now be called by the function `get_icon('$svgname, $size, $title, $desc')`.
+Commonly used SVG icons can now be called by the function `get_icon('$icon, $size, $class, $title, $desc')`.
 
 ** `get_icon()` or  `get_social_icon()` parameters:**
-- `$svgname` = name of svg defined in the array
-- `$size` = size of svg required
-- `$title = SVG title (makes it more accessible)
-- `$desc` = SVG description ( makes it more accessible)
+- `$svgname` = name of svg defined in the array (required)
+- `$size` = size of svg required (required)
+- `class` = icon class (optional)
+- `$title = SVG title (optional)
+- `$desc` = SVG description (optional)
+eg `<?php echo get_icon('arrow',20,'arrow-icon','arrow');?>`
+eg. <?php echo get_social_icon('instagram',20,'ig');?>
 
-Alternatively you can use, `get_social_link_svg()` to display a svg based on a given url.
+Alternatively you can use, `get_social_link_svg()` to display a svg based on a given social media url. New icons can be defined in `inc/class-svg-icons.php`
 
-**` get_social_link_svg()` parameters:**
-- `$uri` = url of social network
-- `$size` = size of svg required
-- `$wrap_link` = wrap displayed svg with the given url
-- `$title = SVG title (makes it more accessible)
-- `$desc` = SVG description ( makes it more accessible)
+**`get_social_link_svg()` parameters:**
+- `$uri` = url of social network (required)
+- `$size` = size of svg required (required)
+- `class` = icon class (optional)
+- `$wrap_link` = wrap displayed svg with the given url  (optional)
+- `$title = SVG title (optional)
+- `$desc` = SVG description (optional)
 
+eg `<?php echo get_social_link_svg('https://facebook.com',20,'fb',false,'Facebook');?>`
 Custom SVGs can be defined as inline svg's in the relevant array in `inc/class-svg-icons.php`
 
 ---
 
 ### Responsive menus
 
-There are several predefined menu classes you can use for the nav menu. Just add the relevant class to `.menu-wrapper` in the header.
+There are several predefined menu classes you can use for the nav menu (found in _menus.scss).
+To use include the relevant class to `.menu-wrapper` in the header and compile the associated sass file.
 
 ---
 
 ### Page layouts
 
-Page layouts are based on ACF's custom fields. Custom ones can be added accordingly.
-
+Page layouts are based on ACF Pro custom fields.
 ---
 
 ### Favicons
-Favicons can be generated automatically and put in the /dist folder if there is a `favicon.png` placed in `src/images`
+Favicons will be created automatically if there is a `favicon.png` placed in `src/images` (but will have to be manually linked in the header).

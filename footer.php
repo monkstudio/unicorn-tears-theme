@@ -14,7 +14,6 @@
 </main><!-- #content -->
 
 	<footer id="colophon" class="site-footer" role="contentinfo" aria-label="site colophon">
-
 		<div class="container">
 			<div class="row">
 				<div class="col">

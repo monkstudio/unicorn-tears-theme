@@ -5,24 +5,27 @@ h1, h2, h3, h4, h5, h6 {
 }
 //variables found in _variables.scss
 h1 {
-    margin: 0 0 .5em;
+    margin: 0 0 .7em;
     @include font-size(4.8);
+	font-size: unquote("min(max(3.6rem, 8vw), 6rem)");
     &.section-title {
-        // text-align: center;
         padding: 0;
-        margin:.8em auto;
+        margin:.7em auto;
     }
 }
 h2 {
     @include font-size(4);
+    font-size: unquote("min(max(3rem, 6.5vw), 4.2rem)");
     margin: 0 0 .5em;
 }
 h3 {
     @include font-size(3);
+    font-size: unquote("min(max(2.6rem, 5.5vw), 3.6rem)");
     margin: 0 0 .5em;
 }
 h4 {
     @include font-size(2.4);
+    font-size: unquote("min(max(2rem, 4.5vw), 3.2rem)");
     margin: 0 0 .5em;
 }
 h5 {

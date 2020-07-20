@@ -82,6 +82,7 @@ button.hamburger {
         transition-duration: 0.15s;
         transition-timing-function: ease;
     }
+    &,
     &::before,
     &::after {
         content: "";

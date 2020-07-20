@@ -27,14 +27,14 @@ li > ol {
 }
 
 dl {
-    display: flex;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    grid-gap: 50px;
 }
 dt {
     font-weight: bold;
-    flex: 1;
 }
 
-dd {
-    margin: 0 1em 1em;
-    flex: 1;
-}
+// dd {
+//     margin: 0 1em 1em;
+// }

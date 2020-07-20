@@ -2,7 +2,7 @@
 $slides = get_sub_field('slides');
 
 if( $slides ): ?>
-    <div class="info-slider slider">
+    <div class="info-slider">
       <?php foreach( $slides as $slide ):
 
       $link = $slide['slide_content']['link'];

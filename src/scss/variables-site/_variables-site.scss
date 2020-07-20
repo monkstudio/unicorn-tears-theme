@@ -25,7 +25,7 @@ $background-color: #FFF;
 //colours
 //common
 $brand-lightgrey: lighten(#000,95%);
-$brand-darkgrey: lighten(#000,20%);
+$brand-darkgrey: lighten(#000,80%);
 
 //brand
 $brand-primary: red;
@@ -34,9 +34,9 @@ $muted: lighten($brand-primary,20%);
 $brand-placeholder-color:$brand-lightgrey;
 
 // WooCommerce color variables
- $woocommerce__color-error: #e2401c;
- $woocommerce__color-success: #0f834d;
- $woocommerce__color-info: #3D9CD2;
+ $woocommerce-color-error: #e2401c;
+ $woocommerce-color-success: #0f834d;
+ $woocommerce-color-info: #3D9CD2;
 
 //underscores styles
 $brand-font: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;

@@ -4,8 +4,10 @@ table {
 	border: 1px solid $brand-lightgrey;
 	border-collapse: collapse;
 	text-align: left;
-	td {
-		padding: .2em;
+
+	td,
+	th {
+		padding: 10px;
 		border: 1px solid $brand-lightgrey;
 	}
 }

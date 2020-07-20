@@ -1,11 +1,4 @@
 .main-navigation {
-	display: block;
-	text-align: right;
-
-    @include media("<=menu") {
-        text-align: right;
-    }
-
     svg {
         stroke: currentColor;
         transition: .3s ease all;
@@ -15,6 +8,8 @@
 		list-style: none;
 		margin: 0;
         padding: 0;
+        display: flex;
+
 
 		ul {
 			// box-shadow: 0 3px 10px rgba($brand-darkgrey, 0.3);
@@ -85,11 +80,7 @@
         align-items: center;
         flex-wrap: wrap;
         justify-content: space-between;
-        width: 100%;
         margin: 0 15px;
-        @include media("<=menu") {
-            margin: 20px 0;
-        }
 		&:hover > a,
 		&.focus > a {
             background-color: $brand-secondary;
@@ -111,7 +102,7 @@
 	.current-menu-item > a,
 	.current_page_ancestor > a,
 	.current-menu-ancestor > a {
-        border-bottom: 2px solid $brand-primary;
+        border-bottom: 2px solid currentColor;
 	}
 
     .sub-menu {
@@ -119,7 +110,7 @@
         padding: 0;
         margin: 0;
 
-        display: none;
+        // display: none;
         @include media("<=menu") {
             width: 100%;
         }
@@ -130,10 +121,11 @@
         }
 
     }
-    .toggled-on {
-        .sub-menu {
-            display: block;
-        }
+    .toggled-on,
+    .focus {
+    //     .sub-menu {
+    //         display: block;
+    //     }
         .dropdown-toggle {
             transform: rotate(180deg);
         }
@@ -144,13 +136,6 @@
         svg {
             fill: none;
         }
-// //        margin: 5px;
-//         display: none;
-//         cursor: pointer;
-// //        float: right;
-//         @include media("<=menu") {
-//             display: inline-flex;
-//         }
     }
 }
 
@@ -164,83 +149,45 @@
     }
 }
 
-// #primary {
-//     > li {
-//         &:hover {
-//             .dropdown-toggle {
-//                 transform: rotate(180deg);
-//             }
-//         }
-//     }
-// }
-//.nav-menu {
-//    > li > a,
-//    > li > button > a {
-//        padding: 30px 15px;
-//        @include media("<=desktop") {
-//            padding: 30px 10px;
-//        }
-//        @include media("<=menu") {
-//            padding: 20px;
-//        }
-//        @include media("<=phone") {
-//            padding: 15px;
+
+// .cross.icon {
+//    color:currentColor;
+//     width: 21px;
+//     height: 21px;
+//     display: block;
+//     position: relative;
+//    &:before {
+//        content: '';
+//        position: absolute;
+//        top: 50%;
+//        left: 0;
+//        width: 21px;
+//        height: 1px;
+//        background-color: currentColor;
+//    }
+
+//    &:after {
+//        content: '';
+//        position: absolute;
+//        top: 50%;
+//        left: 0;
+//        width: 21px;
+//        height: 1px;
+//        background-color: currentColor;
+//        transform: rotate(90deg);
+//    }
+//    .toggled-on & {
+//        &:after {
+//            content: none;
 //        }
 //    }
-//}
-.cross.icon {
-   color:currentColor;
-    width: 21px;
-    height: 21px;
-    display: block;
-    position: relative;
-   &:before {
-       content: '';
-       position: absolute;
-       top: 50%;
-       left: 0;
-       width: 21px;
-       height: 1px;
-       background-color: currentColor;
-   }
-
-   &:after {
-       content: '';
-       position: absolute;
-       top: 50%;
-       left: 0;
-       width: 21px;
-       height: 1px;
-       background-color: currentColor;
-       transform: rotate(90deg);
-   }
-   .toggled-on & {
-       &:after {
-           content: none;
-       }
-   }
-}
+// }
 .comment-navigation,
 .posts-navigation,
 .post-navigation {
-
-	// .site-main & {
-	// 	margin: 0 0 1.5em;
-	// 	overflow: hidden;
-	// }
     display: flex;
+    align-items: center;
     justify-content: space-between;
-
-// 	.nav-previous {
-// 		float: left;
-// //		width: 50%;
-// 	}
-
-// 	.nav-next {
-// 		// float: right;
-// 		text-align: right;
-// //		width: 50%;
-// 	}
 }
 
 .ancestor-wrapper {
@@ -254,15 +201,16 @@
     display: flex;
 
     li {
-        margin: 0 .2em;
+        margin: 0 20px;
 
         svg {
             fill: currentColor;
+            opacity: 1;
             transition: .3s ease all;
         }
         &:hover {
             svg {
-                fill: $brand-secondary;
+                opacity: .7;
                 transition: .3s ease all;
             }
         }
@@ -271,25 +219,24 @@
 
 //Mobile menu global styles
 // ==================================================
-
-
 //media query to hide/show the mobile menu
 @include media(">menu") {
     #mobile-menu {
 		display: none;
 	}
 	.main-navigation ul {
-		display: block;
+		display: flex;
     }
 }
 
 @include media("<=menu") {
     .menu-open {
         // position: fixed;
-        height: 100vh;
+        // height: 100vh;
         overflow: hidden;
     }
 }
+
 button#mobile-menu {
 	position: relative;
 	z-index: 101;
@@ -299,9 +246,6 @@ button#mobile-menu {
         display: table;
     }
 
-}
-.toggled {
-	transition:.5s linear all;
 }
 
 // ======================================================================================

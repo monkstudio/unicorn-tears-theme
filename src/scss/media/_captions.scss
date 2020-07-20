@@ -1,14 +1,13 @@
 .wp-caption {
-	margin-bottom: 1em;
+	margin-bottom: 1.5em;
 	max-width: 100%;
 
 	img[class*="wp-image-"] {
-		// @include center;
 		text-align: center;
 	}
 
 	.wp-caption-text {
-		margin: 0.8em 0;
+		margin: 1em 0;
 	}
 }
 
@@ -17,5 +16,5 @@
 }
 
 figure {
-	margin: 0.5em 0;
+	margin: $grid-padding-sm 0;
 }
