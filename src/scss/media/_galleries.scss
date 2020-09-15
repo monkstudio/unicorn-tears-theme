@@ -5,15 +5,15 @@
 .gallery-item {
 	display: inline-flex;
 	text-align: center;
-
-	// Loops to enumerate the classes for gallery columns.
-	// @for $i from 2 through 9 {
-	// 	.gallery-columns-#{$i} & {
-	// 		max-width: map-get( $columns, $i );
-	// 	}
-	// }
 }
 
+
+	// Loops to enumerate the classes for gallery columns.
+	@for $i from 2 through 9 {
+		.gallery-columns-#{$i} & {
+			grid-template-columns: repeat( auto-fit, minmax(250px, #{$i}+'%') );
+		}
+	}
 .gallery-caption {
 	display: block;
 	margin: 0;

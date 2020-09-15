@@ -28,9 +28,9 @@ function unicorn_tears_body_classes( $classes ) {
 	}
 
 	// Check for post thumbnail.
-	if ( is_singular() && has_post_thumbnail() ) {
+	if ( has_post_thumbnail() ) {
 		$classes[] = 'has-post-thumbnail';
-	} elseif ( is_singular() ) {
+	} else {
 		$classes[] = 'missing-post-thumbnail';
 	}
 

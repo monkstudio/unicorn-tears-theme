@@ -19,40 +19,44 @@
 		border-bottom: 1px solid $brand-lightgrey;
 		//@extend %allcaps;
 		padding: 10px 0;
+
 		&:hover {
 			cursor: pointer;
 		}
 
-		.product-wrapper &{
-		text-transform: uppercase;
-		font-size: 1.2rem;
-		}	
+		.product-wrapper & {
+			text-transform: uppercase;
+			font-size: 1.2rem;
+		}
 	}
+
 	.panel-content {
 		display: none;
 		padding: 10px 0;
 
-		.attribute{
-		font-family: $brand-heading;
-		@include font-size(2.2);
-		line-height: 1.2;
-		text-transform: capitalize;
+		.attribute {
+			font-family: $brand-heading;
+			@include font-size(2.2);
+			line-height: 1.2;
+			text-transform: capitalize;
 		}
 	}
 
-	.attr-content{
+	.attr-content {
 		position: relative;
 	}
 
 	.panel {
 		&.active {
 
-			.plus.icon:after{
+			.plus.icon:after {
 				display: none;
 			}
+
 			.panel-content {
 				display: block;
 			}
+
 			.icon {
 				&:after {
 					content: none;
@@ -69,6 +73,7 @@
 	background-color: $brand-lightgrey;
 	padding: 7px 10px;
 }
+
 .panel-body {
 	font-family: $brand-heading;
 	padding: 10px 25px;

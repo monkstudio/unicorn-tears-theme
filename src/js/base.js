@@ -55,7 +55,7 @@ jQuery(document).ready(function ($) {
 	function viewportHeight() {
 		if ($(window).width() !== currentWidth) {
 			let viewportHeight = window.innerHeight;
-			document.documentElement.style.setProperty('--header', viewportHeight + 'px');
+			document.documentElement.style.setProperty('--vh', viewportHeight + 'px');
 		}
 	}
 	viewportHeight();
@@ -140,9 +140,12 @@ jQuery(document).ready(function ($) {
 		$carousel.flickity(args);
 		$carousel.flickity('reloadCells')
 
-		$(this).find('.next').on('click', function () {
-			$(this).hide();
+		$(this).on('click', function () {
+			$carousel.flickity('next')
 		});
+
+		$carousel.on('dragStart.flickity', () => $carousel.find('.slide').css('pointer-events', 'none'));
+		$carousel.on('dragEnd.flickity', () => $carousel.find('.slide').css('pointer-events', 'all'));
 	});
 
 	$('.info-slider').each(function () {

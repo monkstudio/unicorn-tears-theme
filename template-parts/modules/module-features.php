@@ -42,17 +42,20 @@ if ( !empty($ID) && !empty($feature) ) : ?>
                 'title' => 0,
                 'byline' => 0
             ), $videourl );?>
-        <div class="feature video">
-            <div class="video-wrapper">
-                <iframe
-                    id="viplayer"
-                    type="text/html"
-                    width="100%"
-                    height="100%"
-                    src="<?php echo esc_url($args); ?>"
-                    frameborder="0"
-                    webkitallowfullscreen mozallowfullscreen allowfullscreen>
-                </iframe>
+
+        <div class="feature-wrapper">
+            <div class="feature video">
+                <div class="video-wrapper">
+                    <iframe
+                        id="viplayer"
+                        type="text/html"
+                        width="100%"
+                        height="100%"
+                        src="<?php echo esc_url($args); ?>"
+                        frameborder="0"
+                        webkitallowfullscreen mozallowfullscreen allowfullscreen>
+                    </iframe>
+                </div>
             </div>
         </div>
         <?php else :

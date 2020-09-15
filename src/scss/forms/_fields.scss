@@ -101,7 +101,7 @@ label {
 
   // Box checked
   &:checked + label:before {
-    background: #f35429;
+    background: $brand-secondary;
   }
 
   // Disabled state label.
