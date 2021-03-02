@@ -1,14 +1,21 @@
 .alignleft {
-	margin: 10px;
+	margin: 1.5em;
 	float: left;
+	display: inline-block;
 }
 
 .alignright {
-	margin: 10px;
+	margin: 1.5em;
 	float: right;
+	display: inline-block;
 }
 
 .aligncenter {
 	display: block;
-	margin: 50px auto;
+	margin: 3em auto;
+}
+
+.alignnone {
+	display: inline-block;
+	margin: 1.5em;
 }

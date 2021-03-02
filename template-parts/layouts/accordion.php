@@ -7,20 +7,18 @@ $counter = 0;
   <div class="container">
     <div class="row">
       <div class="col">
-        <div class="sidebar">
-          <h4><?php echo $section_title;?></h4>
-          <!-- <?php //echo sanitize_title($section_title);?>-panel<?php //echo $counter;?>"> -->
-        </div>
-      </div>
-      <div class="col">
+        <?php
+          if ( get_sub_field('section_title')) {
+              get_template_part( 'template-parts/layouts/section-title' );
+          }?>
         <div class="accordion-items">
           <?php
           $counter = 0;
           foreach($items as $item ) :
           $counter++; ?>
-          <div id="<?php echo sanitize_title($section_title);?>-panel<?php echo $counter;?>">
+          <div id="<?php echo sanitize_title($item['title']);?>-panel<?php echo $counter;?>" data-aos="fade-right" data-aos-duration="600">
             <div class="content panel">
-                <strong class="panel-header"><?php echo $item['title'];?> <div class="plus icon"></div> </strong>
+                <button class="panel-header"><?php echo $item['title'];?> <?php echo get_icon('arrow',20);?></button>
                 <div class="panel-content">
                 <?php echo $item['content'];?>
                 </div>

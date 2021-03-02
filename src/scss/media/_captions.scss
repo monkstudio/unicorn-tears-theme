@@ -16,5 +16,9 @@
 }
 
 figure {
-	margin: $grid-padding-sm 0;
+	margin: 1.5em 0;
+	figcaption {
+		font-size: 80%;
+		margin: .8em 0;
+	}
 }

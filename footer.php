@@ -13,10 +13,9 @@
 
 </main><!-- #content -->
 
-	<footer id="colophon" class="site-footer" role="contentinfo" aria-label="site colophon">
+	<footer id="colophon" class="site-footer">
 		<div class="container">
 			<div class="row">
-				<div class="col">
 				<?php
 				printf(
 					/* translators: 1:Site title, 2: current year */
@@ -28,23 +27,21 @@
 						)
 				);
 				?>
-				<span class="separator">|</span><?php _e( 'Made by <a href="https://monk.com.au" target="_blank" rel="noreferrer">Monk</a>', 'unicorn-tears' ); ?>
-				</div>
-				<div class="col">
-					<?php if ( has_nav_menu( 'social' ) ) : ?>
-					<nav class="social-navigation" role="navigation" aria-label="<?php _e( 'Social Links Menu', 'unicorn-tears' ); ?>">
-						<?php
-							wp_nav_menu( array(
-								'theme_location' => 'social',
-								'menu_class'     => 'social-links-menu',
-								'depth'          => 1,
-								'link_before'    => '<span class="screen-reader-text">',
-								'link_after'     => '</span>',
-							) );
-						?>
-					</nav><!-- .social-navigation -->
-					<?php endif;?>
-				</div>
+				<span class="separator">|</span><?php _e( 'Made by <a href="https://monk.com.au" target="_blank" rel="noopener noreferrer">Monk</a>', 'unicorn-tears' ); ?>
+
+				<?php if ( has_nav_menu( 'social' ) ) : ?>
+				<nav class="social-navigation" role="navigation" aria-label="<?php _e( 'Social Links Menu', 'unicorn-tears' ); ?>">
+					<?php
+						wp_nav_menu( array(
+							'theme_location' => 'social',
+							'menu_class'     => 'social-links-menu',
+							'depth'          => 1,
+							'link_before'    => '<span class="screen-reader-text">',
+							'link_after'     => '</span>',
+						) );
+					?>
+				</nav><!-- .social-navigation -->
+				<?php endif;?>
 			</div>
 		</div>
 

@@ -3,10 +3,6 @@ $feature-height:60vh;
 $feature-height-home:100vh;
 $feature-height-sm:600px;
 
-:focus {
-    outline: $brand-lightgrey auto 5px;
-    outline-offset: -2px;
-}
 
 .feature {
     height: $feature-height;
@@ -25,7 +21,14 @@ $feature-height-sm:600px;
     }
 
     &.video {
-        @extend %background-styles;
+        // @extend %background-styles;
+        .img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
         position: relative;
         overflow: hidden;
 
@@ -51,31 +54,6 @@ $feature-height-sm:600px;
 
             @include media("<=tablet") {
                 height: $feature-height-sm;
-            }
-        }
-
-        .caption-content {
-            @include center;
-            color: $brand-primary;
-            width: 80%;
-            max-width: 500px;
-            text-align: center;
-
-            h1 {
-                font-family: $brand-heading;
-                text-transform: none;
-                letter-spacing: 0.01em;
-                line-height: 1;
-                padding: 0 0 10px;
-
-                &:before,
-                &:after {
-                    content: none;
-                }
-            }
-
-            .btn {
-                margin: 30px auto;
             }
         }
     }
@@ -118,9 +96,9 @@ $feature-height-sm:600px;
 }
 
 
-
 //page layouts
 .page-layout {
+    overflow: hidden;
     padding: 50px 0;
 
     @include media("<=tablet") {
@@ -194,10 +172,15 @@ $feature-height-sm:600px;
 .two_columns_image {
     z-index: 50;
     position: relative;
-
+    .row {
+        align-items: center;
+    }
     .left-align {
         .col:first-child {
             order: 2;
+            @include media("<=tablet") {
+                order: initial;
+            }
         }
 
         .row {
@@ -237,27 +220,7 @@ $feature-height-sm:600px;
     img {
         display: block;
         width: auto;
-        padding: 5px 0;
-    }
-
-    &.variable-slider {
-        column-count: 1;
-        // height: 550px;
-        padding: 0 50px;
-
-        img {
-            padding: 0 5px;
-            height: 550px;
-            object-fit: initial;
-            width: auto !important;
-            pointer-events: none;
-
-            @include media("<=tablet") {
-                height: 300px;
-            }
-        }
-
-        ;
+        margin: auto;
     }
 }
 
@@ -267,25 +230,6 @@ $feature-height-sm:600px;
 
 .gallery {
     position: relative;
-
-    .slick-arrow {
-        padding: 5px;
-        border: none;
-
-        &:hover,
-        &:focus {
-            outline: none;
-            background-color: transparent;
-
-            svg {
-                stroke: $brand-secondary;
-            }
-        }
-
-        svg {
-            stroke: $brand-primary;
-        }
-    }
 
     .prev {
         @include center(left);
@@ -298,22 +242,21 @@ $feature-height-sm:600px;
     }
 }
 
+.gallery-slider {
+    height: auto;
+    &.gallery-wrapper {
+        padding: 0;
+        column-count: 1;
+    }
+    .slide {
+        width: 100%;
+        height: auto;
+    }
+    .img-wrapper {
+        margin: 0;
+    }
+}
 .cards {
-    // .col {
-    //     @include column-width(4);
-    //     margin-right: $columns-margin;
-    //     &:last-child {
-    //         margin-right: 0;
-    //     }
-    //     @include media("<=desktop") {
-    //         @include column-width(2);
-    //         margin-right: $columns-margin;
-    //         &:nth-child(even) {
-    //             margin-right: 0;
-    //         }
-    //     }
-
-    // }
     .content {
         // width: 85%;
         margin: auto;
@@ -334,6 +277,10 @@ $feature-height-sm:600px;
     margin: auto;
     display: block;
 
+    .btn {
+        margin: 1em 0;
+    }
+
     &.post {
         max-width: 350px;
 
@@ -349,19 +296,11 @@ $feature-height-sm:600px;
         display: block;
         margin: 0 auto 1.5em;
         box-shadow: none;
-        transition: .3s ease box-shadow;
         object-fit: cover;
 
         &:hover {
-            box-shadow: 3px 3px 10px rgba($brand-secondary, .5);
-            transition: .3s ease box-shadow;
             cursor: pointer;
         }
-    }
-
-    .btn {
-        margin: 20px auto;
-        display: table;
     }
 }
 
@@ -516,36 +455,41 @@ Modals
 ♡♡♡♡♡♡♡♡♡♡♡
 */
 .modal {
-    background-color: $brand-secondary;
+    background-color: #FFF;
     color: $brand-primary;
-    padding: 50px 0;
-    width: 100%;
-    height: 100%;
+    padding: $grid-padding;
+    width: 80%;
+    height: auto;
+    @include center;
     position: fixed;
-    top: 0;
-    left: 0;
     z-index: 1000;
     overflow: auto;
+    max-width: 1000px;
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    // display: flex;
+    // align-items: center;
+    // justify-content: center;
 
     pointer-events: none;
-    transition: .6s ease all;
+    opacity: 0;
+    transition: .3s ease all;
     visibility: hidden;
-    transform: translateY(-100%);
+    // transform: translateY(-100%);
 
     @include media("<=tablet") {
-        padding: 50px 0;
+        padding: 100px $grid-padding-sm 50px;
+        height: 100%;
+        width: 100%;
+        max-width: initial;
     }
 
     &.active {
         visibility: visible;
         pointer-events: all;
         transition: .6s ease all;
-        ;
-        transform: translateY(0);
+        opacity: 1;
+        transition: .3s ease opacity;
+        // transform: translateY(0);
     }
 
     .close {

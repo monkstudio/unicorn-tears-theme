@@ -23,7 +23,7 @@ class SVG_Icons {
 	 * Gets the SVG code for a given icon.
 	 */
 	// WIP to add title and desc
-	public static function get_svg( $group, $icon, $size, $class = '', $title = false, $desc = false  ) {
+	public static function get_svg( $group, $icon, $size, $class, $title = false, $desc = false  ) {
 		if ( 'ui' == $group ) {
 			$arr = self::$ui_icons;
 		} elseif ( 'social' == $group ) {
@@ -31,27 +31,33 @@ class SVG_Icons {
 		} else {
 			$arr = array();
 		}
-		if ( !empty($class)) {
-			$class = $class;
+		if ( $class !== '') {
+			$class = 'svg-icon ' . $class;
 		} else {
-			$class = 'svg-icon';
+			$class = 'svg-icon icon-' . $icon;
 		}
+		// if (!$title) {
+		// 	$title = $icon;
+		// }
 		if ( array_key_exists( $icon, $arr ) ) {
 			$format= preg_replace('/(^width="0*(?:[1-9][0-9]?|100)"|\swidth="0*(?:[1-9][0-9]?|100)")(^height="0*(?:[1-9][0-9]?|100)"|\sheight="0*(?:[1-9][0-9]?|100)")/','',$arr[ $icon ]);
-			$formatted = substr_replace($format,' class="' . $class . '" width="' . $size . '" height="' . $size . '" aria-hidden="true" role="img" focusable="false"',5,0);
+			$formatted = substr_replace($format,' class="' . $class . '" width="' . $size . '" height="' . $size . '" focusable="false"',5,0);
 
 			// $svg  = preg_replace( '/^<svg /', $formatted, trim( $arr[ $icon ] ) ); // Add extra attributes to SVG code.
 			$svg  = preg_replace( "/([\n\t]+)/", ' ',  $formatted ); // Remove newlines & tabs.
 			$svg  = preg_replace( '/>\s*</', '><',  $svg ); // Remove white space between SVG tags.
-
+			$split_svg = preg_split('/(?=<path)/', $svg);
 			//check if a title/description is set; if it is, insert it in the svg.
+			
 			if ( $title && !$desc ) {
-				$svg  = preg_replace( '/>\s*</', '><title>'.$title.'</title><', $svg ); // Remove white space between SVG tags.
+				$svg = $split_svg[0] .'<title>'.$title.'</title>'.$split_svg[1];
 			}
 			elseif ($desc && !$title) {
-				$svg  = preg_replace( '/>\s*</', '><desc>'.$desc.'</desc><', $svg ); // Remove white space between SVG tags.
+				$svg = $split_svg[0] .'<desc>'.$desc.'</desc>'.$split_svg[1];
 			} elseif ($title && $desc) {
-				$svg  = preg_replace( '/>\s*</', '><title>'.$title.'</title><desc>'.$desc.'</desc><', $svg ); // Remove white space between SVG tags.
+				$svg = $split_svg[0] .'<title>'.$title.'</title><desc>'.$desc.'</desc>'.$split_svg[1];
+			} else {
+				$svg = $svg;
 			}
 
 			return $svg;
@@ -62,7 +68,7 @@ class SVG_Icons {
 	/**
 	 * Detects the social network from a URL and returns the SVG code for its icon.
 	 */
-	public static function get_social_link_svg( $uri, $size, $title = false, $class='', $desc, $wrap_link = false) {
+	public static function get_social_link_svg( $uri, $size, $wrap_link = true, $class, $title, $desc) {
 		static $regex_map; // Only compute regex map once, for performance.
 		if ( ! isset( $regex_map ) ) {
 			$regex_map = array();
@@ -79,11 +85,12 @@ class SVG_Icons {
 			preg_match( $regex, $uri, $matches );
 			// var_dump($matches);
 			if ( !empty($matches)) {
-				return self::get_svg( 'social', $icon, $size, $title, $class, $desc,  $wrap_link );
+				return self::get_svg( 'social', $icon, $size, $class, $title, $desc, $wrap_link );
 			}
 		}
 		return null;
 	}
+
 
 	/**
 	 * User Interface icons – svg sources.
@@ -187,14 +194,18 @@ class SVG_Icons {
         <path fill="currentColor" fill-rule="nonzero" d="M12 2c5.52 0 10 4.48 10 10s-4.48 10-10 10S2 17.52 2 12 6.48 2 12 2zM6 14a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm6 0a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm6 0a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"/>
     </g>
 </svg>',
-'arrow_right' => '<svg width="16" height="30" viewBox="0 0 16 30" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M1 1L15 15L1 29" stroke-linecap="round" stroke-linejoin="round"/>
+'arrow_right' => '<svg width="34" height="18" viewBox="0 0 34 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M1.5 9.00806H33" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M25.5 16.5081L33 9.00806L25.5 1.50806" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
 </svg>',
 'arrow_down' => '<svg width="30" height="16" viewBox="0 0 30 16" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M29 1L15 15L1 0.999999" stroke-linecap="round" stroke-linejoin="round"/>
 </svg>',
-'arrow_left' => '<svg width="16" height="30" viewBox="0 0 16 30" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M15 29L1 15L15 1" stroke-linejoin="round"/>
+'arrow_left' => '<svg width="34" height="18" viewBox="0 0 34 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g>
+<path d="M32.5 9.00806H1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M8.5 16.5081L1 9.00806L8.5 1.50806" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
 </svg>',
 'arrow_up' => '<svg width="30" height="16" viewBox="0 0 30 16" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M1 15L15 0.999999L29 15" stroke-linecap="round" stroke-linejoin="round"/>
@@ -226,6 +237,13 @@ class SVG_Icons {
 'arrow' => '
 <svg width="13" height="7" viewBox="0 0 13 7" xmlns="http://www.w3.org/2000/svg">
 <path d="M1 1L6.5 6L12 1" />
+</svg>',
+'email' => '
+<svg width="32" height="22" viewBox="0 0 32 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect x="1.32617" y="1" width="29.3478" height="19.5652" rx="1.95652" stroke-width="1.95652" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M20.8096 8.14136L25.783 12.7392" stroke-width="1.95652" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M11.1913 8.14136L6.21777 12.7392" stroke-width="1.95652" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M30.1912 1.67041L17.7829 10.2269C16.7097 10.9679 15.2901 10.9679 14.2169 10.2269L1.80859 1.67041" stroke-width="1.95652" stroke-linecap="round" stroke-linejoin="round"/>
 </svg>'
 
 	);

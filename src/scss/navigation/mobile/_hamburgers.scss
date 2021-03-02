@@ -13,12 +13,12 @@ $hamburger-padding-y                       : 0px !default;
 $hamburger-layer-width                     : 30px !default;
 $hamburger-layer-height                    : 1px !default;
 $hamburger-layer-spacing                   : 5px !default;
-$hamburger-layer-color                     : $brand-primary !default;
+$hamburger-layer-color                     : $brand-secondary !default;
 $hamburger-layer-border-radius             : 3px !default;
-$hamburger-hover-opacity                   : .9 !default;
+$hamburger-hover-opacity                   : .8 !default;
 $hamburger-hover-transition-duration       : 0.15s !default;
 $hamburger-hover-transition-timing-function: linear !default;
-$hamburger-hover-colour                    : $brand-primary;
+$hamburger-hover-colour                    : $brand-secondary;
 $hamburger-box-hover-color                 : transparent;
 
 // To use CSS filters as the hover effect instead of opacity,

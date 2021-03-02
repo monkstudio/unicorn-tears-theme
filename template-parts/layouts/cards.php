@@ -1,4 +1,7 @@
-<?php get_template_part( 'template-parts/layouts/section-title' ); ?>
+<?php 
+if ( get_sub_field('section_title')){
+    get_template_part( 'template-parts/layouts/section-title' ); 
+}?>
 
 <div class="container">
     <?php $tiled = get_sub_field('make_into_tiles');if( have_rows('card') ): ?>
@@ -21,14 +24,14 @@
                     $alt = isset(get_post_meta($id, '_wp_attachment_image_alt')[0]) ? get_post_meta($id, '_wp_attachment_image_alt')[0] : $title;
                     // var_dump(isset(get_post_meta($id, '_wp_attachment_image_alt')[0]))
                     ?>
-                    <div class="img-wrapper">
+                    <figure class="img-wrapper">
                         <img src="<?php echo esc_url( $img_src ); ?>"
                         srcset="<?php echo esc_attr( $img_srcset ); ?>"
-                        sizes="(min-width: 768px) 400px, 100vw"
+                        sizes="(min-width: 768px) 700px, 1000px"
                         alt="<?php echo $alt; ?>"
                         class="img"
                         loading="lazy">
-                    </div>
+                    </figure>
                     <?php endif;?>
                     <div class="content">
                         <div class="inner">

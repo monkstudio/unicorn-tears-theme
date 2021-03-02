@@ -1,6 +1,6 @@
 
 <div class="container
-<?php echo ( get_sub_field('left_align') === true ) ? ' left-align' : '' ;?>
+<?php echo ( get_sub_field('left_align_image') ) ? ' left-align' : '' ;?>
 ">
     <div class="row">
         <div class="col">
@@ -15,12 +15,17 @@
               $alt = isset(get_post_meta($id, '_wp_attachment_image_alt')[0]) ? get_post_meta($id, '_wp_attachment_image_alt')[0] : $title;
               // var_dump(isset(get_post_meta($id, '_wp_attachment_image_alt')[0]))
               ?>
-            <img src="<?php echo esc_url( $img_src ); ?>"
-            srcset="<?php echo esc_attr( $img_srcset ); ?>"
-            sizes="(min-width: 1024px) 50vw, 100vw"
-            alt="<?php echo $alt; ?>"
-            class="img"
-            loading="lazy">
+              <figure class="img-wrapper">
+                <img src="<?php echo esc_url( $img_src ); ?>"
+                srcset="<?php echo esc_attr( $img_srcset ); ?>"
+                sizes="
+                (max-width: 768px) 800px,
+                (max-width: 1200px) 1200px,
+                800px"
+                alt="<?php echo $alt; ?>"
+                class="img"
+                loading="lazy">
+              </figure>
           <?php endif; ?>
         </div>
         <div class="col">

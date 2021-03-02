@@ -18,11 +18,16 @@
   left: 0;
   pointer-events: none;
   z-index: -1;
-  background-color: transparent;
+  background-color: rgba($brand-primary,.5);
   visibility: hidden;
+  opacity: 0;
+  transition: .3s ease opacity;
 
   .search-open &,
-  .menu-open & {
+  .menu-open &,
+  .modal-open & {
+    opacity: 1;
+    transition: .3s ease opacity;
     visibility: visible;
     pointer-events: all;
     z-index: 99;

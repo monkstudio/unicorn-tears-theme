@@ -118,6 +118,7 @@ function unicorn_tears_scripts() {
 	wp_register_script( 'jquery-core', "https://code.jquery.com/jquery-3.1.1.min.js", array(), '3.1.1' );
 	wp_deregister_script( 'jquery-migrate' );
 	wp_register_script( 'jquery-migrate', "https://code.jquery.com/jquery-migrate-3.0.0.min.js", array(), '3.0.0' );
+	wp_register_script( 'aos', "https://unpkg.com/aos@2.3.1/dist/aos.js" );
 
 	//localize data
 	// Register the scripts
@@ -135,12 +136,14 @@ function unicorn_tears_scripts() {
 
 	//enqueue scripts and styles
 	//css
-	wp_enqueue_style( 'typekit', 'https://use.typekit.net/gdx2ftb.css' );
+	wp_enqueue_style( 'aos-styles', 'https://unpkg.com/aos@2.3.1/dist/aos.css' );
+	wp_enqueue_style( 'typekit', 'https://use.typekit.net/mlz8tte.css' );
 	wp_enqueue_style( 'unicorn-tears-styles');
 
 	//js
 	wp_enqueue_script('jquery');
-	wp_enqueue_script('jquery-migrate');
+	wp_enqueue_script('jquery-migrate');	
+	wp_enqueue_script('aos');
 	// wp_enqueue_script('google-maps', 'https://maps.googleapis.com/maps/api/js?key=key', ['jquery'], date("dmY"), true );
 	wp_enqueue_script('unicorn-tears-scripts');
 
@@ -276,31 +279,6 @@ function maphtml() {
 }
 add_shortcode( 'map', 'maphtml' );
 
-$block_id = 0;
-
-function add_block_id( $block ) {
-	global $block_id;
-	$block_id++;
-	// var_dump($block, $block_id);
-	// $output = '<div class="blah">' . $block.'</div>';
-	// var_dump( parse_blocks($content));
-	if ( strlen($block) > 2) {
-		return '<div class="block" id="' . $block_id . '">' . $block.'</div>';
-	}
-	// $i = 0;
-	// $blocks[] = '';
-	// array_push($blocks,$block);
-	// var_dump($blocks);
-	// if ( strlen($block) > 2) {
-	// 	$i++;
-
-	// 	$output = '<div class="blah">' . $i++ . $block.'</div>';
-	// 	return $output;
-
-	// }
-}
-add_filter('render_block', 'add_block_id', 10, 1);
-
 //disable gutenberg for pages
 add_filter('use_block_editor_for_post_type', function($enabled, $post_type){
     if(in_array($post_type, [
@@ -318,18 +296,6 @@ function custom_theme_assets() {
     wp_dequeue_style( 'wp-block-library' );
 }
 add_action( 'wp_enqueue_scripts', 'custom_theme_assets', 100 );
-
-//remove archive prefix
-add_filter( 'get_the_archive_title', function ($title) {
-    if ( is_category() ) {
-		$title = single_cat_title( '', false );
-	} elseif ( is_tag() ) {
-		$title = single_tag_title( '', false );
-	} elseif ( is_author() ) {
-		$title = '<span class="vcard">' . get_the_author() . '</span>' ;
-	}
-    return $title;
-});
 
 function get_page_ID() {
 	if ( is_home() ) {
@@ -472,7 +438,7 @@ function unicorn_tears_get_the_archive_title( $title ) {
 		'unicorn_tears_get_the_archive_title_regex',
 		array(
 			'pattern'     => '/(\A[^\:]+\:)/',
-			'replacement' => '<span class="color-accent">$1</span>',
+			'replacement' => '<span class="screen-reader-text">$1</span>',
 		)
 	);
 
@@ -511,7 +477,7 @@ function unicorn_tears_add_sub_toggles_to_main_menu( $args, $item, $depth ) {
 		$toggle_target_string = '.menu-modal .menu-item-' . $item->ID . ' > .sub-menu';
 
 		// Add the sub menu toggle.
-		$args->after .= '<div class="dropdown-toggle" data-toggle-target="' . $toggle_target_string . '" aria-expanded="false"><span class="screen-reader-text">' . __( 'Show sub menu', 'unicorn-tears' ) . '</span>' . get_icon('arrow',15,'toggle-icon'). '</div>';
+		$args->after .= '<button class="dropdown-toggle" data-toggle-target="' . $toggle_target_string . '" aria-expanded="false"><span class="screen-reader-text">' . __( 'Show sub menu', 'unicorn-tears' ) . '</span>' . get_icon('arrow',15,'toggle-icon'). '</button>';
 
 	}
 
@@ -525,11 +491,11 @@ function unicorn_tears_add_sub_toggles_to_main_menu( $args, $item, $depth ) {
 add_filter( 'nav_menu_item_args', 'unicorn_tears_add_sub_toggles_to_main_menu', 10, 3 );
 
 
-function jba_disable_editor_fullscreen_by_default() {
+function unicorn_tears_disable_editor_fullscreen_by_default() {
 	$script = "jQuery( window ).load(function() { const isFullscreenMode = wp.data.select( 'core/edit-post' ).isFeatureActive( 'fullscreenMode' ); if ( isFullscreenMode ) { wp.data.dispatch( 'core/edit-post' ).toggleFeature( 'fullscreenMode' ); } });";
 	wp_add_inline_script( 'wp-blocks', $script );
 }
-add_action( 'enqueue_block_editor_assets', 'jba_disable_editor_fullscreen_by_default' );
+add_action( 'enqueue_block_editor_assets', 'unicorn_tears_disable_editor_fullscreen_by_default' );
 
 /**
  * Debug function to show the name of the current template being used
@@ -546,3 +512,16 @@ function show_template() {
 	}
 }
 // add_action( 'wp_head', 'show_template' );
+
+
+
+/**
+ * Registers an editor stylesheet in a sub-directory.
+ */
+function add_editor_styles_sub_dir() {
+	add_editor_style( trailingslashit( get_template_directory_uri() ) . 'dist/css/style.css' );
+}
+add_action( 'after_setup_theme', 'add_editor_styles_sub_dir' );
+
+//disable tabindex changes
+add_filter( 'gform_tabindex', '__return_false' );

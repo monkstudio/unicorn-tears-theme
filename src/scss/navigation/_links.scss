@@ -1,24 +1,11 @@
 a {
 	color: currentColor;
 	text-decoration: none;
-	border-bottom: 1px solid rgba($brand-primary,.3);
-
-	&:visited {
-		color: $brand-primary;
-	}
+	transition: .3s ease all;
 	&:hover,
 	&:active {
-		color: $brand-primary;
-		text-decoration: none;
-		border-bottom: 1px solid rgba($brand-primary,.6);
-	}
-	&:focus {
-		outline: 2px dotted $brand-primary;
-		border-bottom: 1px solid rgba($brand-primary,.6);
-		text-decoration: none;
-	}
-	&:hover,
-	&:active {
-		outline: 0;
+		color: $brand-secondary;
+		text-decoration: underline;
+		transition: .3s ease all;
 	}
 }

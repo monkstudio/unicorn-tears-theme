@@ -15,7 +15,9 @@ function closeModal() {
   let close = document.getElementById('btn-close');
 
   document.getElementsByTagName( 'html' )[0].classList.remove('modal-open');
-  close.remove();
+  if ( close ) {
+    close.remove();
+  }
 
   for (i = 0; i < modals.length; i++) {
     modals[i].classList.remove('active');

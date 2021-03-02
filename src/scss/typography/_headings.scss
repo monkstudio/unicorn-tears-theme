@@ -5,13 +5,9 @@ h1, h2, h3, h4, h5, h6 {
 }
 //variables found in _variables.scss
 h1 {
-    margin: 0 0 .7em;
+    margin: 0 0 .5em;
     @include font-size(4.8);
 	font-size: unquote("min(max(3.6rem, 8vw), 6rem)");
-    &.section-title {
-        padding: 0;
-        margin:.7em auto;
-    }
 }
 h2 {
     @include font-size(4);
@@ -28,10 +24,12 @@ h4 {
     font-size: unquote("min(max(2rem, 4.5vw), 3.2rem)");
     margin: 0 0 .5em;
 }
-h5 {
+h5 {    
     @include font-size(1.8);
+    font-size: unquote("min(max(1.8rem, 3vw), 2.4rem)");
     margin: 0 0 .5em;
 }
-h6 {
+h6 {    
+    font-size: unquote("min(max(1.4rem, 2.5vw), 1.8rem)");
     margin: 0 0 .5em;
 }

@@ -1,6 +1,7 @@
 .accordion-list {
 	.row {
-		grid-template-columns: minmax(200px, auto) 1fr;
+		// grid-template-columns: minmax(200px, auto) 1fr;
+		display: block;
 	}
 }
 
@@ -16,9 +17,9 @@
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
-		border-bottom: 1px solid $brand-lightgrey;
 		//@extend %allcaps;
-		padding: 10px 0;
+		padding: 1em;
+		width: 100%;
 
 		&:hover {
 			cursor: pointer;
@@ -32,7 +33,7 @@
 
 	.panel-content {
 		display: none;
-		padding: 10px 0;
+		padding: 1em;
 
 		.attribute {
 			font-family: $brand-heading;

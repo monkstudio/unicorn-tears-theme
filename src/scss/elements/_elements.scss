@@ -13,15 +13,15 @@ html {
 
 body {
 	background-color: $background-color;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
 }
 
 blockquote,
 q {
-	quotes: """";
-	margin: 20px 0 20px 50px;
-	border-left: 15px solid $brand-darkgrey;
-	background-color: $brand-lightgrey;
-	padding: 20px 50px;
+	// quotes: """";
+	margin: 2em auto;
+	max-width: 60ch;
 	display: block;
 
 	&:before,
@@ -46,8 +46,7 @@ img {
 }
 
 .img {
-	width: 100%;
-	height: 100%;
+	display: block;
 	object-fit: cover;
 }
 
@@ -66,7 +65,7 @@ img {
 //.acf-map img {
 //   max-width: inherit !important;
 //}
-
+@import "alignments";
 @import "reusable";
 @import "tables";
 @import "icons";

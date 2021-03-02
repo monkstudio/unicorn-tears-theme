@@ -18,12 +18,14 @@ if( $slides ): ?>
       <div class="slide">
         <div class="slide-wrapper">
           <div class="col">
-            <img src="<?php echo esc_url( $img_src ); ?>"
-            srcset="<?php echo esc_attr( $img_srcset ); ?>"
-            sizes="(min-width: 768px) 600px, 100vw"
-            alt="<?php echo $alt; ?>"
-            title="<?php echo $title; ?>"
-            class="img">
+            <figure class="img-wrapper">
+              <img src="<?php echo esc_url( $img_src ); ?>"
+              srcset="<?php echo esc_attr( $img_srcset ); ?>"
+              sizes="(min-width: 768px) 700px, 1000px"
+              alt="<?php echo $alt; ?>"
+              title="<?php echo $title; ?>"
+              class="img">
+            </figure>
           </div>
           <div class="col">
             <?php echo $slide['slide_content']['content'];?>

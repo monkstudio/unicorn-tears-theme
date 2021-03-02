@@ -12,22 +12,14 @@ input[type="week"],
 input[type="time"],
 input[type="datetime"],
 input[type="datetime-local"],
-input[type="color"],
-textarea {
+input[type="color"] {
 	color: $brand-primary;
 	appearance: none;
 	border: none;
-	border: 1px solid $brand-primary;
-	border-radius: 0;
-	padding: 5px 10px;
-	margin: .3em 0;
-	background-color: transparent;
-
-	&:focus {
-		outline: 2px solid transparent;
-		box-shadow: 0 0 0 2px rgba($brand-primary,.3);
-    // outline-offset: 2px;
-	}
+	border-bottom: 1px solid currentColor;
+	padding: 10px;
+	width: 100%;
+	background-color: #FFF;
 }
 
 input[type="radio"] {
@@ -37,22 +29,17 @@ input[type="radio"] {
 select {
 	appearance: none;
 	background: none;
-	padding: 5px 10px;
+	padding: 10px;
 	border: 1px solid $brand-primary;
 	border-radius: 0;
-	&:focus {
-		outline: 2px solid transparent;
-		box-shadow: 0 0 0 2px rgba($brand-primary,.3);
-	}
+	width: 100%;
 }
 
 textarea {
 	max-height: 200px;
+	border: 1px solid $brand-primary;
 	width: 100%;
-	&:focus {
-		outline: 2px solid transparent;
-		box-shadow: 0 0 0 2px rgba($brand-primary,.3);
-	}
+	padding: 10px;
 }
 
 label {

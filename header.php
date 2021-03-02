@@ -34,18 +34,19 @@
             <?php esc_html_e( 'Skip to content', 'unicorn-tears' ); ?>
         </a>
 
-        <header id="masthead" class="site-header" role="banner">
+        <header id="masthead">
             <div class="site-branding">
-                <a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home" aria-label="<?php echo get_bloginfo('title');?>">
-                    <img src="<?php echo get_stylesheet_directory_uri(); ?>/dist/images/logo.svg" class="logo" alt="<?php echo esc_attr( get_bloginfo( 'name', 'display' ) ); ?>">
+                <a href="<?php echo esc_url( home_url( '/' ) ); ?>">
+                    <img src="<?php echo esc_url( get_template_directory_uri() ); ?>/dist/images/logo.svg" class="logo" alt="<?php echo esc_attr( get_bloginfo( 'name', 'display' ) ); ?>">
                 </a>
             </div>
 
             <nav id="site-navigation" class="main-navigation" role="navigation" aria-label="Navigation menu for <?php bloginfo('name');?>">
-                <button id="mobile-menu" class="menu-toggle hamburger hamburger--collapse" aria-controls="primary-menu" aria-label="Toggle menu" aria-expanded="false" type="button">
+                <button id="mobile-menu" class="menu-toggle hamburger hamburger--collapse" aria-controls="primary-menu" aria-expanded="false" type="button">
                     <span class="hamburger-box">
                     <span class="hamburger-inner"></span>
                     </span>
+                    <div class="screen-reader-text">Menu</div>
                 </button>
 
                 <div class="menu-wrapper overlay">

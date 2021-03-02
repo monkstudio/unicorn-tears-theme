@@ -1,4 +1,4 @@
-# Through centuries-old myth, tall stories, hand waving, a whole lotta [_s], [Monk] faff, and general hocus pocus, the power of unicorn tears have finally been harnessed to create the quintessential WordPress starter theme.
+# Through centuries-old myth, tall stories, hand waving, a whole lotta _s, Monk faff, and general hocus pocus, the power of unicorn tears have finally been harnessed to create the quintessential WordPress starter theme.
 
 **Featuring:**
   - premade mobile menu styles
@@ -14,12 +14,8 @@
   - generate automatic favicons
   - use es6 js
   - easily customise a woocommerce build with added mini cart dropdown functionality
-  - incorporate modular scale responsive typography
-  - use a tried and tested simple display:table grid framework or roll your own
-  - optional swipebox, slick slider
-  - modify default gutenberg block styles with ease
+  - optional fancybox and simple modal built in
   - generate favicons
-  - generate a site manifest
   - optimise images as you develop
 
 As Phat Kitty Sr. says,
@@ -39,7 +35,7 @@ As Phat Kitty Sr. says,
 # Features
 
 ### Social media menu
-You can build a social menu by making a new menu in the Appearance editor, and assigning it to the Social menu using custom links. Any links related to social medias will automically be converted to inline svg social icons. Any unrecognized networks will show a chain icon.
+You can build a social menu by making a new menu in the Appearance editor, and assigning it to the Social menu using custom links. Any links related to social medias will automically be converted to inline svg social icons. Any unrecognized networks will show a chain icon. New social icons can be added in `inc/class-svg-icons.php`.
 
 ---
 

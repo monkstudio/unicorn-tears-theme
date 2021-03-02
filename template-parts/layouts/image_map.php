@@ -8,13 +8,14 @@
       $title = get_post($id)->post_title;
       $alt = isset(get_post_meta($id, '_wp_attachment_image_alt')[0]) ? get_post_meta($id, '_wp_attachment_image_alt')[0] : $title;
       // var_dump(isset(get_post_meta($id, '_wp_attachment_image_alt')[0]))
-      ?>
-      <img src="<?php echo esc_url( $img_src ); ?>"
-      srcset="<?php echo esc_attr( $img_srcset ); ?>"
-      sizes="(min-width: 1024px) 1200px, 80vw"
-      alt="<?php echo $alt; ?>"
-      class="img">
-
+      ?>                    
+      <figure class="img-wrapper">
+        <img src="<?php echo esc_url( $img_src ); ?>"
+        srcset="<?php echo esc_attr( $img_srcset ); ?>"
+        sizes="(min-width: 1024px) 1100px, 1400px"
+        alt="<?php echo $alt; ?>"
+        class="img">
+      </figure>
       <?php
       $maps = get_sub_field('image_map');
       foreach ($maps as $map) :

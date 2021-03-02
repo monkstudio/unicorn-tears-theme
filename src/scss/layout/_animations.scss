@@ -1,7 +1,7 @@
 .js {
   .animate {
     opacity: 0;
-    transition: .6s ease opacity,.6s ease transform;
+    transition: .6s ease opacity;
     transition-delay: .3s;
     position: relative;
     &.animate-down {
@@ -30,7 +30,7 @@
 
     &.fadein {
         opacity: 1;
-        transition: .6s ease opacity,.6s ease transform;
+        transition: .6s ease opacity;
         transition-delay: .3s;
         transform: translate(0, 0);
 
