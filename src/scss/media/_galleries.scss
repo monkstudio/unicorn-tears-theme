@@ -8,19 +8,20 @@
 }
 
 
-	// Loops to enumerate the classes for gallery columns.
-	@for $i from 2 through 9 {
-		.gallery-columns-#{$i} & {
-			grid-template-columns: repeat( auto-fit, minmax(250px, #{$i}+'%') );
-		}
+// Loops to enumerate the classes for gallery columns.
+@for $i from 2 through 9 {
+	.gallery-columns-#{$i} {
+		grid-template-columns: repeat(auto-fit, minmax(250px, #{$i * 10}+'%'));
 	}
+}
+
 .gallery-caption {
 	display: block;
 	margin: 0;
 	text-align: left;
 }
 
-.gallery-item > div > a {
+.gallery-item>div>a {
 	display: block;
 	line-height: 0;
 
@@ -28,6 +29,6 @@
 	box-shadow: 0 0 0 0 transparent;
 
 	&:focus {
-		box-shadow: 0 0 0 2px rgba( $brand-primary, 1 );
+		box-shadow: 0 0 0 2px rgba($brand-primary, 1);
 	}
 }

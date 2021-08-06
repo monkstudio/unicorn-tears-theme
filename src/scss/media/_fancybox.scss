@@ -174,9 +174,14 @@ body.compensate-for-scrollbar {
     overflow: auto;
     -webkit-overflow-scrolling: touch;
     padding: 44px;
+    width: 80%;
+    max-width: 100ch;
     position: relative;
     text-align: left;
     vertical-align: middle;
+    @include media("<=tablet") {
+        width: 100%;
+    }
 }
 
 .fancybox-slide--image .fancybox-content {

@@ -10,7 +10,7 @@
 get_header(); ?>
 
 
-<section id="intro" class="error-404 page-layout">
+<section id="page-content" class="error-404 monk-block">
     <div class="container">
         <div class="content">
             <?php get_template_part( 'template-parts/modules/module', 'page-title' ); ?>

@@ -54,11 +54,23 @@ function unicorn_tears_body_classes( $classes ) {
 	}
 
 
-	if ( wp_is_mobile() ) {
-		$classes[] = 'is-touch';
-	} else {
-		$classes[] = 'no-touch';
-	}
+	// generate a class based on the current page template
+  if ( is_page_template() ) {
+    $classes[] = basename( get_page_template_slug(), '-template' );
+  }
+
+  $query = get_queried_object();
+  if ( isset($query->slug)) {
+    $classes[] = 'page-'.$query->slug;
+  } elseif(isset($query)) {
+    $classes[] = 'page-'.$query->post_name;
+  }
+
+  if ( wp_is_mobile() ) {
+  $classes[] = 'is-touch';
+  } else {
+  $classes[] = 'no-touch';
+  }
 
 	return $classes;
 }

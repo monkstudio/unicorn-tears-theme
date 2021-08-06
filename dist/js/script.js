@@ -1,86 +1,5 @@
 "use strict";
 
-/*
--ˋˏ *.·:·.⟐.·:·.* ˎˊ-
-━━━ ⋅𖥔⋅ ━━✶━━ ⋅𖥔⋅ ━━━
-Bare bones modal
-━━━ ⋅𖥔⋅ ━━✶━━ ⋅𖥔⋅ ━━━
--ˋˏ *.·:·.⟐.·:·.* ˎˊ-
-*/
-var focusableElems = document.querySelectorAll('#page a[href]:not([disabled]),#page button:not([disabled]),#page textarea:not([disabled]),#page input[type="text"]:not([disabled]),#page input[type="radio"]:not([disabled]),#page input[type="checkbox"]:not([disabled]),#page select:not([disabled])');
-var modalTriggers = document.querySelectorAll('.modal-trigger');
-var i; //close modals
-
-function closeModal() {
-  var modals = document.querySelectorAll('.modal.active');
-  var close = document.getElementById('btn-close');
-  document.getElementsByTagName('html')[0].classList.remove('modal-open');
-
-  if (close) {
-    close.remove();
-  }
-
-  for (i = 0; i < modals.length; i++) {
-    modals[i].classList.remove('active');
-  }
-
-  for (i = 0; i < focusableElems.length; i++) {
-    focusableElems[i].setAttribute('tabindex', '');
-  }
-}
-
-if (modalTriggers.length > 0) {
-  var _loop = function _loop() {
-    var btn = modalTriggers[i];
-    btn.addEventListener('click', function (e) {
-      e.preventDefault();
-      var target = '#' + btn.hash.substr(1);
-      var modalfocusableElems = document.querySelector(target).querySelectorAll('a, button, input, textarea, select, details, [tabindex]:not([tabindex="-1"])'); //close button
-
-      var closeBtn = document.createElement('button');
-      closeBtn.classList.add('button', 'close');
-      closeBtn.id = 'btn-close';
-      document.querySelector(target).appendChild(closeBtn); //set active classes
-
-      document.querySelector(target).classList.add('active');
-      document.getElementsByTagName('html')[0].classList.add('modal-open'); //focus attributes
-
-      for (i = 0; i < focusableElems.length; i++) {
-        focusableElems[i].setAttribute('tabindex', -1);
-      }
-
-      for (i = 0; i < modalfocusableElems.length; i++) {
-        modalfocusableElems[i].setAttribute('tabindex', '');
-      } //close modal with esc
-
-
-      closeBtn.addEventListener('click', function (e) {
-        closeModal();
-      });
-    });
-  };
-
-  for (i = 0; i < modalTriggers.length; i++) {
-    _loop();
-  }
-}
-
-document.onkeydown = function (evt) {
-  evt = evt || window.event;
-  var isEscape = false;
-
-  if ("key" in evt) {
-    isEscape = evt.key === "Escape" || evt.key === "Esc";
-  } else {
-    isEscape = evt.keyCode === 27;
-  }
-
-  if (isEscape) {
-    closeModal();
-  }
-};
-"use strict";
-
 /**
  * File navigation.js.
  *
@@ -1241,7 +1160,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
   }), t.createMethods.push("_createDrag");
   var n = t.prototype;
   a.extend(n, e.prototype), n._touchActionValue = "pan-y";
-  var s = "createTouch" in document,
+  var s = ("createTouch" in document),
       o = !1;
   n._createDrag = function () {
     this.on("activate", this.onActivateDrag), this.on("uiChange", this._uiChangeDrag), this.on("deactivate", this.onDeactivateDrag), this.on("cellChange", this.updateDraggable), s && !o && (i.addEventListener("touchmove", function () {}), o = !0);
@@ -6479,7 +6398,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
 
 console.log('🥑 %cMade by Monk', 'background: #616a2e; color: #f4e9e2; padding: 5px 17px; border-radius: 3px;');
 console.log(' %chttp://monk.com.au ', 'padding: 5px 13px;');
-jQuery(document).ready(function ($) {
+jQuery(function ($) {
   //page
   var $hamburger = $(".hamburger"),
       $site = $("html,body"),
@@ -6517,11 +6436,9 @@ jQuery(document).ready(function ($) {
   }
 
   $screenOverlay.on('click', closeMenu);
-  $screenOverlay.on('click', closeModal);
   $(document).bind('keydown', function (e) {
     if (e.which == 27) {
       closeMenu();
-      closeModal();
     }
   });
   /*
@@ -6533,11 +6450,15 @@ jQuery(document).ready(function ($) {
   */
 
   function viewportHeight() {
+    var headerHeight = document.querySelector('#masthead').clientHeight;
+
     if (window.innerWidth !== currentWidth) {
       var _viewportHeight = window.innerHeight;
       document.documentElement.style.setProperty('--vh', _viewportHeight + 'px');
+      document.documentElement.style.setProperty('--header', headerHeight + 'px');
     } else {
       document.documentElement.style.setProperty('--vh', currentHeight + 'px');
+      document.documentElement.style.setProperty('--header', headerHeight + 'px');
     }
   }
 
@@ -6582,8 +6503,8 @@ jQuery(document).ready(function ($) {
   // 		$(this).addClass('fadein');
   // 	}
   // });
+  // AOS.init();
 
-  AOS.init();
   /*
   -ˋˏ *.·:·.⟐.·:·.* ˎˊ-
   ━━━ ⋅𖥔⋅ ━━✶━━ ⋅𖥔⋅ ━━━
@@ -6691,8 +6612,16 @@ jQuery(document).ready(function ($) {
 
     $carousel.flickity(args); // $carousel.flickity('reloadCells');
 
-    $(this).on('click', function () {
+    $(this).parent().find('.next').on('click', function () {
       $carousel.flickity('next');
+    });
+    $(this).parent().find('.prev').on('click', function () {
+      $carousel.flickity('previous');
+    });
+    $carousel.on('dragStart.flickity', function (e) {
+      $(this).addClass('is-dragging');
+    }).on('dragEnd.flickity', function () {
+      $(this).removeClass('is-dragging');
     });
   }); //recalculates slider on load to get around some annoying center mode bugs
 
@@ -6836,12 +6765,12 @@ jQuery(document).ready(function ($) {
   ━━━ ⋅𖥔⋅ ━━✶━━ ⋅𖥔⋅ ━━━
   -ˋˏ *.·:·.⟐.·:·.* ˎˊ-
   */
-
-  $('.gform_wrapper').on('submit', 'form', function () {
-    $('[type=submit]', this) // Select the form's submit button
-    .val('Sending...') // Change the value of the submit button. Change text to whatever you like.
-    .prop('disabled', true); // Not really necessary but will prevent the user from clicking the button again while the form is submitting.
-  }); //make gravity forms more accessible
+  // $('.gform_wrapper').on('submit', 'form', function () {
+  // 	$('[type=submit]', this) // Select the form's submit button
+  // 		.val('Sending...') // Change the value of the submit button. Change text to whatever you like.
+  // 		.prop('disabled', true); // Not really necessary but will prevent the user from clicking the button again while the form is submitting.
+  // });
+  //make gravity forms more accessible
   //     var $fields = $( '.gform_body input[type="text"],.gform_body input[type="email"], .gform_body textarea' ),
   //         $label = $( ".gfield_label" );
   //     //wrap label with a span

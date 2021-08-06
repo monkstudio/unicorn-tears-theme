@@ -226,8 +226,9 @@ class SVG_Icons {
 <line y1="0.5" x2="20" y2="0.5"/>
 </svg>',
 'plus' => '
-<svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path fill-rule="evenodd" clip-rule="evenodd" d="M7.668 13.356V7.596H13.32V5.652H7.668V0H5.724V5.652H0V7.596H5.724V13.356H7.668Z"/>
+<svg width="31" height="31" viewBox="0 0 31 31" fill="none" xmlns="http://www.w3.org/2000/svg">
+<line x1="16.5" y1="0.308838" x2="16.5" y2="30.0882" stroke-width="1"/>
+<line x1="0.911774" y1="14.5" x2="30.6912" y2="14.5" stroke-width="1"/>
 </svg>',
 'close' => '
 <svg width="27" height="27" viewBox="0 0 27 27" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -244,6 +245,16 @@ class SVG_Icons {
 <path d="M20.8096 8.14136L25.783 12.7392" stroke-width="1.95652" stroke-linecap="round" stroke-linejoin="round"/>
 <path d="M11.1913 8.14136L6.21777 12.7392" stroke-width="1.95652" stroke-linecap="round" stroke-linejoin="round"/>
 <path d="M30.1912 1.67041L17.7829 10.2269C16.7097 10.9679 15.2901 10.9679 14.2169 10.2269L1.80859 1.67041" stroke-width="1.95652" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>',
+'arrow_left_alt' => '
+<svg width="50" height="39" viewBox="0 0 50 39" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M19 1L1 19.5L19 38" />
+<line y1="-0.5" x2="49" y2="-0.5" />
+</svg>',
+'arrow_right_alt' => '
+<svg width="50" height="39" viewBox="0 0 50 39" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M19 1L1 19.5L19 38" />
+<line y1="-0.5" x2="49" y2="-0.5" />
 </svg>'
 
 	);

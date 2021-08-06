@@ -70,23 +70,6 @@ $feature = get_field('feature_options',$ID);
                 </div>
             <?php else :
             $videoid = get_field('feature_video_id',$ID);
-            // $videourl = 'https://www.youtube.com/embed/' . $videoid;
-            // $args =
-            // add_query_arg( array(
-            //     'enablejsapi' => 1,
-            //     'autoplay' => 1,
-            //     'modestbranding' => 1,
-            //     'showinfo' => 0,
-            //     'origin' => home_url(),
-            //     'playsinline' => 1,
-            //     'rel' => 0,
-            //     'controls' => 0,
-            //     'color' => 'white',
-            //     'loop' => 1,
-            //     'mute' => 1,
-            //     'playlist' => $videoid,
-            //     'vq' => 720
-            // ), $videourl );
             ?>
             <div class="feature video">
                 <?php

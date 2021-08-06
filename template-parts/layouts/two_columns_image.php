@@ -4,6 +4,11 @@
 ">
     <div class="row">
         <div class="col">
+            <div class="content">
+              <?php the_sub_field('content'); ?>
+            </div>
+        </div>
+        <div class="col">
           <?php $image = get_sub_field('image');
           if ( $image ) : ?>
               <?php
@@ -27,11 +32,6 @@
                 loading="lazy">
               </figure>
           <?php endif; ?>
-        </div>
-        <div class="col">
-            <div class="content">
-              <?php the_sub_field('content'); ?>
-            </div>
         </div>
     </div>
 </div>

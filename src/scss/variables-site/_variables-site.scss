@@ -1,17 +1,17 @@
-$columns: (
-	1: 100%,
-	2: 50%,
-	3: 33.33%,
-	4: 25%,
-	5: 20%,
-	6: 16.66%,
-	7: 14.28%,
-	8: 12.5%,
-	9: 11.11%
-);
+// $columns: (
+// 	1: 100%,
+// 	2: 50%,
+// 	3: 33.33%,
+// 	4: 25%,
+// 	5: 20%,
+// 	6: 16.66%,
+// 	7: 14.28%,
+// 	8: 12.5%,
+// 	9: 11.11%
+// );
 
-$columns-margin: 50px;;
-$spacing-unit: 50px;
+// $columns-margin: 50px;;
+// $spacing-unit: 50px;
 
 //grid vars
 $grid-width: 1600px;
@@ -40,5 +40,5 @@ $brand-placeholder-color:$brand-lightgrey;
 
 //underscores styles
 $brand-font: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
-$brand-heading: "Big Caslon","Book Antiqua","Palatino Linotype",Georgia,serif;
-$brand-code: Menlo, Monaco, Consolas, "Andale Mono", "DejaVu Sans Mono", monospace;
+$brand-heading: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+$brand-code: Consolas, "Andale Mono WT", "Andale Mono", "Lucida Console", "Lucida Sans Typewriter", "DejaVu Sans Mono", "Bitstream Vera Sans Mono", "Liberation Mono", "Nimbus Mono L", Monaco, "Courier New", Courier, monospace;

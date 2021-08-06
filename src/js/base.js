@@ -2,7 +2,7 @@ console.log('🥑 %cMade by Monk', 'background: #616a2e; color: #f4e9e2; padding
 console.log(' %chttp://monk.com.au ', 'padding: 5px 13px;');
 
 
-jQuery(document).ready(function ($) {
+jQuery(function ($){
 
 	//page
 	var $hamburger = $(".hamburger"),
@@ -43,12 +43,10 @@ jQuery(document).ready(function ($) {
 		$hamburger.removeClass("is-active");
 	}
 	$screenOverlay.on('click', closeMenu);
-	$screenOverlay.on('click', closeModal);
 
 	$(document).bind('keydown', function (e) {
 		if (e.which == 27) {
 			closeMenu();
-			closeModal();
 		}
 	});
 
@@ -61,11 +59,14 @@ jQuery(document).ready(function ($) {
 	-ˋˏ *.·:·.⟐.·:·.* ˎˊ-
 	*/
 	function viewportHeight() {
+		var headerHeight = document.querySelector('#masthead').clientHeight;
 		if (window.innerWidth !== currentWidth) {
 			let viewportHeight = window.innerHeight;
 			document.documentElement.style.setProperty('--vh', viewportHeight + 'px');
+			document.documentElement.style.setProperty('--header', headerHeight + 'px');
 		} else {
 			document.documentElement.style.setProperty('--vh', currentHeight + 'px');
+			document.documentElement.style.setProperty('--header', headerHeight + 'px');
 		}
 	}
 	viewportHeight();
@@ -108,7 +109,7 @@ jQuery(document).ready(function ($) {
 	// 		$(this).addClass('fadein');
 	// 	}
 	// });
-  AOS.init();
+  // AOS.init();
 	/*
 	-ˋˏ *.·:·.⟐.·:·.* ˎˊ-
 	━━━ ⋅𖥔⋅ ━━✶━━ ⋅𖥔⋅ ━━━
@@ -214,9 +215,20 @@ jQuery(document).ready(function ($) {
 		//Re-init
 		$carousel.flickity(args);
 		// $carousel.flickity('reloadCells');
-		$(this).on('click', function () {
+		
+		$(this).parent().find('.next').on('click', function () {
 			$carousel.flickity('next')
 		});
+		$(this).parent().find('.prev').on('click', function () {
+			$carousel.flickity('previous')
+		});
+		$carousel
+		.on('dragStart.flickity', function(e) {
+			$(this).addClass('is-dragging');
+		})
+		.on('dragEnd.flickity', function() {
+			$(this).removeClass('is-dragging');
+		})
 	});
 	//recalculates slider on load to get around some annoying center mode bugs
 	$(window).resize();
@@ -376,11 +388,11 @@ jQuery(document).ready(function ($) {
 	━━━ ⋅𖥔⋅ ━━✶━━ ⋅𖥔⋅ ━━━
 	-ˋˏ *.·:·.⟐.·:·.* ˎˊ-
 	*/
-	$('.gform_wrapper').on('submit', 'form', function () {
-		$('[type=submit]', this) // Select the form's submit button
-			.val('Sending...') // Change the value of the submit button. Change text to whatever you like.
-			.prop('disabled', true); // Not really necessary but will prevent the user from clicking the button again while the form is submitting.
-	});
+	// $('.gform_wrapper').on('submit', 'form', function () {
+	// 	$('[type=submit]', this) // Select the form's submit button
+	// 		.val('Sending...') // Change the value of the submit button. Change text to whatever you like.
+	// 		.prop('disabled', true); // Not really necessary but will prevent the user from clicking the button again while the form is submitting.
+	// });
 
 	//make gravity forms more accessible
 	//     var $fields = $( '.gform_body input[type="text"],.gform_body input[type="email"], .gform_body textarea' ),

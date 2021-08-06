@@ -44,7 +44,7 @@
             <nav id="site-navigation" class="main-navigation" role="navigation" aria-label="Navigation menu for <?php bloginfo('name');?>">
                 <button id="mobile-menu" class="menu-toggle hamburger hamburger--collapse" aria-controls="primary-menu" aria-expanded="false" type="button">
                     <span class="hamburger-box">
-                    <span class="hamburger-inner"></span>
+                        <span class="hamburger-inner"></span>
                     </span>
                     <div class="screen-reader-text">Menu</div>
                 </button>

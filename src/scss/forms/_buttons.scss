@@ -14,7 +14,7 @@ input[type="submit"],
 	margin: 1.5em 0;
 
 	&:hover {
-		background-color:rgba($brand-primary,.5);
+		background-color:$brand-secondary;
 		border: none;
 		transition:.3s ease all;
 		cursor:pointer;

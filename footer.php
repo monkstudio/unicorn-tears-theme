@@ -27,8 +27,6 @@
 						)
 				);
 				?>
-				<span class="separator">|</span><?php _e( 'Made by <a href="https://monk.com.au" target="_blank" rel="noopener noreferrer">Monk</a>', 'unicorn-tears' ); ?>
-
 				<?php if ( has_nav_menu( 'social' ) ) : ?>
 				<nav class="social-navigation" role="navigation" aria-label="<?php _e( 'Social Links Menu', 'unicorn-tears' ); ?>">
 					<?php

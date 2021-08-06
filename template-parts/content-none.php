@@ -8,7 +8,7 @@
  */
 
 ?>
-<section class="no-results not-found page-layout">
+<section class="no-results not-found monk-block">
 	<div class="container">
 			<header class="page-header">
 				<h1 class="page-title"><?php esc_html_e( 'Nothing Found', 'unicorn-tears' ); ?></h1>

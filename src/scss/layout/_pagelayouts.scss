@@ -106,17 +106,6 @@ $feature-height-sm:600px;
     }
 }
 
-.fw_column {
-    color: $brand-secondary;
-    position: relative;
-    padding: 50px 0;
-    @include column-width();
-
-    .container {
-        max-width: 900px;
-    }
-}
-
 .cover_panel {
     position: relative;
     min-height: 100vh;
@@ -169,18 +158,27 @@ $feature-height-sm:600px;
     }
 }
 
-.two_columns_image {
+.monk-block {
+    margin: $grid-padding auto;
+    @include media("<=laptop") {
+        margin: $grid-padding-md auto;
+    }
+}
+.monk-two-columns-image {
     z-index: 50;
     position: relative;
     .row {
         align-items: center;
     }
-    .left-align {
+
+    .col:first-child {
+        @include media("<=tablet") {
+            order:2
+        }
+    }
+    &.left-align {
         .col:first-child {
             order: 2;
-            @include media("<=tablet") {
-                order: initial;
-            }
         }
 
         .row {
@@ -317,6 +315,9 @@ $feature-height-sm:600px;
         grid-template-columns: 50% 1fr;
         grid-gap: 50px;
         align-items: center;
+        @include media("<=tablet") {
+            grid-template-columns: 1fr;
+        }
     }
     img {
         pointer-events: none;
@@ -454,81 +455,81 @@ Modals
 ♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥
 ♡♡♡♡♡♡♡♡♡♡♡
 */
-.modal {
-    background-color: #FFF;
-    color: $brand-primary;
-    padding: $grid-padding;
-    width: 80%;
-    height: auto;
-    @include center;
-    position: fixed;
-    z-index: 1000;
-    overflow: auto;
-    max-width: 1000px;
+// .modal {
+//     background-color: #FFF;
+//     color: $brand-primary;
+//     padding: $grid-padding;
+//     width: 80%;
+//     height: auto;
+//     @include center;
+//     position: fixed;
+//     z-index: 1000;
+//     overflow: auto;
+//     max-width: 1000px;
 
-    // display: flex;
-    // align-items: center;
-    // justify-content: center;
+//     // display: flex;
+//     // align-items: center;
+//     // justify-content: center;
 
-    pointer-events: none;
-    opacity: 0;
-    transition: .3s ease all;
-    visibility: hidden;
-    // transform: translateY(-100%);
+//     pointer-events: none;
+//     opacity: 0;
+//     transition: .3s ease all;
+//     visibility: hidden;
+//     // transform: translateY(-100%);
 
-    @include media("<=tablet") {
-        padding: 100px $grid-padding-sm 50px;
-        height: 100%;
-        width: 100%;
-        max-width: initial;
-    }
+//     @include media("<=tablet") {
+//         padding: 100px $grid-padding-sm 50px;
+//         height: 100%;
+//         width: 100%;
+//         max-width: initial;
+//     }
 
-    &.active {
-        visibility: visible;
-        pointer-events: all;
-        transition: .6s ease all;
-        opacity: 1;
-        transition: .3s ease opacity;
-        // transform: translateY(0);
-    }
+//     &.active {
+//         visibility: visible;
+//         pointer-events: all;
+//         transition: .6s ease all;
+//         opacity: 1;
+//         transition: .3s ease opacity;
+//         // transform: translateY(0);
+//     }
 
-    .close {
-        position: absolute;
-        top: 20px;
-        right: 20px;
-        border: none;
-        margin: 0;
-        padding: 0;
-        width: 35px;
-        height: 35px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
+//     .close {
+//         position: absolute;
+//         top: 20px;
+//         right: 20px;
+//         border: none;
+//         margin: 0;
+//         padding: 0;
+//         width: 35px;
+//         height: 35px;
+//         display: flex;
+//         align-items: center;
+//         justify-content: center;
 
-        svg {
-            stroke: #FFF;
-        }
+//         svg {
+//             stroke: #FFF;
+//         }
 
-        &:before,
-        &:after {
-            content: "";
-            position: absolute;
-            margin-left: auto;
-            margin-right: auto;
-            left: 0;
-            right: 0;
-            height: 25px;
-            width: 2px;
-            background-color: currentColor;
-        }
+//         &:before,
+//         &:after {
+//             content: "";
+//             position: absolute;
+//             margin-left: auto;
+//             margin-right: auto;
+//             left: 0;
+//             right: 0;
+//             height: 25px;
+//             width: 2px;
+//             background-color: currentColor;
+//         }
 
-        &:before {
-            transform: rotate(45deg);
-        }
+//         &:before {
+//             transform: rotate(45deg);
+//         }
 
-        &:after {
-            transform: rotate(-45deg);
-        }
+//         &:after {
+//             transform: rotate(-45deg);
+//         }
 
-    }
-}
+//     }
+// }

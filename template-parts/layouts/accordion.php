@@ -8,17 +8,17 @@ $counter = 0;
     <div class="row">
       <div class="col">
         <?php
-          if ( get_sub_field('section_title')) {
-              get_template_part( 'template-parts/layouts/section-title' );
-          }?>
+        if ( get_sub_field('section_title')) {
+            get_template_part( 'template-parts/layouts/section-title' );
+        }?>
         <div class="accordion-items">
           <?php
           $counter = 0;
           foreach($items as $item ) :
           $counter++; ?>
-          <div id="<?php echo sanitize_title($item['title']);?>-panel<?php echo $counter;?>" data-aos="fade-right" data-aos-duration="600">
+          <div id="<?php echo sanitize_title($item['title']);?>-panel<?php echo $counter;?>">
             <div class="content panel">
-                <button class="panel-header"><?php echo $item['title'];?> <?php echo get_icon('arrow',20);?></button>
+                <button class="panel-header"><?php echo $item['title'];?> <?php echo get_icon('plus',20);?></button>
                 <div class="panel-content">
                 <?php echo $item['content'];?>
                 </div>

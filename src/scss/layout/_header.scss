@@ -1,8 +1,8 @@
-.site-header {
+#masthead {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 20px;
+    padding: 20px $grid-padding;
 }
 
 .site-branding {
