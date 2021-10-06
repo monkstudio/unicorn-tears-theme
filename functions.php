@@ -120,8 +120,8 @@ function unicorn_tears_scripts() {
 	// wp_register_script( 'jquery-migrate', "https://code.jquery.com/jquery-migrate-3.0.0.min.js", array(), '3.0.0' );
 	// wp_register_script( 'aos', "https://unpkg.com/aos@2.3.1/dist/aos.js" );
 	$scripts = glob('wp-content/themes/unicorn-tears/dist/js/script-*.js');
-	$script = pathinfo($scripts[0])['basename'];
-	$script_min = pathinfo($scripts[1])['basename'];
+	$script = pathinfo($scripts[1])['basename'];
+	$script_min = pathinfo($scripts[0])['basename'];
 
 	// $styles = glob('wp-content/themes/unicorn-tears/dist/css/style-*.css');
 	// $style = pathinfo($styles[0])['basename'];
@@ -144,6 +144,7 @@ function unicorn_tears_scripts() {
 	//enqueue scripts and styles
 	//css
 	// wp_enqueue_style( 'aos-styles', 'https://unpkg.com/aos@2.3.1/dist/aos.css' );
+	// wp_enqueue_style( 'csshead', 'https://csswizardry.com/ct/ct.css' );
 	wp_enqueue_style( 'typekit', 'https://use.typekit.net/zcd0ukj.css' );
 	wp_enqueue_style( 'unicorn-tears-styles');
 

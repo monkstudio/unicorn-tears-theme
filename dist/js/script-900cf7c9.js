@@ -1,3 +1,351 @@
+/**
+ * File skip-link-focus-fix.js.
+ *
+ * Helps with accessibility for keyboard only users.
+ *
+ * Learn more: https://git.io/vWdr2
+ */
+(function () {
+  var isWebkit = navigator.userAgent.toLowerCase().indexOf('webkit') > -1,
+      isOpera = navigator.userAgent.toLowerCase().indexOf('opera') > -1,
+      isIe = navigator.userAgent.toLowerCase().indexOf('msie') > -1;
+
+  if ((isWebkit || isOpera || isIe) && document.getElementById && window.addEventListener) {
+    window.addEventListener('hashchange', function () {
+      var id = location.hash.substring(1),
+          element;
+
+      if (!/^[A-z0-9_-]+$/.test(id)) {
+        return;
+      }
+
+      element = document.getElementById(id);
+
+      if (element) {
+        if (!/^(?:a|select|input|button|textarea)$/i.test(element.tagName)) {
+          element.tabIndex = -1;
+        }
+
+        element.focus();
+      }
+    }, false);
+  }
+})();
+
+/*
+-ˋˏ *.·:·.⟐.·:·.* ˎˊ-
+━━━ ⋅𖥔⋅ ━━✶━━ ⋅𖥔⋅ ━━━
+Smooth scroll
+━━━ ⋅𖥔⋅ ━━✶━━ ⋅𖥔⋅ ━━━
+-ˋˏ *.·:·.⟐.·:·.* ˎˊ-
+*/
+(function ($) {
+  $('a[href*="#"]') // Remove links that don't actually link to anything
+  .not('[href="#"]').not('[href="#0"]').not('.modal-trigger').click(function (event) {
+    // On-page links
+    if (location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') && location.hostname == this.hostname) {
+      // Figure out element to scroll to
+      var target = $(this.hash);
+      target = target.length ? target : $('[name=' + this.hash.slice(1) + ']'); // Does a scroll target exist?
+
+      if (target.length) {
+        // Only prevent default if animation is actually gonna happen
+        event.preventDefault();
+        $('html, body').animate({
+          scrollTop: target.offset().top
+        }, 1000, function () {
+          // Callback after animation
+          // Must change focus!
+          var $target = $(target);
+          $target.focus();
+
+          if ($target.is(":focus")) {
+            // Checking if the target was focused
+            return false;
+          } else {
+            $target.attr('tabindex', '-1'); // Adding tabindex for elements not focusable
+
+            $target.focus(); // Set focus again
+          }
+        });
+      }
+    }
+  });
+})(jQuery);
+
+/**
+ * File navigation.js.
+ *
+ * Handles toggling the navigation menu for small screens and enables TAB key
+ * navigation support for dropdown menus.
+ */
+(function () {
+  var container, button, menu, links, i, len;
+  container = document.getElementById('site-navigation');
+
+  if (!container) {
+    return;
+  }
+
+  button = container.getElementsByTagName('button')[0];
+
+  if ('undefined' === typeof button) {
+    return;
+  }
+
+  menu = container.getElementsByTagName('ul')[0]; // Hide menu toggle button if menu is empty and return early.
+
+  if ('undefined' === typeof menu) {
+    button.style.display = 'none';
+    return;
+  }
+
+  menu.setAttribute('aria-expanded', 'false');
+
+  if (-1 === menu.className.indexOf('nav-menu')) {
+    menu.className += ' nav-menu';
+  }
+
+  button.onclick = function () {
+    if (-1 !== container.className.indexOf('toggled')) {
+      container.className = container.className.replace(' toggled', '');
+      button.setAttribute('aria-expanded', 'false');
+      menu.setAttribute('aria-expanded', 'false');
+    } else {
+      container.className += ' toggled';
+      button.setAttribute('aria-expanded', 'true');
+      menu.setAttribute('aria-expanded', 'true');
+    }
+  }; // Get all the link elements within the menu.
+
+
+  links = menu.getElementsByTagName('a'); // Each time a menu link is focused or blurred, toggle focus.
+
+  for (i = 0, len = links.length; i < len; i++) {
+    links[i].addEventListener('focus', toggleFocus, true);
+    links[i].addEventListener('blur', toggleFocus, true);
+  }
+  /**
+   * Sets or removes .focus class on an element.
+   */
+
+
+  function toggleFocus() {
+    var self = this; // Move up through the ancestors of the current link until we hit .nav-menu.
+
+    while (-1 === self.className.indexOf('nav-menu')) {
+      // On li elements toggle the class .focus.
+      if ('li' === self.tagName.toLowerCase()) {
+        // console.log(self.className.indexOf( 'focus' ))
+        if (-1 !== self.className.indexOf('focus')) {
+          self.className = self.className.replace(' focus', '');
+        } else {
+          self.className += ' focus';
+        }
+      }
+
+      self = self.parentElement;
+    }
+  }
+  /**
+   * Toggles `focus` class to allow submenu access on tablets.
+   */
+
+
+  (function (container) {
+    var touchStartFn,
+        i,
+        parentLink = container.querySelectorAll('.menu-item-has-children > a, .page_item_has_children > a');
+
+    if ('ontouchstart' in window) {
+      touchStartFn = function (e) {
+        var menuItem = this.parentNode,
+            i;
+
+        if (!menuItem.classList.contains('focus')) {
+          // e.preventDefault();
+          for (i = 0; i < menuItem.parentNode.children.length; ++i) {
+            if (menuItem === menuItem.parentNode.children[i]) {
+              continue;
+            }
+
+            menuItem.parentNode.children[i].classList.remove('focus');
+          }
+
+          menuItem.classList.add('focus');
+        } else {
+          menuItem.classList.remove('focus');
+        }
+      };
+
+      for (i = 0; i < parentLink.length; ++i) {
+        parentLink[i].addEventListener('touchstart', touchStartFn, false);
+      }
+    }
+  })(container);
+})();
+
+(function ($) {
+
+  function initMainNavigation(container) {
+    //check if $navcontent in functions.php is false
+    // 	if ( navcontent.has_navigation == 'true') {
+    // 		// Add dropdown toggle that displays child menu items.
+    // 		var dropdownToggle = '<div class="dropdown-toggle" aria-expanded="false" aria-label="Toggle Menu">'+navcontent.iconOpen+'<span class="screen-reader-text">Expand</span></div>'
+    // }
+    // 	// container.find( '.menu-item-has-children > .sub-menu, .page_item_has_children > .sub-menu' ).before( dropdownToggle );
+    // 	container.find( '.menu-item-has-children > a, .page_item_has_children > a' ).after( dropdownToggle );
+    // Toggle buttons and submenu items with active children menu items.
+    // container.find( '.current-menu-ancestor > button' ).addClass( 'toggled-on' );
+    // container.find( '.current-menu-ancestor > .sub-menu' ).addClass( 'toggled-on' );
+    // Add menu items with submenus to aria-haspopup="true".
+    container.find('.menu-item-has-children, .page_item_has_children').attr('aria-haspopup', 'true');
+    container.find('.dropdown-toggle').click(function (e) {
+      // if ( 	$('body').hasClass('menu-open')) {
+      // 	$('body').removeClass('menu-open');
+      // } else {
+      // 	$('body').addClass('menu-open');
+      // }
+      var _this = $(this),
+          screenReaderSpan = _this.find('.screen-reader-text'); // if ( document.body.clientWidth < 1024 || 'ontouchstart' in window   ) {
+      //     e.preventDefault();
+      //     // $(this).unbind(e);
+      // }
+
+
+      _this.parent().parent().toggleClass('toggled-on');
+
+      _this.prev('.children, .sub-menu').toggleClass('toggled-on'); // jscs:disable
+
+
+      _this.attr('aria-expanded', _this.attr('aria-expanded') === 'false' ? 'true' : 'false'); // jscs:enable
+
+
+      screenReaderSpan.text(screenReaderSpan.text() === navcontent.expand ? navcontent.collapse : navcontent.expand); // if (_this.parent().hasClass('toggled-on') ) {
+      // 	_this.find('.svg-wrapper').html(navcontent.iconClose);
+      // } else {
+      // 	_this.find('.svg-wrapper').html(navcontent.iconOpen);
+      // }
+    });
+  }
+
+  initMainNavigation($('.main-navigation'));
+})(jQuery);
+
+/*
+-ˋˏ *.·:·.⟐.·:·.* ˎˊ-
+━━━ ⋅𖥔⋅ ━━✶━━ ⋅𖥔⋅ ━━━
+Scrolly classes
+━━━ ⋅𖥔⋅ ━━✶━━ ⋅𖥔⋅ ━━━
+-ˋˏ *.·:·.⟐.·:·.* ˎˊ-
+*/
+var scrollDistance = function (callback, refresh) {
+  // Make sure a valid callback was provided
+  if (!callback || typeof callback !== 'function') return; // Variables
+
+  var isScrolling, start, end, distance, docHeight, height; // Listen for scroll events
+
+  window.addEventListener('scroll', function (event) {
+    // Set starting position
+    if (!start) {
+      start = window.pageYOffset;
+    } // Clear our timeout throughout the scroll
+
+
+    window.clearTimeout(isScrolling); // Set a timeout to run after scrolling ends
+
+    isScrolling = setTimeout(function () {
+      // Calculate distance
+      end = window.pageYOffset;
+      distance = end - start;
+      docHeight = Math.max(document.body.scrollHeight, document.body.offsetHeight, document.documentElement.clientHeight, document.documentElement.scrollHeight, document.documentElement.offsetHeight);
+      height = docHeight - window.innerHeight; // Run the callback
+
+      callback(distance, start, end, height); // Reset calculations
+
+      start = null;
+      end = null;
+      distance = null;
+    }, refresh || 20);
+  }, false);
+};
+
+scrollDistance(function (distance, start, end, height) {
+  // detect top and bottom scroll positions
+  if (end >= height) {
+    document.body.classList.add('scroll-bottom');
+    document.body.classList.remove('scroll-top', 'scrolling-up', 'scrolling-down');
+  } else if (end <= 1) {
+    document.body.classList.add('scroll-top');
+    document.body.classList.remove('scroll-bottom', 'scrolling-up', 'scrolling-down');
+  } else if (distance > 0 && start !== 0 && end !== height) {
+    document.body.classList.add('scrolling-down');
+    document.body.classList.remove('scrolling-up', 'scroll-top', 'scroll-bottom');
+  } else if (distance < 0 && start !== 0 && end !== height) {
+    document.body.classList.add('scrolling-up');
+    document.body.classList.remove('scrolling-down', 'scroll-top', 'scroll-bottom');
+  } // console.log(distance, start,end,height)
+
+});
+window.scrollTo(window.scrollX, window.scrollY - 1);
+window.scrollTo(window.scrollX, window.scrollY + 1);
+
+/*
+-ˋˏ *.·:·.⟐.·:·.* ˎˊ-
+━━━ ⋅𖥔⋅ ━━✶━━ ⋅𖥔⋅ ━━━
+Store VH
+━━━ ⋅𖥔⋅ ━━✶━━ ⋅𖥔⋅ ━━━
+-ˋˏ *.·:·.⟐.·:·.* ˎˊ-
+*/
+var currentWidth = window.outerWidth,
+    currentHeight = window.outerHeight;
+
+function viewportHeight() {
+  var headerHeight = document.querySelector('#masthead').clientHeight;
+
+  if (window.innerWidth !== currentWidth) {
+    let viewportHeight = window.innerHeight;
+    document.documentElement.style.setProperty('--vh', viewportHeight + 'px');
+    document.documentElement.style.setProperty('--header', headerHeight + 'px');
+  } else {
+    document.documentElement.style.setProperty('--vh', currentHeight + 'px');
+    document.documentElement.style.setProperty('--header', headerHeight + 'px');
+  }
+}
+
+viewportHeight();
+window.addEventListener('resize', viewportHeight);
+
+/*
+-ˋˏ *.·:·.⟐.·:·.* ˎˊ-
+━━━ ⋅𖥔⋅ ━━✶━━ ⋅𖥔⋅ ━━━
+Make feature videos act as background: cover
+━━━ ⋅𖥔⋅ ━━✶━━ ⋅𖥔⋅ ━━━
+-ˋˏ *.·:·.⟐.·:·.* ˎˊ-
+*/
+function video() {
+  var video = document.querySelector('.video-wrapper');
+
+  if (video !== null) {
+    var wrapperWidth = window.outerWidth,
+        videoWidth = video.offsetWidth,
+        videoHeight = video.offsetHeight; //this is to get around the elastic url bar on mobiles like ios...
+
+    if (wrapperWidth < 768) {
+      var wrapperHeight = window.innerHeight + 100;
+    } else {
+      var wrapperHeight = window.innerHeight;
+    }
+
+    var scale = Math.max(wrapperWidth / videoWidth, wrapperHeight / videoHeight);
+    document.querySelector('.video-wrapper').style.transform = "translate(-50%, -50%) " + "scale(" + scale + ")";
+  }
+}
+
+video(); //update the video's scale as the browser resizes
+
+window.addEventListener('resize', video);
+
 /*!
  * Flickity PACKAGED v2.2.1
  * Touch, responsive, flickable carousels
@@ -1572,6 +1920,129 @@
     }
   }, e;
 });
+
+/*
+-ˋˏ *.·:·.⟐.·:·.* ˎˊ-
+━━━ ⋅𖥔⋅ ━━✶━━ ⋅𖥔⋅ ━━━
+Slider functionality
+━━━ ⋅𖥔⋅ ━━✶━━ ⋅𖥔⋅ ━━━
+-ˋˏ *.·:·.⟐.·:·.* ˎˊ-
+*/
+
+(function ($) {
+  $('.slider').each(function () {
+    let _this = $(this);
+
+    var args = {
+      pageDots: false,
+      wrapAround: true,
+      cellSelector: '.slide',
+      percentPosition: true,
+      contain: true,
+      setGallerySize: false,
+      resize: true,
+      imagesLoaded: true,
+      cellAlign: 'left',
+      freeScroll: false,
+      prevNextButtons: false // autoPlay: 4000,
+      // selectedAttraction: 0.008,
+      // friction: 0.16
+
+    };
+
+    var $carousel = _this.flickity(args); //Destroy
+    // $carousel.flickity('destroy');
+    //Re-init
+
+
+    $carousel.flickity(args); // $carousel.flickity('reloadCells')
+    // $(this).on('click', function () {
+    // 	$carousel.flickity('next')
+    // });
+    // $carousel.on('dragStart.flickity', () => $carousel.find('.slide').css('pointer-events', 'none'));
+    // $carousel.on('dragEnd.flickity', () => $carousel.find('.slide').css('pointer-events', 'all'));
+  });
+  $('.info-slider').each(function () {
+    let _this = $(this);
+
+    var args = {
+      pageDots: false,
+      wrapAround: true,
+      cellSelector: '.slide',
+      percentPosition: true,
+      contain: true,
+      setGallerySize: false,
+      resize: true,
+      imagesLoaded: true,
+      cellAlign: 'left',
+      freeScroll: false,
+      prevNextButtons: false,
+      autoPlay: 4000,
+      selectedAttraction: 0.008,
+      friction: 0.16
+    };
+
+    var $carousel = _this.flickity(args); //Destroy
+    // $carousel.flickity('destroy');
+    //Re-init
+
+
+    $carousel.flickity(args); // $carousel.flickity('reloadCells');
+  });
+  $('.gallery-slider').each(function () {
+    let _this = $(this);
+
+    var args = {
+      pageDots: false,
+      wrapAround: true,
+      cellSelector: '.slide',
+      percentPosition: true,
+      contain: true,
+      setGallerySize: true,
+      resize: true,
+      imagesLoaded: true,
+      cellAlign: 'left',
+      freeScroll: false,
+      prevNextButtons: false,
+      autoPlay: 4000,
+      selectedAttraction: 0.008,
+      friction: 0.16
+    };
+
+    var $carousel = _this.flickity(args); //Destroy
+    // $carousel.flickity('destroy');
+    //Re-init
+
+
+    $carousel.flickity(args); // $carousel.flickity('reloadCells');
+
+    $(this).parent().find('.next').on('click', function () {
+      $carousel.flickity('next');
+    });
+    $(this).parent().find('.prev').on('click', function () {
+      $carousel.flickity('previous');
+    });
+    $carousel.on('dragStart.flickity', function (e) {
+      $(this).addClass('is-dragging');
+    }).on('dragEnd.flickity', function () {
+      $(this).removeClass('is-dragging');
+    });
+  });
+})(jQuery);
+
+/*
+-ˋˏ *.·:·.⟐.·:·.* ˎˊ-
+━━━ ⋅𖥔⋅ ━━✶━━ ⋅𖥔⋅ ━━━
+Accordions
+━━━ ⋅𖥔⋅ ━━✶━━ ⋅𖥔⋅ ━━━
+-ˋˏ *.·:·.⟐.·:·.* ˎˊ-
+*/
+(function ($) {
+  $(".panel-header").click(function (e) {
+    $(this).next().slideToggle();
+    $(this).parent().toggleClass('active');
+  });
+})(jQuery);
 
 // ==================================================
 // fancyBox v3.5.7
@@ -6162,214 +6633,47 @@
   });
 })(document, jQuery);
 
-/**
- * File navigation.js.
- *
- * Handles toggling the navigation menu for small screens and enables TAB key
- * navigation support for dropdown menus.
- */
-(function () {
-  var container, button, menu, links, i, len;
-  container = document.getElementById('site-navigation');
-
-  if (!container) {
-    return;
-  }
-
-  button = container.getElementsByTagName('button')[0];
-
-  if ('undefined' === typeof button) {
-    return;
-  }
-
-  menu = container.getElementsByTagName('ul')[0]; // Hide menu toggle button if menu is empty and return early.
-
-  if ('undefined' === typeof menu) {
-    button.style.display = 'none';
-    return;
-  }
-
-  menu.setAttribute('aria-expanded', 'false');
-
-  if (-1 === menu.className.indexOf('nav-menu')) {
-    menu.className += ' nav-menu';
-  }
-
-  button.onclick = function () {
-    if (-1 !== container.className.indexOf('toggled')) {
-      container.className = container.className.replace(' toggled', '');
-      button.setAttribute('aria-expanded', 'false');
-      menu.setAttribute('aria-expanded', 'false');
-    } else {
-      container.className += ' toggled';
-      button.setAttribute('aria-expanded', 'true');
-      menu.setAttribute('aria-expanded', 'true');
-    }
-  }; // Get all the link elements within the menu.
-
-
-  links = menu.getElementsByTagName('a'); // Each time a menu link is focused or blurred, toggle focus.
-
-  for (i = 0, len = links.length; i < len; i++) {
-    links[i].addEventListener('focus', toggleFocus, true);
-    links[i].addEventListener('blur', toggleFocus, true);
-  }
-  /**
-   * Sets or removes .focus class on an element.
-   */
-
-
-  function toggleFocus() {
-    var self = this; // Move up through the ancestors of the current link until we hit .nav-menu.
-
-    while (-1 === self.className.indexOf('nav-menu')) {
-      // On li elements toggle the class .focus.
-      if ('li' === self.tagName.toLowerCase()) {
-        // console.log(self.className.indexOf( 'focus' ))
-        if (-1 !== self.className.indexOf('focus')) {
-          self.className = self.className.replace(' focus', '');
-        } else {
-          self.className += ' focus';
-        }
-      }
-
-      self = self.parentElement;
-    }
-  }
-  /**
-   * Toggles `focus` class to allow submenu access on tablets.
-   */
-
-
-  (function (container) {
-    var touchStartFn,
-        i,
-        parentLink = container.querySelectorAll('.menu-item-has-children > a, .page_item_has_children > a');
-
-    if ('ontouchstart' in window) {
-      touchStartFn = function (e) {
-        var menuItem = this.parentNode,
-            i;
-
-        if (!menuItem.classList.contains('focus')) {
-          // e.preventDefault();
-          for (i = 0; i < menuItem.parentNode.children.length; ++i) {
-            if (menuItem === menuItem.parentNode.children[i]) {
-              continue;
-            }
-
-            menuItem.parentNode.children[i].classList.remove('focus');
-          }
-
-          menuItem.classList.add('focus');
-        } else {
-          menuItem.classList.remove('focus');
-        }
-      };
-
-      for (i = 0; i < parentLink.length; ++i) {
-        parentLink[i].addEventListener('touchstart', touchStartFn, false);
-      }
-    }
-  })(container);
-})();
+/*
+-ˋˏ *.·:·.⟐.·:·.* ˎˊ-
+━━━ ⋅𖥔⋅ ━━✶━━ ⋅𖥔⋅ ━━━
+Add lightbox
+━━━ ⋅𖥔⋅ ━━✶━━ ⋅𖥔⋅ ━━━
+-ˋˏ *.·:·.⟐.·:·.* ˎˊ-
+*/
 
 (function ($) {
+  var $lightbox = $('.lightbox');
+  $('a[href]').filter(function () {
+    return this.href && this.href.match(/\.(?:jpe?g|gif|bmp|a?png)$/i);
+  }).addClass('lightbox');
+  $lightbox.fancybox({
+    touch: {
+      vertical: true,
+      // Allow to drag content vertically
+      momentum: true // Continue movement after releasing mouse/touch when panning
 
-  function initMainNavigation(container) {
-    //check if $navcontent in functions.php is false
-    // 	if ( navcontent.has_navigation == 'true') {
-    // 		// Add dropdown toggle that displays child menu items.
-    // 		var dropdownToggle = '<div class="dropdown-toggle" aria-expanded="false" aria-label="Toggle Menu">'+navcontent.iconOpen+'<span class="screen-reader-text">Expand</span></div>'
-    // }
-    // 	// container.find( '.menu-item-has-children > .sub-menu, .page_item_has_children > .sub-menu' ).before( dropdownToggle );
-    // 	container.find( '.menu-item-has-children > a, .page_item_has_children > a' ).after( dropdownToggle );
-    // Toggle buttons and submenu items with active children menu items.
-    // container.find( '.current-menu-ancestor > button' ).addClass( 'toggled-on' );
-    // container.find( '.current-menu-ancestor > .sub-menu' ).addClass( 'toggled-on' );
-    // Add menu items with submenus to aria-haspopup="true".
-    container.find('.menu-item-has-children, .page_item_has_children').attr('aria-haspopup', 'true');
-    container.find('.dropdown-toggle').click(function (e) {
-      // if ( 	$('body').hasClass('menu-open')) {
-      // 	$('body').removeClass('menu-open');
-      // } else {
-      // 	$('body').addClass('menu-open');
-      // }
-      var _this = $(this),
-          screenReaderSpan = _this.find('.screen-reader-text'); // if ( document.body.clientWidth < 1024 || 'ontouchstart' in window   ) {
-      //     e.preventDefault();
-      //     // $(this).unbind(e);
-      // }
-
-
-      _this.parent().parent().toggleClass('toggled-on');
-
-      _this.prev('.children, .sub-menu').toggleClass('toggled-on'); // jscs:disable
-
-
-      _this.attr('aria-expanded', _this.attr('aria-expanded') === 'false' ? 'true' : 'false'); // jscs:enable
-
-
-      screenReaderSpan.text(screenReaderSpan.text() === navcontent.expand ? navcontent.collapse : navcontent.expand); // if (_this.parent().hasClass('toggled-on') ) {
-      // 	_this.find('.svg-wrapper').html(navcontent.iconClose);
-      // } else {
-      // 	_this.find('.svg-wrapper').html(navcontent.iconOpen);
-      // }
-    });
-  }
-
-  initMainNavigation($('.main-navigation'));
+    }
+  });
+  $('[data-fancybox]').fancybox({
+    youtube: {
+      controls: 0,
+      showinfo: 0
+    },
+    vimeo: {
+      color: '000'
+    }
+  });
 })(jQuery);
 
-/**
- * File skip-link-focus-fix.js.
- *
- * Helps with accessibility for keyboard only users.
- *
- * Learn more: https://git.io/vWdr2
- */
-(function () {
-  var isWebkit = navigator.userAgent.toLowerCase().indexOf('webkit') > -1,
-      isOpera = navigator.userAgent.toLowerCase().indexOf('opera') > -1,
-      isIe = navigator.userAgent.toLowerCase().indexOf('msie') > -1;
-
-  if ((isWebkit || isOpera || isIe) && document.getElementById && window.addEventListener) {
-    window.addEventListener('hashchange', function () {
-      var id = location.hash.substring(1),
-          element;
-
-      if (!/^[A-z0-9_-]+$/.test(id)) {
-        return;
-      }
-
-      element = document.getElementById(id);
-
-      if (element) {
-        if (!/^(?:a|select|input|button|textarea)$/i.test(element.tagName)) {
-          element.tabIndex = -1;
-        }
-
-        element.focus();
-      }
-    }, false);
-  }
-})();
-
 console.log('🥑 %cMade by Monk', 'background: #616a2e; color: #f4e9e2; padding: 5px 17px; border-radius: 3px;');
-console.log(' %chttp://monk.com.au ', 'padding: 5px 13px;');
+console.log(' %chttps://monk.com.au ', 'padding: 5px 13px;');
 jQuery(function ($) {
   //page
   var $hamburger = $(".hamburger"),
-      $site = $("html,body");
-      $('.site-content');
-      var //menu
-  $menu = $(".main-navigation"),
+      $site = $("body"),
+      $menu = $(".main-navigation"),
       $menuitems = $(".menu-item"),
-      $screenOverlay = $(".screen-overlay"),
-      //media
-  $lightbox = $('.lightbox'),
-      currentWidth = $(window).width(),
-      currentHeight = $(window).height();
+      $screenOverlay = $(".screen-overlay");
   /*
   -ˋˏ *.·:·.⟐.·:·.* ˎˊ-
   ━━━ ⋅𖥔⋅ ━━✶━━ ⋅𖥔⋅ ━━━
@@ -6403,56 +6707,6 @@ jQuery(function ($) {
   /*
   -ˋˏ *.·:·.⟐.·:·.* ˎˊ-
   ━━━ ⋅𖥔⋅ ━━✶━━ ⋅𖥔⋅ ━━━
-  Store VH
-  ━━━ ⋅𖥔⋅ ━━✶━━ ⋅𖥔⋅ ━━━
-  -ˋˏ *.·:·.⟐.·:·.* ˎˊ-
-  */
-
-  function viewportHeight() {
-    var headerHeight = document.querySelector('#masthead').clientHeight;
-
-    if (window.innerWidth !== currentWidth) {
-      let viewportHeight = window.innerHeight;
-      document.documentElement.style.setProperty('--vh', viewportHeight + 'px');
-      document.documentElement.style.setProperty('--header', headerHeight + 'px');
-    } else {
-      document.documentElement.style.setProperty('--vh', currentHeight + 'px');
-      document.documentElement.style.setProperty('--header', headerHeight + 'px');
-    }
-  }
-
-  viewportHeight();
-  /*
-  -ˋˏ *.·:·.⟐.·:·.* ˎˊ-
-  ━━━ ⋅𖥔⋅ ━━✶━━ ⋅𖥔⋅ ━━━
-  Add lightbox
-  ━━━ ⋅𖥔⋅ ━━✶━━ ⋅𖥔⋅ ━━━
-  -ˋˏ *.·:·.⟐.·:·.* ˎˊ-
-  */
-
-  $('a[href]').filter(function () {
-    return this.href && this.href.match(/\.(?:jpe?g|gif|bmp|a?png)$/i);
-  }).addClass('lightbox');
-  $lightbox.fancybox({
-    touch: {
-      vertical: true,
-      // Allow to drag content vertically
-      momentum: true // Continue movement after releasing mouse/touch when panning
-
-    }
-  });
-  $('[data-fancybox]').fancybox({
-    youtube: {
-      controls: 0,
-      showinfo: 0
-    },
-    vimeo: {
-      color: '000'
-    }
-  });
-  /*
-  -ˋˏ *.·:·.⟐.·:·.* ˎˊ-
-  ━━━ ⋅𖥔⋅ ━━✶━━ ⋅𖥔⋅ ━━━
   Animate elements in on scroll
   ━━━ ⋅𖥔⋅ ━━✶━━ ⋅𖥔⋅ ━━━
   -ˋˏ *.·:·.⟐.·:·.* ˎˊ-
@@ -6463,298 +6717,5 @@ jQuery(function ($) {
   // 	}
   // });
   // AOS.init();
-
-  /*
-  -ˋˏ *.·:·.⟐.·:·.* ˎˊ-
-  ━━━ ⋅𖥔⋅ ━━✶━━ ⋅𖥔⋅ ━━━
-  Accordions
-  ━━━ ⋅𖥔⋅ ━━✶━━ ⋅𖥔⋅ ━━━
-  -ˋˏ *.·:·.⟐.·:·.* ˎˊ-
-  */
-
-  $(".panel-header").click(function (e) {
-    $(this).next().slideToggle();
-    $(this).parent().toggleClass('active');
-  });
-  /*
-  -ˋˏ *.·:·.⟐.·:·.* ˎˊ-
-  ━━━ ⋅𖥔⋅ ━━✶━━ ⋅𖥔⋅ ━━━
-  Slider functionality
-  ━━━ ⋅𖥔⋅ ━━✶━━ ⋅𖥔⋅ ━━━
-  -ˋˏ *.·:·.⟐.·:·.* ˎˊ-
-  */
-
-  $('.slider').each(function () {
-    let _this = $(this);
-
-    var args = {
-      pageDots: false,
-      wrapAround: true,
-      cellSelector: '.slide',
-      percentPosition: true,
-      contain: true,
-      setGallerySize: false,
-      resize: true,
-      imagesLoaded: true,
-      cellAlign: 'left',
-      freeScroll: false,
-      prevNextButtons: false // autoPlay: 4000,
-      // selectedAttraction: 0.008,
-      // friction: 0.16
-
-    };
-
-    var $carousel = _this.flickity(args); //Destroy
-    // $carousel.flickity('destroy');
-    //Re-init
-
-
-    $carousel.flickity(args); // $carousel.flickity('reloadCells')
-    // $(this).on('click', function () {
-    // 	$carousel.flickity('next')
-    // });
-    // $carousel.on('dragStart.flickity', () => $carousel.find('.slide').css('pointer-events', 'none'));
-    // $carousel.on('dragEnd.flickity', () => $carousel.find('.slide').css('pointer-events', 'all'));
-  });
-  $('.info-slider').each(function () {
-    let _this = $(this);
-
-    var args = {
-      pageDots: false,
-      wrapAround: true,
-      cellSelector: '.slide',
-      percentPosition: true,
-      contain: true,
-      setGallerySize: false,
-      resize: true,
-      imagesLoaded: true,
-      cellAlign: 'left',
-      freeScroll: false,
-      prevNextButtons: false,
-      autoPlay: 4000,
-      selectedAttraction: 0.008,
-      friction: 0.16
-    };
-
-    var $carousel = _this.flickity(args); //Destroy
-    // $carousel.flickity('destroy');
-    //Re-init
-
-
-    $carousel.flickity(args); // $carousel.flickity('reloadCells');
-  });
-  $('.gallery-slider').each(function () {
-    let _this = $(this);
-
-    var args = {
-      pageDots: false,
-      wrapAround: true,
-      cellSelector: '.slide',
-      percentPosition: true,
-      contain: true,
-      setGallerySize: true,
-      resize: true,
-      imagesLoaded: true,
-      cellAlign: 'left',
-      freeScroll: false,
-      prevNextButtons: false,
-      autoPlay: 4000,
-      selectedAttraction: 0.008,
-      friction: 0.16
-    };
-
-    var $carousel = _this.flickity(args); //Destroy
-    // $carousel.flickity('destroy');
-    //Re-init
-
-
-    $carousel.flickity(args); // $carousel.flickity('reloadCells');
-
-    $(this).parent().find('.next').on('click', function () {
-      $carousel.flickity('next');
-    });
-    $(this).parent().find('.prev').on('click', function () {
-      $carousel.flickity('previous');
-    });
-    $carousel.on('dragStart.flickity', function (e) {
-      $(this).addClass('is-dragging');
-    }).on('dragEnd.flickity', function () {
-      $(this).removeClass('is-dragging');
-    });
-  }); //recalculates slider on load to get around some annoying center mode bugs
-
-  $(window).resize();
-  /*
-  -ˋˏ *.·:·.⟐.·:·.* ˎˊ-
-  ━━━ ⋅𖥔⋅ ━━✶━━ ⋅𖥔⋅ ━━━
-  Smooth scroll
-  ━━━ ⋅𖥔⋅ ━━✶━━ ⋅𖥔⋅ ━━━
-  -ˋˏ *.·:·.⟐.·:·.* ˎˊ-
-  */
-
-  $('a[href*="#"]') // Remove links that don't actually link to anything
-  .not('[href="#"]').not('[href="#0"]').not('.modal-trigger').click(function (event) {
-    // On-page links
-    if (location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') && location.hostname == this.hostname) {
-      // Figure out element to scroll to
-      var target = $(this.hash);
-      target = target.length ? target : $('[name=' + this.hash.slice(1) + ']'); // Does a scroll target exist?
-
-      if (target.length) {
-        // Only prevent default if animation is actually gonna happen
-        event.preventDefault();
-        $('html, body').animate({
-          scrollTop: target.offset().top
-        }, 1000, function () {
-          // Callback after animation
-          // Must change focus!
-          var $target = $(target);
-          $target.focus();
-
-          if ($target.is(":focus")) {
-            // Checking if the target was focused
-            return false;
-          } else {
-            $target.attr('tabindex', '-1'); // Adding tabindex for elements not focusable
-
-            $target.focus(); // Set focus again
-          }
-        });
-      }
-    }
-  });
-  /*
-  -ˋˏ *.·:·.⟐.·:·.* ˎˊ-
-  ━━━ ⋅𖥔⋅ ━━✶━━ ⋅𖥔⋅ ━━━
-  Make feature videos act as background: cover
-  ━━━ ⋅𖥔⋅ ━━✶━━ ⋅𖥔⋅ ━━━
-  -ˋˏ *.·:·.⟐.·:·.* ˎˊ-
-  */
-
-  function video() {
-    var video = document.querySelector('.video-wrapper');
-
-    if (video !== null) {
-      var wrapperWidth = window.outerWidth,
-          videoWidth = video.offsetWidth,
-          videoHeight = video.offsetHeight; //this is to get around the elastic url bar on mobiles like ios...
-
-      if (wrapperWidth < 768) {
-        var wrapperHeight = window.innerHeight + 100;
-      } else {
-        var wrapperHeight = window.innerHeight;
-      }
-
-      var scale = Math.max(wrapperWidth / videoWidth, wrapperHeight / videoHeight);
-      document.querySelector('.video-wrapper').style.transform = "translate(-50%, -50%) " + "scale(" + scale + ")";
-    }
-  }
-
-  video(); //update the video's scale as the browser resizes
-
-  $(window).on('resize', function () {
-    video();
-    viewportHeight();
-  });
-  /*
-  -ˋˏ *.·:·.⟐.·:·.* ˎˊ-
-  ━━━ ⋅𖥔⋅ ━━✶━━ ⋅𖥔⋅ ━━━
-  Scrolly classes
-  ━━━ ⋅𖥔⋅ ━━✶━━ ⋅𖥔⋅ ━━━
-  -ˋˏ *.·:·.⟐.·:·.* ˎˊ-
-  */
-
-  var scrollDistance = function (callback, refresh) {
-    // Make sure a valid callback was provided
-    if (!callback || typeof callback !== 'function') return; // Variables
-
-    var isScrolling, start, end, distance, docHeight, height; // Listen for scroll events
-
-    window.addEventListener('scroll', function (event) {
-      // Set starting position
-      if (!start) {
-        start = window.pageYOffset;
-      } // Clear our timeout throughout the scroll
-
-
-      window.clearTimeout(isScrolling); // Set a timeout to run after scrolling ends
-
-      isScrolling = setTimeout(function () {
-        // Calculate distance
-        end = window.pageYOffset;
-        distance = end - start;
-        docHeight = Math.max(document.body.scrollHeight, document.body.offsetHeight, document.documentElement.clientHeight, document.documentElement.scrollHeight, document.documentElement.offsetHeight);
-        height = docHeight - window.innerHeight; // Run the callback
-
-        callback(distance, start, end, height); // Reset calculations
-
-        start = null;
-        end = null;
-        distance = null;
-      }, refresh || 20);
-    }, false);
-  };
-
-  scrollDistance(function (distance, start, end, height) {
-    // detect top and bottom scroll positions
-    if (end >= height) {
-      document.body.classList.add('scroll-bottom');
-      document.body.classList.remove('scroll-top', 'scrolling-up', 'scrolling-down');
-    } else if (end <= 1) {
-      document.body.classList.add('scroll-top');
-      document.body.classList.remove('scroll-bottom', 'scrolling-up', 'scrolling-down');
-    } else if (distance > 0 && start !== 0 && end !== height) {
-      document.body.classList.add('scrolling-down');
-      document.body.classList.remove('scrolling-up', 'scroll-top', 'scroll-bottom');
-    } else if (distance < 0 && start !== 0 && end !== height) {
-      document.body.classList.add('scrolling-up');
-      document.body.classList.remove('scrolling-down', 'scroll-top', 'scroll-bottom');
-    } // console.log(distance, start,end,height)
-
-  });
-  window.scrollTo(window.scrollX, window.scrollY - 1);
-  window.scrollTo(window.scrollX, window.scrollY + 1);
-  /*
-  -ˋˏ *.·:·.⟐.·:·.* ˎˊ-
-  ━━━ ⋅𖥔⋅ ━━✶━━ ⋅𖥔⋅ ━━━
-  Gravity Forms
-  ━━━ ⋅𖥔⋅ ━━✶━━ ⋅𖥔⋅ ━━━
-  -ˋˏ *.·:·.⟐.·:·.* ˎˊ-
-  */
-  // $('.gform_wrapper').on('submit', 'form', function () {
-  // 	$('[type=submit]', this) // Select the form's submit button
-  // 		.val('Sending...') // Change the value of the submit button. Change text to whatever you like.
-  // 		.prop('disabled', true); // Not really necessary but will prevent the user from clicking the button again while the form is submitting.
-  // });
-  //make gravity forms more accessible
-  //     var $fields = $( '.gform_body input[type="text"],.gform_body input[type="email"], .gform_body textarea' ),
-  //         $label = $( ".gfield_label" );
-  //     //wrap label with a span
-  //     $label.wrapInner( "<span class='label-content'></span>");
-  //     //Add an active class to a focused in input field
-  //     $fields.focusin(function() {
-  //         $(this).parents( ".gfield" ).addClass("active");
-  //     });
-  //     //Check if the field is filled - if it is the active class will stay, if not the active class will revert to its non active state
-  //     $fields.focusout(function() {
-  // //        console.log($(this).val().length);
-  //         if ($(this).val().length == 0 ) {
-  //             $(this).parents( ".gfield" ).removeClass("active");
-  //         }
-  //     });
-  //     //Pre-check fallback - checks if the field already has a value and adds an active class if it does
-  // //    $fields.each(function( index ) {
-  // //            console.log( index + ": " + $( this ).val() );
-  // //    });
-  //     $fields.each(function() {
-  //         if( $(this).val()) {
-  //             $(this).parents( ".gfield" ).addClass("active");
-  //         } else {
-  //             $(this).parents( ".gfield" ).removeClass("active");
-  //         };
-  //     });
-  // var ex1 = document.querySelectorAll(".blocks-gallery-item");
-  // var ex2 = document.getElementsByClassName("blocks-gallery-item");
-  // // console.log(ex1, ex2);
 });
-//# sourceMappingURL=script-807118f5.js.map
+//# sourceMappingURL=script-900cf7c9.js.map
