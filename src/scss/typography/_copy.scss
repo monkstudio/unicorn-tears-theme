@@ -19,8 +19,8 @@ address {
 }
 
 pre {
-    background: $brand-lightgrey;
-    font-family: $brand-code;
+    background: var(--grey1);
+    font-family: var(--font-stack-code);
     margin-bottom: 1.6em;
     max-width: 100%;
     overflow: auto;
@@ -31,18 +31,18 @@ code,
 kbd,
 tt,
 var {
-    font-family: $brand-code;
+    font-family: var(--font-stack-code);
 }
 
 abbr,
 acronym {
-    border-bottom: 1px dotted $brand-primary;
+    border-bottom: 1px dotted $primary;
     cursor: help;
 }
 
 mark,
 ins {
-    background: $brand-lightgrey;
+    background: var(--grey1);
     text-decoration: none;
     padding: 0 .2em;
 }

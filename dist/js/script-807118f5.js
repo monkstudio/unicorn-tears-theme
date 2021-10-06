@@ -1,203 +1,3 @@
-"use strict";
-
-/**
- * File navigation.js.
- *
- * Handles toggling the navigation menu for small screens and enables TAB key
- * navigation support for dropdown menus.
- */
-(function () {
-  var container, button, menu, links, i, len;
-  container = document.getElementById('site-navigation');
-
-  if (!container) {
-    return;
-  }
-
-  button = container.getElementsByTagName('button')[0];
-
-  if ('undefined' === typeof button) {
-    return;
-  }
-
-  menu = container.getElementsByTagName('ul')[0]; // Hide menu toggle button if menu is empty and return early.
-
-  if ('undefined' === typeof menu) {
-    button.style.display = 'none';
-    return;
-  }
-
-  menu.setAttribute('aria-expanded', 'false');
-
-  if (-1 === menu.className.indexOf('nav-menu')) {
-    menu.className += ' nav-menu';
-  }
-
-  button.onclick = function () {
-    if (-1 !== container.className.indexOf('toggled')) {
-      container.className = container.className.replace(' toggled', '');
-      button.setAttribute('aria-expanded', 'false');
-      menu.setAttribute('aria-expanded', 'false');
-    } else {
-      container.className += ' toggled';
-      button.setAttribute('aria-expanded', 'true');
-      menu.setAttribute('aria-expanded', 'true');
-    }
-  }; // Get all the link elements within the menu.
-
-
-  links = menu.getElementsByTagName('a'); // Each time a menu link is focused or blurred, toggle focus.
-
-  for (i = 0, len = links.length; i < len; i++) {
-    links[i].addEventListener('focus', toggleFocus, true);
-    links[i].addEventListener('blur', toggleFocus, true);
-  }
-  /**
-   * Sets or removes .focus class on an element.
-   */
-
-
-  function toggleFocus() {
-    var self = this; // Move up through the ancestors of the current link until we hit .nav-menu.
-
-    while (-1 === self.className.indexOf('nav-menu')) {
-      // On li elements toggle the class .focus.
-      if ('li' === self.tagName.toLowerCase()) {
-        // console.log(self.className.indexOf( 'focus' ))
-        if (-1 !== self.className.indexOf('focus')) {
-          self.className = self.className.replace(' focus', '');
-        } else {
-          self.className += ' focus';
-        }
-      }
-
-      self = self.parentElement;
-    }
-  }
-  /**
-   * Toggles `focus` class to allow submenu access on tablets.
-   */
-
-
-  (function (container) {
-    var touchStartFn,
-        i,
-        parentLink = container.querySelectorAll('.menu-item-has-children > a, .page_item_has_children > a');
-
-    if ('ontouchstart' in window) {
-      touchStartFn = function touchStartFn(e) {
-        var menuItem = this.parentNode,
-            i;
-
-        if (!menuItem.classList.contains('focus')) {
-          // e.preventDefault();
-          for (i = 0; i < menuItem.parentNode.children.length; ++i) {
-            if (menuItem === menuItem.parentNode.children[i]) {
-              continue;
-            }
-
-            menuItem.parentNode.children[i].classList.remove('focus');
-          }
-
-          menuItem.classList.add('focus');
-        } else {
-          menuItem.classList.remove('focus');
-        }
-      };
-
-      for (i = 0; i < parentLink.length; ++i) {
-        parentLink[i].addEventListener('touchstart', touchStartFn, false);
-      }
-    }
-  })(container);
-})();
-
-(function ($) {
-  var masthead, menuToggle, siteNavigation;
-
-  function initMainNavigation(container) {
-    //check if $navcontent in functions.php is false
-    // 	if ( navcontent.has_navigation == 'true') {
-    // 		// Add dropdown toggle that displays child menu items.
-    // 		var dropdownToggle = '<div class="dropdown-toggle" aria-expanded="false" aria-label="Toggle Menu">'+navcontent.iconOpen+'<span class="screen-reader-text">Expand</span></div>'
-    // }
-    // 	// container.find( '.menu-item-has-children > .sub-menu, .page_item_has_children > .sub-menu' ).before( dropdownToggle );
-    // 	container.find( '.menu-item-has-children > a, .page_item_has_children > a' ).after( dropdownToggle );
-    // Toggle buttons and submenu items with active children menu items.
-    // container.find( '.current-menu-ancestor > button' ).addClass( 'toggled-on' );
-    // container.find( '.current-menu-ancestor > .sub-menu' ).addClass( 'toggled-on' );
-    // Add menu items with submenus to aria-haspopup="true".
-    container.find('.menu-item-has-children, .page_item_has_children').attr('aria-haspopup', 'true');
-    container.find('.dropdown-toggle').click(function (e) {
-      // if ( 	$('body').hasClass('menu-open')) {
-      // 	$('body').removeClass('menu-open');
-      // } else {
-      // 	$('body').addClass('menu-open');
-      // }
-      var _this = $(this),
-          screenReaderSpan = _this.find('.screen-reader-text'); // if ( document.body.clientWidth < 1024 || 'ontouchstart' in window   ) {
-      //     e.preventDefault();
-      //     // $(this).unbind(e);
-      // }
-
-
-      _this.parent().parent().toggleClass('toggled-on');
-
-      _this.prev('.children, .sub-menu').toggleClass('toggled-on'); // jscs:disable
-
-
-      _this.attr('aria-expanded', _this.attr('aria-expanded') === 'false' ? 'true' : 'false'); // jscs:enable
-
-
-      screenReaderSpan.text(screenReaderSpan.text() === navcontent.expand ? navcontent.collapse : navcontent.expand); // if (_this.parent().hasClass('toggled-on') ) {
-      // 	_this.find('.svg-wrapper').html(navcontent.iconClose);
-      // } else {
-      // 	_this.find('.svg-wrapper').html(navcontent.iconOpen);
-      // }
-    });
-  }
-
-  initMainNavigation($('.main-navigation'));
-})(jQuery);
-"use strict";
-
-/**
- * File skip-link-focus-fix.js.
- *
- * Helps with accessibility for keyboard only users.
- *
- * Learn more: https://git.io/vWdr2
- */
-(function () {
-  var isWebkit = navigator.userAgent.toLowerCase().indexOf('webkit') > -1,
-      isOpera = navigator.userAgent.toLowerCase().indexOf('opera') > -1,
-      isIe = navigator.userAgent.toLowerCase().indexOf('msie') > -1;
-
-  if ((isWebkit || isOpera || isIe) && document.getElementById && window.addEventListener) {
-    window.addEventListener('hashchange', function () {
-      var id = location.hash.substring(1),
-          element;
-
-      if (!/^[A-z0-9_-]+$/.test(id)) {
-        return;
-      }
-
-      element = document.getElementById(id);
-
-      if (element) {
-        if (!/^(?:a|select|input|button|textarea)$/i.test(element.tagName)) {
-          element.tabIndex = -1;
-        }
-
-        element.focus();
-      }
-    }, false);
-  }
-})();
-"use strict";
-
-function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
 /*!
  * Flickity PACKAGED v2.2.1
  * Touch, responsive, flickable carousels
@@ -211,9 +11,8 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
 !function (e, i) {
   "function" == typeof define && define.amd ? define("jquery-bridget/jquery-bridget", ["jquery"], function (t) {
     return i(e, t);
-  }) : "object" == (typeof module === "undefined" ? "undefined" : _typeof(module)) && module.exports ? module.exports = i(e, require("jquery")) : e.jQueryBridget = i(e, e.jQuery);
+  }) : "object" == typeof module && module.exports ? module.exports = i(e, require("jquery")) : e.jQueryBridget = i(e, e.jQuery);
 }(window, function (t, e) {
-  "use strict";
 
   var i = Array.prototype.slice,
       n = t.console,
@@ -255,8 +54,8 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
 
   return o(e || t.jQuery), s;
 }), function (t, e) {
-  "function" == typeof define && define.amd ? define("ev-emitter/ev-emitter", e) : "object" == (typeof module === "undefined" ? "undefined" : _typeof(module)) && module.exports ? module.exports = e() : t.EvEmitter = e();
-}("undefined" != typeof window ? window : void 0, function () {
+  "function" == typeof define && define.amd ? define("ev-emitter/ev-emitter", e) : "object" == typeof module && module.exports ? module.exports = e() : t.EvEmitter = e();
+}("undefined" != typeof window ? window : undefined, function () {
   function t() {}
 
   var e = t.prototype;
@@ -296,9 +95,8 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
     delete this._events, delete this._onceEvents;
   }, t;
 }), function (t, e) {
-  "function" == typeof define && define.amd ? define("get-size/get-size", e) : "object" == (typeof module === "undefined" ? "undefined" : _typeof(module)) && module.exports ? module.exports = e() : t.getSize = e();
+  "function" == typeof define && define.amd ? define("get-size/get-size", e) : "object" == typeof module && module.exports ? module.exports = e() : t.getSize = e();
 }(window, function () {
-  "use strict";
 
   function m(t) {
     var e = parseFloat(t);
@@ -330,7 +128,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
         var i = E(t);
         S = 200 == Math.round(m(i.width)), x.isBoxSizeOuter = S, e.removeChild(t);
       }
-    }(), "string" == typeof t && (t = document.querySelector(t)), t && "object" == _typeof(t) && t.nodeType) {
+    }(), "string" == typeof t && (t = document.querySelector(t)), t && "object" == typeof t && t.nodeType) {
       var e = E(t);
       if ("none" == e.display) return function () {
         for (var t = {
@@ -372,11 +170,9 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
 
   return x;
 }), function (t, e) {
-  "use strict";
 
-  "function" == typeof define && define.amd ? define("desandro-matches-selector/matches-selector", e) : "object" == (typeof module === "undefined" ? "undefined" : _typeof(module)) && module.exports ? module.exports = e() : t.matchesSelector = e();
+  "function" == typeof define && define.amd ? define("desandro-matches-selector/matches-selector", e) : "object" == typeof module && module.exports ? module.exports = e() : t.matchesSelector = e();
 }(window, function () {
-  "use strict";
 
   var i = function () {
     var t = window.Element.prototype;
@@ -395,30 +191,26 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
 }), function (e, i) {
   "function" == typeof define && define.amd ? define("fizzy-ui-utils/utils", ["desandro-matches-selector/matches-selector"], function (t) {
     return i(e, t);
-  }) : "object" == (typeof module === "undefined" ? "undefined" : _typeof(module)) && module.exports ? module.exports = i(e, require("desandro-matches-selector")) : e.fizzyUIUtils = i(e, e.matchesSelector);
+  }) : "object" == typeof module && module.exports ? module.exports = i(e, require("desandro-matches-selector")) : e.fizzyUIUtils = i(e, e.matchesSelector);
 }(window, function (h, o) {
   var c = {
-    extend: function extend(t, e) {
-      for (var i in e) {
-        t[i] = e[i];
-      }
+    extend: function (t, e) {
+      for (var i in e) t[i] = e[i];
 
       return t;
     },
-    modulo: function modulo(t, e) {
+    modulo: function (t, e) {
       return (t % e + e) % e;
     }
   },
       e = Array.prototype.slice;
   c.makeArray = function (t) {
-    return Array.isArray(t) ? t : null == t ? [] : "object" == _typeof(t) && "number" == typeof t.length ? e.call(t) : [t];
+    return Array.isArray(t) ? t : null == t ? [] : "object" == typeof t && "number" == typeof t.length ? e.call(t) : [t];
   }, c.removeFrom = function (t, e) {
     var i = t.indexOf(e);
     -1 != i && t.splice(i, 1);
   }, c.getParent = function (t, e) {
-    for (; t.parentNode && t != document.body;) {
-      if (t = t.parentNode, o(t, e)) return t;
-    }
+    for (; t.parentNode && t != document.body;) if (t = t.parentNode, o(t, e)) return t;
   }, c.getQueryElement = function (t) {
     return "string" == typeof t ? document.querySelector(t) : t;
   }, c.handleEvent = function (t) {
@@ -431,9 +223,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
       if (t instanceof HTMLElement) if (n) {
         o(t, n) && s.push(t);
 
-        for (var e = t.querySelectorAll(n), i = 0; i < e.length; i++) {
-          s.push(e[i]);
-        }
+        for (var e = t.querySelectorAll(n), i = 0; i < e.length; i++) s.push(e[i]);
       } else s.push(t);
     }), s;
   }, c.debounceMethod = function (t, e, n) {
@@ -486,7 +276,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
 }), function (e, i) {
   "function" == typeof define && define.amd ? define("flickity/js/cell", ["get-size/get-size"], function (t) {
     return i(e, t);
-  }) : "object" == (typeof module === "undefined" ? "undefined" : _typeof(module)) && module.exports ? module.exports = i(e, require("get-size")) : (e.Flickity = e.Flickity || {}, e.Flickity.Cell = i(e, e.getSize));
+  }) : "object" == typeof module && module.exports ? module.exports = i(e, require("get-size")) : (e.Flickity = e.Flickity || {}, e.Flickity.Cell = i(e, e.getSize));
 }(window, function (t, e) {
   function i(t, e) {
     this.element = t, this.parent = e, this.create();
@@ -519,9 +309,8 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
     this.element.parentNode.removeChild(this.element);
   }, i;
 }), function (t, e) {
-  "function" == typeof define && define.amd ? define("flickity/js/slide", e) : "object" == (typeof module === "undefined" ? "undefined" : _typeof(module)) && module.exports ? module.exports = e() : (t.Flickity = t.Flickity || {}, t.Flickity.Slide = e());
+  "function" == typeof define && define.amd ? define("flickity/js/slide", e) : "object" == typeof module && module.exports ? module.exports = e() : (t.Flickity = t.Flickity || {}, t.Flickity.Slide = e());
 }(window, function () {
-  "use strict";
 
   function t(t) {
     this.parent = t, this.isOriginLeft = "left" == t.originSide, this.cells = [], this.outerWidth = 0, this.height = 0;
@@ -558,13 +347,13 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
 }), function (e, i) {
   "function" == typeof define && define.amd ? define("flickity/js/animate", ["fizzy-ui-utils/utils"], function (t) {
     return i(e, t);
-  }) : "object" == (typeof module === "undefined" ? "undefined" : _typeof(module)) && module.exports ? module.exports = i(e, require("fizzy-ui-utils")) : (e.Flickity = e.Flickity || {}, e.Flickity.animatePrototype = i(e, e.fizzyUIUtils));
+  }) : "object" == typeof module && module.exports ? module.exports = i(e, require("fizzy-ui-utils")) : (e.Flickity = e.Flickity || {}, e.Flickity.animatePrototype = i(e, e.fizzyUIUtils));
 }(window, function (t, e) {
   var i = {
-    startAnimation: function startAnimation() {
+    startAnimation: function () {
       this.isAnimating || (this.isAnimating = !0, this.restingFrames = 0, this.animate());
     },
-    animate: function animate() {
+    animate: function () {
       this.applyDragForce(), this.applySelectedAttraction();
       var t = this.x;
 
@@ -575,16 +364,16 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
         });
       }
     },
-    positionSlider: function positionSlider() {
+    positionSlider: function () {
       var t = this.x;
       this.options.wrapAround && 1 < this.cells.length && (t = e.modulo(t, this.slideableWidth), t -= this.slideableWidth, this.shiftWrapCells(t)), this.setTranslateX(t, this.isAnimating), this.dispatchScrollEvent();
     },
-    setTranslateX: function setTranslateX(t, e) {
+    setTranslateX: function (t, e) {
       t += this.cursorPosition, t = this.options.rightToLeft ? -t : t;
       var i = this.getPositionValue(t);
       this.slider.style.transform = e ? "translate3d(" + i + ",0,0)" : "translateX(" + i + ")";
     },
-    dispatchScrollEvent: function dispatchScrollEvent() {
+    dispatchScrollEvent: function () {
       var t = this.slides[0];
 
       if (t) {
@@ -593,16 +382,16 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
         this.dispatchEvent("scroll", null, [i, e]);
       }
     },
-    positionSliderAtSelected: function positionSliderAtSelected() {
+    positionSliderAtSelected: function () {
       this.cells.length && (this.x = -this.selectedSlide.target, this.velocity = 0, this.positionSlider());
     },
-    getPositionValue: function getPositionValue(t) {
+    getPositionValue: function (t) {
       return this.options.percentPosition ? .01 * Math.round(t / this.size.innerWidth * 1e4) + "%" : Math.round(t) + "px";
     },
-    settle: function settle(t) {
+    settle: function (t) {
       this.isPointerDown || Math.round(100 * this.x) != Math.round(100 * t) || this.restingFrames++, 2 < this.restingFrames && (this.isAnimating = !1, delete this.isFreeScrolling, this.positionSlider(), this.dispatchEvent("settle", null, [this.selectedIndex]));
     },
-    shiftWrapCells: function shiftWrapCells(t) {
+    shiftWrapCells: function (t) {
       var e = this.cursorPosition + t;
 
       this._shiftCells(this.beforeShiftCells, e, -1);
@@ -611,37 +400,35 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
 
       this._shiftCells(this.afterShiftCells, i, 1);
     },
-    _shiftCells: function _shiftCells(t, e, i) {
+    _shiftCells: function (t, e, i) {
       for (var n = 0; n < t.length; n++) {
         var s = t[n],
             o = 0 < e ? i : 0;
         s.wrapShift(o), e -= s.size.outerWidth;
       }
     },
-    _unshiftCells: function _unshiftCells(t) {
-      if (t && t.length) for (var e = 0; e < t.length; e++) {
-        t[e].wrapShift(0);
-      }
+    _unshiftCells: function (t) {
+      if (t && t.length) for (var e = 0; e < t.length; e++) t[e].wrapShift(0);
     },
-    integratePhysics: function integratePhysics() {
+    integratePhysics: function () {
       this.x += this.velocity, this.velocity *= this.getFrictionFactor();
     },
-    applyForce: function applyForce(t) {
+    applyForce: function (t) {
       this.velocity += t;
     },
-    getFrictionFactor: function getFrictionFactor() {
+    getFrictionFactor: function () {
       return 1 - this.options[this.isFreeScrolling ? "freeScrollFriction" : "friction"];
     },
-    getRestingPosition: function getRestingPosition() {
+    getRestingPosition: function () {
       return this.x + this.velocity / (1 - this.getFrictionFactor());
     },
-    applyDragForce: function applyDragForce() {
+    applyDragForce: function () {
       if (this.isDraggable && this.isPointerDown) {
         var t = this.dragX - this.x - this.velocity;
         this.applyForce(t);
       }
     },
-    applySelectedAttraction: function applySelectedAttraction() {
+    applySelectedAttraction: function () {
       if (!(this.isDraggable && this.isPointerDown) && !this.isFreeScrolling && this.slides.length) {
         var t = (-1 * this.selectedSlide.target - this.x) * this.options.selectedAttraction;
         this.applyForce(t);
@@ -652,7 +439,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
 }), function (r, a) {
   if ("function" == typeof define && define.amd) define("flickity/js/flickity", ["ev-emitter/ev-emitter", "get-size/get-size", "fizzy-ui-utils/utils", "./cell", "./slide", "./animate"], function (t, e, i, n, s, o) {
     return a(r, t, e, i, n, s, o);
-  });else if ("object" == (typeof module === "undefined" ? "undefined" : _typeof(module)) && module.exports) module.exports = a(r, require("ev-emitter"), require("get-size"), require("fizzy-ui-utils"), require("./cell"), require("./slide"), require("./animate"));else {
+  });else if ("object" == typeof module && module.exports) module.exports = a(r, require("ev-emitter"), require("get-size"), require("fizzy-ui-utils"), require("./cell"), require("./slide"), require("./animate"));else {
     var t = r.Flickity;
     r.Flickity = a(r, r.EvEmitter, r.getSize, r.fizzyUIUtils, t.Cell, t.Slide, t.animatePrototype);
   }
@@ -662,9 +449,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
       h = n.console;
 
   function c(t, e) {
-    for (t = a.makeArray(t); t.length;) {
-      e.appendChild(t.shift());
-    }
+    for (t = a.makeArray(t); t.length;) e.appendChild(t.shift());
   }
 
   var d = 0,
@@ -950,11 +735,11 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
       i && i.call(this);
     }
   }, f.keyboardHandlers = {
-    37: function _() {
+    37: function () {
       var t = this.options.rightToLeft ? "next" : "previous";
       this.uiChange(), this[t]();
     },
-    39: function _() {
+    39: function () {
       var t = this.options.rightToLeft ? "previous" : "next";
       this.uiChange(), this[t]();
     }
@@ -978,7 +763,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
 }), function (e, i) {
   "function" == typeof define && define.amd ? define("unipointer/unipointer", ["ev-emitter/ev-emitter"], function (t) {
     return i(e, t);
-  }) : "object" == (typeof module === "undefined" ? "undefined" : _typeof(module)) && module.exports ? module.exports = i(e, require("ev-emitter")) : e.Unipointer = i(e, e.EvEmitter);
+  }) : "object" == typeof module && module.exports ? module.exports = i(e, require("ev-emitter")) : e.Unipointer = i(e, e.EvEmitter);
 }(window, function (s, t) {
   function e() {}
 
@@ -1071,7 +856,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
 }), function (e, i) {
   "function" == typeof define && define.amd ? define("unidragger/unidragger", ["unipointer/unipointer"], function (t) {
     return i(e, t);
-  }) : "object" == (typeof module === "undefined" ? "undefined" : _typeof(module)) && module.exports ? module.exports = i(e, require("unipointer")) : e.Unidragger = i(e, e.Unipointer);
+  }) : "object" == typeof module && module.exports ? module.exports = i(e, require("unipointer")) : e.Unidragger = i(e, e.Unipointer);
 }(window, function (o, t) {
   function e() {}
 
@@ -1152,7 +937,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
 }), function (n, s) {
   "function" == typeof define && define.amd ? define("flickity/js/drag", ["./flickity", "unidragger/unidragger", "fizzy-ui-utils/utils"], function (t, e, i) {
     return s(n, t, e, i);
-  }) : "object" == (typeof module === "undefined" ? "undefined" : _typeof(module)) && module.exports ? module.exports = s(n, require("./flickity"), require("unidragger"), require("fizzy-ui-utils")) : n.Flickity = s(n, n.Flickity, n.Unidragger, n.fizzyUIUtils);
+  }) : "object" == typeof module && module.exports ? module.exports = s(n, require("./flickity"), require("unidragger"), require("fizzy-ui-utils")) : n.Flickity = s(n, n.Flickity, n.Unidragger, n.fizzyUIUtils);
 }(window, function (i, t, e, a) {
   a.extend(t.defaults, {
     draggable: ">1",
@@ -1256,9 +1041,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
       return t <= e;
     } : function (t, e) {
       return t < e;
-    }; o(e, s) && (n += i, s = e, null !== (e = this.getSlideDistance(-t, n)));) {
-      e = Math.abs(e);
-    }
+    }; o(e, s) && (n += i, s = e, null !== (e = this.getSlideDistance(-t, n)));) e = Math.abs(e);
 
     return {
       distance: s,
@@ -1291,9 +1074,8 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
 }), function (n, s) {
   "function" == typeof define && define.amd ? define("flickity/js/prev-next-button", ["./flickity", "unipointer/unipointer", "fizzy-ui-utils/utils"], function (t, e, i) {
     return s(n, t, e, i);
-  }) : "object" == (typeof module === "undefined" ? "undefined" : _typeof(module)) && module.exports ? module.exports = s(n, require("./flickity"), require("unipointer"), require("fizzy-ui-utils")) : s(n, n.Flickity, n.Unipointer, n.fizzyUIUtils);
+  }) : "object" == typeof module && module.exports ? module.exports = s(n, require("./flickity"), require("unipointer"), require("fizzy-ui-utils")) : s(n, n.Flickity, n.Unipointer, n.fizzyUIUtils);
 }(window, function (t, e, i, n) {
-  "use strict";
 
   var s = "http://www.w3.org/2000/svg";
 
@@ -1364,7 +1146,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
 }), function (n, s) {
   "function" == typeof define && define.amd ? define("flickity/js/page-dots", ["./flickity", "unipointer/unipointer", "fizzy-ui-utils/utils"], function (t, e, i) {
     return s(n, t, e, i);
-  }) : "object" == (typeof module === "undefined" ? "undefined" : _typeof(module)) && module.exports ? module.exports = s(n, require("./flickity"), require("unipointer"), require("fizzy-ui-utils")) : s(n, n.Flickity, n.Unipointer, n.fizzyUIUtils);
+  }) : "object" == typeof module && module.exports ? module.exports = s(n, require("./flickity"), require("unipointer"), require("fizzy-ui-utils")) : s(n, n.Flickity, n.Unipointer, n.fizzyUIUtils);
 }(window, function (t, e, i, n) {
   function s(t) {
     this.parent = t, this._create();
@@ -1420,7 +1202,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
 }), function (t, n) {
   "function" == typeof define && define.amd ? define("flickity/js/player", ["ev-emitter/ev-emitter", "fizzy-ui-utils/utils", "./flickity"], function (t, e, i) {
     return n(t, e, i);
-  }) : "object" == (typeof module === "undefined" ? "undefined" : _typeof(module)) && module.exports ? module.exports = n(require("ev-emitter"), require("fizzy-ui-utils"), require("./flickity")) : n(t.EvEmitter, t.fizzyUIUtils, t.Flickity);
+  }) : "object" == typeof module && module.exports ? module.exports = n(require("ev-emitter"), require("fizzy-ui-utils"), require("./flickity")) : n(t.EvEmitter, t.fizzyUIUtils, t.Flickity);
 }(window, function (t, e, i) {
   function n(t) {
     this.parent = t, this.state = "stopped", this.onVisibilityChange = this.visibilityChange.bind(this), this.onVisibilityPlay = this.visibilityPlay.bind(this);
@@ -1475,7 +1257,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
 }), function (i, n) {
   "function" == typeof define && define.amd ? define("flickity/js/add-remove-cell", ["./flickity", "fizzy-ui-utils/utils"], function (t, e) {
     return n(i, t, e);
-  }) : "object" == (typeof module === "undefined" ? "undefined" : _typeof(module)) && module.exports ? module.exports = n(i, require("./flickity"), require("fizzy-ui-utils")) : n(i, i.Flickity, i.fizzyUIUtils);
+  }) : "object" == typeof module && module.exports ? module.exports = n(i, require("./flickity"), require("fizzy-ui-utils")) : n(i, i.Flickity, i.fizzyUIUtils);
 }(window, function (t, e, n) {
   var i = e.prototype;
   return i.insert = function (t, e) {
@@ -1535,9 +1317,8 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
 }), function (i, n) {
   "function" == typeof define && define.amd ? define("flickity/js/lazyload", ["./flickity", "fizzy-ui-utils/utils"], function (t, e) {
     return n(i, t, e);
-  }) : "object" == (typeof module === "undefined" ? "undefined" : _typeof(module)) && module.exports ? module.exports = n(i, require("./flickity"), require("fizzy-ui-utils")) : n(i, i.Flickity, i.fizzyUIUtils);
+  }) : "object" == typeof module && module.exports ? module.exports = n(i, require("./flickity"), require("fizzy-ui-utils")) : n(i, i.Flickity, i.fizzyUIUtils);
 }(window, function (t, e, o) {
-  "use strict";
 
   e.createMethods.push("_createLazyload");
   var i = e.prototype;
@@ -1589,11 +1370,11 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
     this.flickity.cellSizeChange(n), this.img.classList.add(e), this.flickity.dispatchEvent("lazyLoad", t, n);
   }, e.LazyLoader = s, e;
 }), function (t, e) {
-  "function" == typeof define && define.amd ? define("flickity/js/index", ["./flickity", "./drag", "./prev-next-button", "./page-dots", "./player", "./add-remove-cell", "./lazyload"], e) : "object" == (typeof module === "undefined" ? "undefined" : _typeof(module)) && module.exports && (module.exports = e(require("./flickity"), require("./drag"), require("./prev-next-button"), require("./page-dots"), require("./player"), require("./add-remove-cell"), require("./lazyload")));
+  "function" == typeof define && define.amd ? define("flickity/js/index", ["./flickity", "./drag", "./prev-next-button", "./page-dots", "./player", "./add-remove-cell", "./lazyload"], e) : "object" == typeof module && module.exports && (module.exports = e(require("./flickity"), require("./drag"), require("./prev-next-button"), require("./page-dots"), require("./player"), require("./add-remove-cell"), require("./lazyload")));
 }(window, function (t) {
   return t;
 }), function (t, e) {
-  "function" == typeof define && define.amd ? define("flickity-as-nav-for/as-nav-for", ["flickity/js/index", "fizzy-ui-utils/utils"], e) : "object" == (typeof module === "undefined" ? "undefined" : _typeof(module)) && module.exports ? module.exports = e(require("flickity"), require("fizzy-ui-utils")) : t.Flickity = e(t.Flickity, t.fizzyUIUtils);
+  "function" == typeof define && define.amd ? define("flickity-as-nav-for/as-nav-for", ["flickity/js/index", "fizzy-ui-utils/utils"], e) : "object" == typeof module && module.exports ? module.exports = e(require("flickity"), require("fizzy-ui-utils")) : t.Flickity = e(t.Flickity, t.fizzyUIUtils);
 }(window, function (n, s) {
   n.createMethods.push("_createAsNavFor");
   var t = n.prototype;
@@ -1652,19 +1433,16 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
     this.navCompanion && (this.navCompanion.off("select", this.onNavCompanionSelect), this.off("staticClick", this.onNavStaticClick), delete this.navCompanion);
   }, n;
 }), function (e, i) {
-  "use strict";
 
   "function" == typeof define && define.amd ? define("imagesloaded/imagesloaded", ["ev-emitter/ev-emitter"], function (t) {
     return i(e, t);
-  }) : "object" == (typeof module === "undefined" ? "undefined" : _typeof(module)) && module.exports ? module.exports = i(e, require("ev-emitter")) : e.imagesLoaded = i(e, e.EvEmitter);
-}("undefined" != typeof window ? window : void 0, function (e, t) {
+  }) : "object" == typeof module && module.exports ? module.exports = i(e, require("ev-emitter")) : e.imagesLoaded = i(e, e.EvEmitter);
+}("undefined" != typeof window ? window : undefined, function (e, t) {
   var s = e.jQuery,
       o = e.console;
 
   function r(t, e) {
-    for (var i in e) {
-      t[i] = e[i];
-    }
+    for (var i in e) t[i] = e[i];
 
     return t;
   }
@@ -1675,7 +1453,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
     if (!(this instanceof l)) return new l(t, e, i);
     var n = t;
     "string" == typeof t && (n = document.querySelectorAll(t)), n ? (this.elements = function (t) {
-      return Array.isArray(t) ? t : "object" == _typeof(t) && "number" == typeof t.length ? a.call(t) : [t];
+      return Array.isArray(t) ? t : "object" == typeof t && "number" == typeof t.length ? a.call(t) : [t];
     }(n), this.options = r({}, this.options), "function" == typeof e ? i = e : r(this.options, e), i && this.on("always", i), this.getImages(), s && (this.jqDeferred = new s.Deferred()), setTimeout(this.check.bind(this))) : o.error("Bad element for imagesLoaded " + (n || t));
   }
 
@@ -1777,9 +1555,8 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
 }), function (i, n) {
   "function" == typeof define && define.amd ? define(["flickity/js/index", "imagesloaded/imagesloaded"], function (t, e) {
     return n(i, t, e);
-  }) : "object" == (typeof module === "undefined" ? "undefined" : _typeof(module)) && module.exports ? module.exports = n(i, require("flickity"), require("imagesloaded")) : i.Flickity = n(i, i.Flickity, i.imagesLoaded);
+  }) : "object" == typeof module && module.exports ? module.exports = n(i, require("flickity"), require("imagesloaded")) : i.Flickity = n(i, i.Flickity, i.imagesLoaded);
 }(window, function (t, e, i) {
-  "use strict";
 
   e.createMethods.push("_createImagesLoaded");
   var n = e.prototype;
@@ -1795,7 +1572,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
     }
   }, e;
 });
-"use strict";
 
 // ==================================================
 // fancyBox v3.5.7
@@ -1807,11 +1583,10 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
 // Copyright 2019 fancyApps
 //
 // ==================================================
-(function (window, document, $, undefined) {
-  "use strict";
+(function (window, document, $, undefined$1) {
 
   window.console = window.console || {
-    info: function info(stuff) {}
+    info: function (stuff) {}
   }; // If there's no jQuery, fancyBox can't work
   // =========================================
 
@@ -2053,7 +1828,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
     //   "zoom"            - zoom image (if loaded)
     //   false             - do nothing
     // Clicked on the content
-    clickContent: function clickContent(current, event) {
+    clickContent: function (current, event) {
       return current.type === "image" ? "zoom" : false;
     },
     // Clicked on the slide
@@ -2070,16 +1845,16 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
     mobile: {
       preventCaptionOverlap: false,
       idleTime: false,
-      clickContent: function clickContent(current, event) {
+      clickContent: function (current, event) {
         return current.type === "image" ? "toggleControls" : false;
       },
-      clickSlide: function clickSlide(current, event) {
+      clickSlide: function (current, event) {
         return current.type === "image" ? "toggleControls" : "close";
       },
-      dblclickContent: function dblclickContent(current, event) {
+      dblclickContent: function (current, event) {
         return current.type === "image" ? "zoom" : false;
       },
-      dblclickSlide: function dblclickSlide(current, event) {
+      dblclickSlide: function (current, event) {
         return current.type === "image" ? "zoom" : false;
       }
     },
@@ -2122,7 +1897,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
   var called = 0; // Check if an object is a jQuery object and not a native JavaScript object
   // ========================================================================
 
-  var isQuery = function isQuery(obj) {
+  var isQuery = function (obj) {
     return obj && obj.hasOwnProperty && obj instanceof $;
   }; // Handle multiple browsers for "requestAnimationFrame" and "cancelAnimationFrame"
   // ===============================================================================
@@ -2154,7 +1929,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
     };
 
     for (t in transitions) {
-      if (el.style[t] !== undefined) {
+      if (el.style[t] !== undefined$1) {
         return transitions[t];
       }
     }
@@ -2165,13 +1940,13 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
   // ================================================================================
 
 
-  var forceRedraw = function forceRedraw($el) {
+  var forceRedraw = function ($el) {
     return $el && $el.length && $el[0].offsetHeight;
   }; // Exclude array (`buttons`) options from deep merging
   // ===================================================
 
 
-  var mergeOpts = function mergeOpts(opts1, opts2) {
+  var mergeOpts = function (opts1, opts2) {
     var rez = $.extend(true, {}, opts1, opts2);
     $.each(opts2, function (key, value) {
       if ($.isArray(value)) {
@@ -2183,7 +1958,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
   // =============================================
 
 
-  var inViewport = function inViewport(elem) {
+  var inViewport = function (elem) {
     var elemCenter, rez;
 
     if (!elem || elem.ownerDocument !== document) {
@@ -2202,7 +1977,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
   // ================
 
 
-  var FancyBox = function FancyBox(content, opts, index) {
+  var FancyBox = function (content, opts, index) {
     var self = this;
     self.opts = mergeOpts({
       index: index
@@ -2239,7 +2014,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
   $.extend(FancyBox.prototype, {
     // Create DOM structure
     // ====================
-    init: function init() {
+    init: function () {
       var self = this,
           firstItem = self.group[self.currIndex],
           firstItemOpts = firstItem.opts,
@@ -2285,16 +2060,16 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
     // Simple i18n support - replaces object keys found in template
     // with corresponding values
     // ============================================================
-    translate: function translate(obj, str) {
+    translate: function (obj, str) {
       var arr = obj.opts.i18n[obj.opts.lang] || obj.opts.i18n.en;
       return str.replace(/\{\{(\w+)\}\}/g, function (match, n) {
-        return arr[n] === undefined ? match : arr[n];
+        return arr[n] === undefined$1 ? match : arr[n];
       });
     },
     // Populate current group with fresh content
     // Check if each object has valid type and content
     // ===============================================
-    addContent: function addContent(content) {
+    addContent: function (content) {
       var self = this,
           items = $.makeArray(content),
           thumbs;
@@ -2430,7 +2205,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
 
 
         if (!(obj.opts.caption instanceof $)) {
-          obj.opts.caption = obj.opts.caption === undefined ? "" : obj.opts.caption + "";
+          obj.opts.caption = obj.opts.caption === undefined$1 ? "" : obj.opts.caption + "";
         } // Check if url contains "filter" used to filter the content
         // Example: "ajax.html #something"
 
@@ -2492,7 +2267,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
     //   - keyboard
     //   - detecting inactivity
     // ======================================
-    addEvents: function addEvents() {
+    addEvents: function () {
       var self = this;
       self.removeEvents(); // Make navigation elements clickable
       // ==================================
@@ -2603,7 +2378,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
     },
     // Remove events added by the core
     // ===============================
-    removeEvents: function removeEvents() {
+    removeEvents: function () {
       var self = this;
       $W.off("orientationchange.fb resize.fb");
       $D.off("keydown.fb .fb-idle");
@@ -2616,17 +2391,17 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
     },
     // Change to previous gallery item
     // ===============================
-    previous: function previous(duration) {
+    previous: function (duration) {
       return this.jumpTo(this.currPos - 1, duration);
     },
     // Change to next gallery item
     // ===========================
-    next: function next(duration) {
+    next: function (duration) {
       return this.jumpTo(this.currPos + 1, duration);
     },
     // Switch to selected gallery item
     // ===============================
-    jumpTo: function jumpTo(pos, duration) {
+    jumpTo: function (pos, duration) {
       var self = this,
           groupLen = self.group.length,
           firstRun,
@@ -2675,7 +2450,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
       self.trigger("beforeShow", firstRun);
       self.updateControls(); // Validate duration length
 
-      current.forcedDuration = undefined;
+      current.forcedDuration = undefined$1;
 
       if ($.isNumeric(duration)) {
         current.forcedDuration = duration;
@@ -2772,7 +2547,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
     // Create new "slide" element
     // These are gallery items  that are actually added to DOM
     // =======================================================
-    createSlide: function createSlide(pos) {
+    createSlide: function (pos) {
       var self = this,
           $slide,
           index;
@@ -2794,7 +2569,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
     // Scale image to the actual size of the image;
     // x and y values should be relative to the slide
     // ==============================================
-    scaleToActual: function scaleToActual(x, y, duration) {
+    scaleToActual: function (x, y, duration) {
       var self = this,
           current = self.current,
           $content = current.$content,
@@ -2814,8 +2589,8 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
 
       self.isAnimating = true;
       $.fancybox.stop($content);
-      x = x === undefined ? canvasWidth * 0.5 : x;
-      y = y === undefined ? canvasHeight * 0.5 : y;
+      x = x === undefined$1 ? canvasWidth * 0.5 : x;
+      y = y === undefined$1 ? canvasHeight * 0.5 : y;
       imgPos = $.fancybox.getTranslate($content);
       imgPos.top -= $.fancybox.getTranslate(current.$slide).top;
       imgPos.left -= $.fancybox.getTranslate(current.$slide).left;
@@ -2865,7 +2640,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
     },
     // Scale image to fit inside parent element
     // ========================================
-    scaleToFit: function scaleToFit(duration) {
+    scaleToFit: function (duration) {
       var self = this,
           current = self.current,
           $content = current.$content,
@@ -2890,7 +2665,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
     },
     // Calculate image size to fit inside viewport
     // ===========================================
-    getFitPos: function getFitPos(slide) {
+    getFitPos: function (slide) {
       var self = this,
           $content = slide.$content,
           $slide = slide.$slide,
@@ -2949,7 +2724,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
     },
     // Update content size and position for all slides
     // ==============================================
-    update: function update(e) {
+    update: function (e) {
       var self = this;
       $.each(self.slides, function (key, slide) {
         self.updateSlide(slide, e);
@@ -2957,7 +2732,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
     },
     // Update slide content position and size
     // ======================================
-    updateSlide: function updateSlide(slide, e) {
+    updateSlide: function (slide, e) {
       var self = this,
           $content = slide && slide.$content,
           width = slide.width || slide.opts.width,
@@ -2991,7 +2766,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
     },
     // Horizontally center slide
     // =========================
-    centerSlide: function centerSlide(duration) {
+    centerSlide: function (duration) {
       var self = this,
           current = self.current,
           $slide = current.$slide;
@@ -3009,7 +2784,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
         top: 0,
         left: 0,
         opacity: 1
-      }, duration === undefined ? 0 : duration, function () {
+      }, duration === undefined$1 ? 0 : duration, function () {
         // Clean up
         $slide.css({
           transform: "",
@@ -3023,7 +2798,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
     },
     // Check if current slide is moved (swiped)
     // ========================================
-    isMoved: function isMoved(slide) {
+    isMoved: function (slide) {
       var current = slide || this.current,
           slidePos,
           stagePos;
@@ -3038,7 +2813,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
     },
     // Update cursor style depending if content can be zoomed
     // ======================================================
-    updateCursor: function updateCursor(nextWidth, nextHeight) {
+    updateCursor: function (nextWidth, nextHeight) {
       var self = this,
           current = self.current,
           $container = self.$refs.container,
@@ -3065,7 +2840,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
     },
     // Check if current slide is zoomable
     // ==================================
-    isZoomable: function isZoomable() {
+    isZoomable: function () {
       var self = this,
           current = self.current,
           fitPos; // Assume that slide is zoomable if:
@@ -3088,13 +2863,13 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
     },
     // Check if current image dimensions are smaller than actual
     // =========================================================
-    isScaledDown: function isScaledDown(nextWidth, nextHeight) {
+    isScaledDown: function (nextWidth, nextHeight) {
       var self = this,
           rez = false,
           current = self.current,
           $content = current.$content;
 
-      if (nextWidth !== undefined && nextHeight !== undefined) {
+      if (nextWidth !== undefined$1 && nextHeight !== undefined$1) {
         rez = nextWidth < current.width && nextHeight < current.height;
       } else if ($content) {
         rez = $.fancybox.getTranslate($content);
@@ -3105,7 +2880,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
     },
     // Check if image dimensions exceed parent element
     // ===============================================
-    canPan: function canPan(nextWidth, nextHeight) {
+    canPan: function (nextWidth, nextHeight) {
       var self = this,
           current = self.current,
           pos = null,
@@ -3114,7 +2889,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
       if (current.type === "image" && (current.isComplete || nextWidth && nextHeight) && !current.hasError) {
         rez = self.getFitPos(current);
 
-        if (nextWidth !== undefined && nextHeight !== undefined) {
+        if (nextWidth !== undefined$1 && nextHeight !== undefined$1) {
           pos = {
             width: nextWidth,
             height: nextHeight
@@ -3132,7 +2907,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
     },
     // Load content into the slide
     // ===========================
-    loadSlide: function loadSlide(slide) {
+    loadSlide: function (slide) {
       var self = this,
           type,
           $slide,
@@ -3183,12 +2958,12 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
           self.showLoading(slide);
           ajaxLoad = $.ajax($.extend({}, slide.opts.ajax.settings, {
             url: slide.src,
-            success: function success(data, textStatus) {
+            success: function (data, textStatus) {
               if (textStatus === "success") {
                 self.setContent(slide, data);
               }
             },
-            error: function error(jqXHR, textStatus) {
+            error: function (jqXHR, textStatus) {
               if (jqXHR && textStatus !== "abort") {
                 self.setError(slide);
               }
@@ -3208,7 +2983,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
     },
     // Use thumbnail image, if possible
     // ================================
-    setImage: function setImage(slide) {
+    setImage: function (slide) {
       var self = this,
           ghost; // Check if need to show loading icon
 
@@ -3247,7 +3022,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
     },
     // Check if image has srcset and get the source
     // ============================================
-    checkSrcset: function checkSrcset(slide) {
+    checkSrcset: function (slide) {
       var srcset = slide.opts.srcset || slide.opts.image.srcset,
           found,
           temp,
@@ -3308,7 +3083,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
     },
     // Create full-size image
     // ======================
-    setBigImage: function setBigImage(slide) {
+    setBigImage: function (slide) {
       var self = this,
           img = document.createElement("img"),
           $img = $(img);
@@ -3356,7 +3131,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
     },
     // Computes the slide size from image size and maxWidth/maxHeight
     // ==============================================================
-    resolveImageSlideSize: function resolveImageSlideSize(slide, imgWidth, imgHeight) {
+    resolveImageSlideSize: function (slide, imgWidth, imgHeight) {
       var maxWidth = parseInt(slide.opts.width, 10),
           maxHeight = parseInt(slide.opts.height, 10); // Sets the default values from the image
 
@@ -3375,7 +3150,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
     },
     // Create iframe wrapper, iframe and bindings
     // ==========================================
-    setIframe: function setIframe(slide) {
+    setIframe: function (slide) {
       var self = this,
           opts = slide.opts.iframe,
           $slide = slide.$slide,
@@ -3421,13 +3196,13 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
               height: "9999px"
             });
 
-            if (frameWidth === undefined) {
+            if (frameWidth === undefined$1) {
               frameWidth = Math.ceil(Math.max($body[0].clientWidth, $body.outerWidth(true)));
             }
 
             $content.css("width", frameWidth ? frameWidth : "").css("max-width", "");
 
-            if (frameHeight === undefined) {
+            if (frameHeight === undefined$1) {
               frameHeight = Math.ceil(Math.max($body[0].clientHeight, $body.outerHeight(true)));
             }
 
@@ -3456,7 +3231,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
     },
     // Wrap and append content to the slide
     // ======================================
-    setContent: function setContent(slide, content) {
+    setContent: function (slide, content) {
       var self = this;
 
       if (self.isClosing) {
@@ -3540,7 +3315,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
     },
     // Display error message
     // =====================
-    setError: function setError(slide) {
+    setError: function (slide) {
       slide.hasError = true;
       slide.$slide.trigger("onReset").removeClass("fancybox-slide--" + slide.contentType).addClass("fancybox-slide--error");
       slide.contentType = "html";
@@ -3552,7 +3327,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
     },
     // Show loading icon inside the slide
     // ==================================
-    showLoading: function showLoading(slide) {
+    showLoading: function (slide) {
       var self = this;
       slide = slide || self.current;
 
@@ -3562,7 +3337,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
     },
     // Remove loading icon from the slide
     // ==================================
-    hideLoading: function hideLoading(slide) {
+    hideLoading: function (slide) {
       var self = this;
       slide = slide || self.current;
 
@@ -3573,7 +3348,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
     },
     // Adjustments after slide content has been loaded
     // ===============================================
-    afterLoad: function afterLoad(slide) {
+    afterLoad: function (slide) {
       var self = this;
 
       if (self.isClosing) {
@@ -3617,7 +3392,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
     // Prevent caption overlap,
     // fix css inconsistency across browsers
     // =====================================
-    adjustCaption: function adjustCaption(slide) {
+    adjustCaption: function (slide) {
       var self = this,
           current = slide || self.current,
           caption = current.opts.caption,
@@ -3643,7 +3418,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
     // Simple hack to fix inconsistency across browsers, described here (affects Edge, too):
     // https://bugzilla.mozilla.org/show_bug.cgi?id=748518
     // ====================================================================================
-    adjustLayout: function adjustLayout(slide) {
+    adjustLayout: function (slide) {
       var self = this,
           current = slide || self.current,
           scrollHeight,
@@ -3678,7 +3453,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
     // This method is called right after content has been loaded or
     // user navigates gallery and transition should start
     // ============================================================
-    revealContent: function revealContent(slide) {
+    revealContent: function (slide) {
       var self = this,
           $slide = slide.$slide,
           end = false,
@@ -3692,7 +3467,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
       slide.isRevealed = true;
       effect = slide.opts[self.firstRun ? "animationEffect" : "transitionEffect"];
       duration = slide.opts[self.firstRun ? "animationDuration" : "transitionDuration"];
-      duration = parseInt(slide.forcedDuration === undefined ? duration : slide.forcedDuration, 10);
+      duration = parseInt(slide.forcedDuration === undefined$1 ? duration : slide.forcedDuration, 10);
 
       if (isMoved || slide.pos !== self.currPos || !duration) {
         effect = false;
@@ -3781,7 +3556,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
     },
     // Check if we can and have to zoom from thumbnail
     //================================================
-    getThumbPos: function getThumbPos(slide) {
+    getThumbPos: function (slide) {
       var rez = false,
           $thumb = slide.$thumb,
           thumbPos,
@@ -3812,7 +3587,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
     // Final adjustments after current gallery item is moved to position
     // and it`s content is loaded
     // ==================================================================
-    complete: function complete() {
+    complete: function () {
       var self = this,
           current = self.current,
           slides = {},
@@ -3874,7 +3649,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
     },
     // Preload next and previous slides
     // ================================
-    preload: function preload(type) {
+    preload: function (type) {
       var self = this,
           prev,
           next;
@@ -3896,7 +3671,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
     },
     // Try to find and focus on the first focusable element
     // ====================================================
-    focus: function focus(e, firstRun) {
+    focus: function (e, firstRun) {
       var self = this,
           focusableStr = ["a[href]", "area[href]", 'input:not([disabled]):not([type="hidden"]):not([aria-hidden])', "select:not([disabled]):not([aria-hidden])", "textarea:not([disabled]):not([aria-hidden])", "button:not([disabled]):not([aria-hidden])", "iframe", "object", "embed", "video", "audio", "[contenteditable]", '[tabindex]:not([tabindex^="-"])'].join(","),
           focusableItems,
@@ -3944,7 +3719,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
     // Activates current instance - brings container to the front and enables keyboard,
     // notifies other instances about deactivating
     // =================================================================================
-    activate: function activate() {
+    activate: function () {
       var self = this; // Deactivate all instances
 
       $(".fancybox-container").each(function () {
@@ -3969,7 +3744,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
     // Start closing procedure
     // This will start "zoom-out" animation if needed and clean everything up afterwards
     // =================================================================================
-    close: function close(e, d) {
+    close: function (e, d) {
       var self = this,
           current = self.current,
           effect,
@@ -3980,7 +3755,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
           start,
           end;
 
-      var done = function done() {
+      var done = function () {
         self.cleanUp(e);
       };
 
@@ -4071,7 +3846,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
     },
     // Final adjustments after removing the instance
     // =============================================
-    cleanUp: function cleanUp(e) {
+    cleanUp: function (e) {
       var self = this,
           instance,
           $focus = self.current.opts.$orig,
@@ -4107,7 +3882,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
     },
     // Call callback and trigger an event
     // ==================================
-    trigger: function trigger(name, slide) {
+    trigger: function (name, slide) {
       var args = Array.prototype.slice.call(arguments, 1),
           self = this,
           obj = slide && slide.opts ? slide : self.current,
@@ -4137,7 +3912,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
     },
     // Update infobar values, navigation button states and reveal caption
     // ==================================================================
-    updateControls: function updateControls() {
+    updateControls: function () {
       var self = this,
           current = self.current,
           index = current.index,
@@ -4178,7 +3953,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
     },
     // Hide toolbar and caption
     // ========================
-    hideControls: function hideControls(andCaption) {
+    hideControls: function (andCaption) {
       var self = this,
           arr = ["infobar", "toolbar", "nav"];
 
@@ -4191,7 +3966,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
       }).join(" "));
       this.hasHiddenControls = true;
     },
-    showControls: function showControls() {
+    showControls: function () {
       var self = this,
           opts = self.current ? self.current.opts : self.opts,
           $container = self.$refs.container;
@@ -4201,7 +3976,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
     },
     // Toggle toolbar and caption
     // ==========================
-    toggleControls: function toggleControls() {
+    toggleControls: function () {
       if (this.hasHiddenControls) {
         this.showControls();
       } else {
@@ -4223,7 +3998,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
     //       console.info( this.currIndex );
     //   });
     // ======================================================
-    getInstance: function getInstance(command) {
+    getInstance: function (command) {
       var instance = $('.fancybox-container:not(".fancybox-is-closing"):last').data("FancyBox"),
           args = Array.prototype.slice.call(arguments, 1);
 
@@ -4241,12 +4016,12 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
     },
     // Create new instance
     // ===================
-    open: function open(items, opts, index) {
+    open: function (items, opts, index) {
       return new FancyBox(items, opts, index);
     },
     // Close current or all instances
     // ==============================
-    close: function close(all) {
+    close: function (all) {
       var instance = this.getInstance();
 
       if (instance) {
@@ -4259,7 +4034,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
     },
     // Close all instances and unbind all events
     // =========================================
-    destroy: function destroy() {
+    destroy: function () {
       this.close(true);
       $D.add("body").off("click.fb-start", "**");
     },
@@ -4275,7 +4050,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
     // Helper function to get current visual state of an element
     // returns array[ top, left, horizontal-scale, vertical-scale, opacity ]
     // =====================================================================
-    getTranslate: function getTranslate($el) {
+    getTranslate: function ($el) {
       var domRect;
 
       if (!$el || !$el.length) {
@@ -4294,7 +4069,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
     // Shortcut for setting "translate3d" properties for element
     // Can set be used to set opacity, too
     // ========================================================
-    setTranslate: function setTranslate($el, props) {
+    setTranslate: function ($el, props) {
       var str = "",
           css = {};
 
@@ -4302,8 +4077,8 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
         return;
       }
 
-      if (props.left !== undefined || props.top !== undefined) {
-        str = (props.left === undefined ? $el.position().left : props.left) + "px, " + (props.top === undefined ? $el.position().top : props.top) + "px";
+      if (props.left !== undefined$1 || props.top !== undefined$1) {
+        str = (props.left === undefined$1 ? $el.position().left : props.left) + "px, " + (props.top === undefined$1 ? $el.position().top : props.top) + "px";
 
         if (this.use3d) {
           str = "translate3d(" + str + ", 0px)";
@@ -4312,9 +4087,9 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
         }
       }
 
-      if (props.scaleX !== undefined && props.scaleY !== undefined) {
+      if (props.scaleX !== undefined$1 && props.scaleY !== undefined$1) {
         str += " scale(" + props.scaleX + ", " + props.scaleY + ")";
-      } else if (props.scaleX !== undefined) {
+      } else if (props.scaleX !== undefined$1) {
         str += " scaleX(" + props.scaleX + ")";
       }
 
@@ -4322,15 +4097,15 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
         css.transform = str;
       }
 
-      if (props.opacity !== undefined) {
+      if (props.opacity !== undefined$1) {
         css.opacity = props.opacity;
       }
 
-      if (props.width !== undefined) {
+      if (props.width !== undefined$1) {
         css.width = props.width;
       }
 
-      if (props.height !== undefined) {
+      if (props.height !== undefined$1) {
         css.height = props.height;
       }
 
@@ -4338,7 +4113,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
     },
     // Simple CSS transition handler
     // =============================
-    animate: function animate($el, to, duration, callback, leaveAnimationName) {
+    animate: function ($el, to, duration, callback, leaveAnimationName) {
       var self = this,
           from;
 
@@ -4362,7 +4137,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
         }
 
         if ($.isPlainObject(to)) {
-          if (to.scaleX !== undefined && to.scaleY !== undefined) {
+          if (to.scaleX !== undefined$1 && to.scaleY !== undefined$1) {
             self.setTranslate($el, {
               top: to.top,
               left: to.left,
@@ -4387,7 +4162,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
 
 
       if ($.isPlainObject(to)) {
-        if (to.scaleX !== undefined && to.scaleY !== undefined) {
+        if (to.scaleX !== undefined$1 && to.scaleY !== undefined$1) {
           delete to.width;
           delete to.height;
 
@@ -4406,7 +4181,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
         $el.trigger(transitionEnd);
       }, duration + 33));
     },
-    stop: function stop($el, callCallback) {
+    stop: function ($el, callCallback) {
       if ($el && $el.length) {
         clearTimeout($el.data("timer"));
 
@@ -4543,7 +4318,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
 
 
 (function ($) {
-  "use strict"; // Object containing properties for each media type
 
   var defaults = {
     youtube: {
@@ -4590,7 +4364,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
     gmap_place: {
       matcher: /(maps\.)?google\.([a-z]{2,3}(\.[a-z]{2})?)\/(((maps\/(place\/(.*)\/)?\@(.*),(\d+.?\d+?)z))|(\?ll=))(.*)?/i,
       type: "iframe",
-      url: function url(rez) {
+      url: function (rez) {
         return "//maps.google." + rez[2] + "/?ll=" + (rez[9] ? rez[9] + "&z=" + Math.floor(rez[10]) + (rez[12] ? rez[12].replace(/^\//, "&") : "") : rez[12] + "").replace(/\?/, "&") + "&output=" + (rez[12] && rez[12].indexOf("layer=c") > 0 ? "svembed" : "embed");
       }
     },
@@ -4601,13 +4375,13 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
     gmap_search: {
       matcher: /(maps\.)?google\.([a-z]{2,3}(\.[a-z]{2})?)\/(maps\/search\/)(.*)/i,
       type: "iframe",
-      url: function url(rez) {
+      url: function (rez) {
         return "//maps.google." + rez[2] + "/maps?q=" + rez[5].replace("query=", "q=").replace("api=1", "") + "&output=embed";
       }
     }
   }; // Formats matching url to final form
 
-  var format = function format(url, rez, params) {
+  var format = function (url, rez, params) {
     if (!url) {
       return;
     }
@@ -4716,17 +4490,17 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
   var VideoAPILoader = {
     youtube: {
       src: "https://www.youtube.com/iframe_api",
-      "class": "YT",
+      class: "YT",
       loading: false,
       loaded: false
     },
     vimeo: {
       src: "https://player.vimeo.com/api/player.js",
-      "class": "Vimeo",
+      class: "Vimeo",
       loading: false,
       loaded: false
     },
-    load: function load(vendor) {
+    load: function (vendor) {
       var _this = this,
           script;
 
@@ -4762,7 +4536,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
 
       document.body.appendChild(script);
     },
-    done: function done(vendor) {
+    done: function (vendor) {
       var instance, $el, player;
 
       if (vendor === "youtube") {
@@ -4777,7 +4551,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
         if (vendor === "youtube" && YT !== undefined && YT) {
           player = new YT.Player($el.attr("id"), {
             events: {
-              onStateChange: function onStateChange(e) {
+              onStateChange: function (e) {
                 if (e.data == 0) {
                   instance.next();
                 }
@@ -4794,7 +4568,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
     }
   };
   $(document).on({
-    "afterShow.fb": function afterShowFb(e, instance, current) {
+    "afterShow.fb": function (e, instance, current) {
       if (instance.group.length > 1 && (current.contentSource === "youtube" || current.contentSource === "vimeo")) {
         VideoAPILoader.load(current.contentSource);
       }
@@ -4809,7 +4583,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
 
 
 (function (window, document, $) {
-  "use strict";
 
   var requestAFrame = function () {
     return window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || window.oRequestAnimationFrame || // if all else fails, use setTimeout
@@ -4824,7 +4597,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
     };
   }();
 
-  var getPointerXY = function getPointerXY(e) {
+  var getPointerXY = function (e) {
     var result = [];
     e = e.originalEvent || e || window.e;
     e = e.touches && e.touches.length ? e.touches : e.changedTouches && e.changedTouches.length ? e.changedTouches : [e];
@@ -4846,7 +4619,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
     return result;
   };
 
-  var distance = function distance(point2, point1, what) {
+  var distance = function (point2, point1, what) {
     if (!point1 || !point2) {
       return 0;
     }
@@ -4860,7 +4633,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
     return Math.sqrt(Math.pow(point2.x - point1.x, 2) + Math.pow(point2.y - point1.y, 2));
   };
 
-  var isClickable = function isClickable($el) {
+  var isClickable = function ($el) {
     if ($el.is('a,area,button,[role="button"],input,label,select,summary,textarea,video,audio,iframe') || $.isFunction($el.get(0).onclick) || $el.data("selectable")) {
       return true;
     } // Check for attributes like data-fancybox-next or data-fancybox-close
@@ -4875,7 +4648,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
     return false;
   };
 
-  var hasScrollbars = function hasScrollbars(el) {
+  var hasScrollbars = function (el) {
     var overflowY = window.getComputedStyle(el)["overflow-y"],
         overflowX = window.getComputedStyle(el)["overflow-x"],
         vertical = (overflowY === "scroll" || overflowY === "auto") && el.scrollHeight > el.clientHeight,
@@ -4883,7 +4656,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
     return vertical || horizontal;
   };
 
-  var isScrollable = function isScrollable($el) {
+  var isScrollable = function ($el) {
     var rez = false;
 
     while (true) {
@@ -4903,7 +4676,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
     return rez;
   };
 
-  var Guestures = function Guestures(instance) {
+  var Guestures = function (instance) {
     var self = this;
     self.instance = instance;
     self.$bg = instance.$refs.bg;
@@ -5478,7 +5251,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
     var tapY = endPoints[0] ? endPoints[0].y - $(window).scrollTop() - self.stagePos.top : 0;
     var where;
 
-    var process = function process(prefix) {
+    var process = function (prefix) {
       var action = current.opts[prefix];
 
       if ($.isFunction(action)) {
@@ -5602,7 +5375,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
 
 
 (function (document, $) {
-  "use strict";
 
   $.extend(true, $.fancybox.defaults, {
     btnTpl: {
@@ -5615,7 +5387,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
     }
   });
 
-  var SlideShow = function SlideShow(instance) {
+  var SlideShow = function (instance) {
     this.instance = instance;
     this.init();
   };
@@ -5624,7 +5396,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
     timer: null,
     isActive: false,
     $button: null,
-    init: function init() {
+    init: function () {
       var self = this,
           instance = self.instance,
           opts = instance.group[instance.currIndex].opts.slideShow;
@@ -5638,7 +5410,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
         self.$progress = $('<div class="fancybox-progress"></div>').appendTo(instance.$refs.inner);
       }
     },
-    set: function set(force) {
+    set: function (force) {
       var self = this,
           instance = self.instance,
           current = instance.current; // Check if reached last element
@@ -5665,7 +5437,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
         instance.showControls();
       }
     },
-    clear: function clear() {
+    clear: function () {
       var self = this;
       clearTimeout(self.timer);
       self.timer = null;
@@ -5674,7 +5446,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
         self.$progress.removeAttr("style").hide();
       }
     },
-    start: function start() {
+    start: function () {
       var self = this,
           current = self.instance.current;
 
@@ -5689,7 +5461,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
         self.instance.trigger("onSlideShowChange", true);
       }
     },
-    stop: function stop() {
+    stop: function () {
       var self = this,
           current = self.instance.current;
       self.clear();
@@ -5701,7 +5473,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
         self.$progress.removeAttr("style").hide();
       }
     },
-    toggle: function toggle() {
+    toggle: function () {
       var self = this;
 
       if (self.isActive) {
@@ -5712,12 +5484,12 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
     }
   });
   $(document).on({
-    "onInit.fb": function onInitFb(e, instance) {
+    "onInit.fb": function (e, instance) {
       if (instance && !instance.SlideShow) {
         instance.SlideShow = new SlideShow(instance);
       }
     },
-    "beforeShow.fb": function beforeShowFb(e, instance, current, firstRun) {
+    "beforeShow.fb": function (e, instance, current, firstRun) {
       var SlideShow = instance && instance.SlideShow;
 
       if (firstRun) {
@@ -5728,14 +5500,14 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
         SlideShow.clear();
       }
     },
-    "afterShow.fb": function afterShowFb(e, instance, current) {
+    "afterShow.fb": function (e, instance, current) {
       var SlideShow = instance && instance.SlideShow;
 
       if (SlideShow && SlideShow.isActive) {
         SlideShow.set();
       }
     },
-    "afterKeydown.fb": function afterKeydownFb(e, instance, current, keypress, keycode) {
+    "afterKeydown.fb": function (e, instance, current, keypress, keycode) {
       var SlideShow = instance && instance.SlideShow; // "P" or Spacebar
 
       if (SlideShow && current.opts.slideShow && (keycode === 80 || keycode === 32) && !$(document.activeElement).is("button,a,input")) {
@@ -5743,7 +5515,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
         SlideShow.toggle();
       }
     },
-    "beforeClose.fb onDeactivate.fb": function beforeCloseFbOnDeactivateFb(e, instance) {
+    "beforeClose.fb onDeactivate.fb": function (e, instance) {
       var SlideShow = instance && instance.SlideShow;
 
       if (SlideShow) {
@@ -5773,7 +5545,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
 
 
 (function (document, $) {
-  "use strict"; // Collection of methods supported by user browser
 
   var fn = function () {
     var fnMap = [["requestFullscreen", "exitFullscreen", "fullscreenElement", "fullscreenEnabled", "fullscreenchange", "fullscreenerror"], // new WebKit
@@ -5798,14 +5569,14 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
 
   if (fn) {
     var FullScreen = {
-      request: function request(elem) {
+      request: function (elem) {
         elem = elem || document.documentElement;
         elem[fn.requestFullscreen](elem.ALLOW_KEYBOARD_INPUT);
       },
-      exit: function exit() {
+      exit: function () {
         document[fn.exitFullscreen]();
       },
-      toggle: function toggle(elem) {
+      toggle: function (elem) {
         elem = elem || document.documentElement;
 
         if (this.isFullscreen()) {
@@ -5814,10 +5585,10 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
           this.request(elem);
         }
       },
-      isFullscreen: function isFullscreen() {
+      isFullscreen: function () {
         return Boolean(document[fn.fullscreenElement]);
       },
-      enabled: function enabled() {
+      enabled: function () {
         return Boolean(document[fn.fullscreenEnabled]);
       }
     };
@@ -5852,7 +5623,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
   }
 
   $(document).on({
-    "onInit.fb": function onInitFb(e, instance) {
+    "onInit.fb": function (e, instance) {
       var $container;
 
       if (!fn) {
@@ -5878,14 +5649,14 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
         instance.$refs.toolbar.find("[data-fancybox-fullscreen]").hide();
       }
     },
-    "afterKeydown.fb": function afterKeydownFb(e, instance, current, keypress, keycode) {
+    "afterKeydown.fb": function (e, instance, current, keypress, keycode) {
       // "F"
       if (instance && instance.FullScreen && keycode === 70) {
         keypress.preventDefault();
         instance.FullScreen.toggle();
       }
     },
-    "beforeClose.fb": function beforeCloseFb(e, instance) {
+    "beforeClose.fb": function (e, instance) {
       if (instance && instance.FullScreen && instance.$refs.container.hasClass("fancybox-is-fullscreen")) {
         FullScreen.exit();
       }
@@ -5900,7 +5671,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
 
 
 (function (document, $) {
-  "use strict";
 
   var CLASS = "fancybox-thumbs",
       CLASS_ACTIVE = CLASS + "-active"; // Make sure there are default values
@@ -5921,7 +5691,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
     }
   }, $.fancybox.defaults);
 
-  var FancyThumbs = function FancyThumbs(instance) {
+  var FancyThumbs = function (instance) {
     this.init(instance);
   };
 
@@ -5931,7 +5701,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
     $list: null,
     isVisible: false,
     isActive: false,
-    init: function init(instance) {
+    init: function (instance) {
       var self = this,
           group = instance.group,
           enabled = 0;
@@ -5959,7 +5729,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
         self.$button.hide();
       }
     },
-    create: function create() {
+    create: function () {
       var self = this,
           instance = self.instance,
           parentEl = self.opts.parentEl,
@@ -5996,7 +5766,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
         self.$list.width(parseInt(self.$grid.css("padding-right"), 10) + instance.group.length * self.$list.children().eq(0).outerWidth(true));
       }
     },
-    focus: function focus(duration) {
+    focus: function (duration) {
       var self = this,
           $list = self.$list,
           $grid = self.$grid,
@@ -6020,7 +5790,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
         }, duration);
       }
     },
-    update: function update() {
+    update: function () {
       var that = this;
       that.instance.$refs.container.toggleClass("fancybox-show-thumbs", this.isVisible);
 
@@ -6038,21 +5808,21 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
 
       that.instance.update();
     },
-    hide: function hide() {
+    hide: function () {
       this.isVisible = false;
       this.update();
     },
-    show: function show() {
+    show: function () {
       this.isVisible = true;
       this.update();
     },
-    toggle: function toggle() {
+    toggle: function () {
       this.isVisible = !this.isVisible;
       this.update();
     }
   });
   $(document).on({
-    "onInit.fb": function onInitFb(e, instance) {
+    "onInit.fb": function (e, instance) {
       var Thumbs;
 
       if (instance && !instance.Thumbs) {
@@ -6063,14 +5833,14 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
         }
       }
     },
-    "beforeShow.fb": function beforeShowFb(e, instance, item, firstRun) {
+    "beforeShow.fb": function (e, instance, item, firstRun) {
       var Thumbs = instance && instance.Thumbs;
 
       if (Thumbs && Thumbs.isVisible) {
         Thumbs.focus(firstRun ? 0 : 250);
       }
     },
-    "afterKeydown.fb": function afterKeydownFb(e, instance, current, keypress, keycode) {
+    "afterKeydown.fb": function (e, instance, current, keypress, keycode) {
       var Thumbs = instance && instance.Thumbs; // "G"
 
       if (Thumbs && Thumbs.isActive && keycode === 71) {
@@ -6078,7 +5848,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
         Thumbs.toggle();
       }
     },
-    "beforeClose.fb": function beforeCloseFb(e, instance) {
+    "beforeClose.fb": function (e, instance) {
       var Thumbs = instance && instance.Thumbs;
 
       if (Thumbs && Thumbs.isVisible && Thumbs.opts.hideOnClose !== false) {
@@ -6095,14 +5865,13 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
 
 
 (function (document, $) {
-  "use strict";
 
   $.extend(true, $.fancybox.defaults, {
     btnTpl: {
       share: '<button data-fancybox-share class="fancybox-button fancybox-button--share" title="{{SHARE}}">' + '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M2.55 19c1.4-8.4 9.1-9.8 11.9-9.8V5l7 7-7 6.3v-3.5c-2.8 0-10.5 2.1-11.9 4.2z"/></svg>' + "</button>"
     },
     share: {
-      url: function url(instance, item) {
+      url: function (instance, item) {
         return (!instance.currentHash && !(item.type === "inline" || item.type === "html") ? item.origSrc || item.src : false) || window.location;
       },
       tpl: '<div class="fancybox-share">' + "<h1>{{SHARE}}</h1>" + "<p>" + '<a class="fancybox-share__button fancybox-share__button--fb" href="https://www.facebook.com/sharer/sharer.php?u={{url}}">' + '<svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg"><path d="m287 456v-299c0-21 6-35 35-35h38v-63c-7-1-29-3-55-3-54 0-91 33-91 94v306m143-254h-205v72h196" /></svg>' + "<span>Facebook</span>" + "</a>" + '<a class="fancybox-share__button fancybox-share__button--tw" href="https://twitter.com/intent/tweet?url={{url}}&text={{descr}}">' + '<svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg"><path d="m456 133c-14 7-31 11-47 13 17-10 30-27 37-46-15 10-34 16-52 20-61-62-157-7-141 75-68-3-129-35-169-85-22 37-11 86 26 109-13 0-26-4-37-9 0 39 28 72 65 80-12 3-25 4-37 2 10 33 41 57 77 57-42 30-77 38-122 34 170 111 378-32 359-208 16-11 30-25 41-42z" /></svg>' + "<span>Twitter</span>" + "</a>" + '<a class="fancybox-share__button fancybox-share__button--pt" href="https://www.pinterest.com/pin/create/button/?url={{url}}&description={{descr}}&media={{media}}">' + '<svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg"><path d="m265 56c-109 0-164 78-164 144 0 39 15 74 47 87 5 2 10 0 12-5l4-19c2-6 1-8-3-13-9-11-15-25-15-45 0-58 43-110 113-110 62 0 96 38 96 88 0 67-30 122-73 122-24 0-42-19-36-44 6-29 20-60 20-81 0-19-10-35-31-35-25 0-44 26-44 60 0 21 7 36 7 36l-30 125c-8 37-1 83 0 87 0 3 4 4 5 2 2-3 32-39 42-75l16-64c8 16 31 29 56 29 74 0 124-67 124-157 0-69-58-132-146-132z" fill="#fff"/></svg>' + "<span>Pinterest</span>" + "</a>" + "</p>" + '<p><input class="fancybox-share__input" type="text" value="{{url_raw}}" onclick="select()" /></p>' + "</div>"
@@ -6146,7 +5915,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
       opts: {
         touch: false,
         animationEffect: false,
-        afterLoad: function afterLoad(shareInstance, shareCurrent) {
+        afterLoad: function (shareInstance, shareCurrent) {
           // Close self if parent instance is closing
           instance.$refs.container.one("beforeClose.fb", function () {
             shareInstance.close(null, 0);
@@ -6172,13 +5941,12 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
 
 
 (function (window, document, $) {
-  "use strict"; // Simple $.escapeSelector polyfill (for jQuery prior v3)
 
   if (!$.escapeSelector) {
     $.escapeSelector = function (sel) {
       var rcssescape = /([\0-\x1f\x7f]|^-?\d)|^-$|[^\x80-\uFFFF\w-]/g;
 
-      var fcssescape = function fcssescape(ch, asCodePoint) {
+      var fcssescape = function (ch, asCodePoint) {
         if (asCodePoint) {
           // U+0000 NULL becomes U+FFFD REPLACEMENT CHARACTER
           if (ch === "\0") {
@@ -6243,7 +6011,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
 
 
     $(document).on({
-      "onInit.fb": function onInitFb(e, instance) {
+      "onInit.fb": function (e, instance) {
         var url, gallery;
 
         if (instance.group[instance.currIndex].opts.hash === false) {
@@ -6257,7 +6025,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
           instance.currIndex = url.index - 1;
         }
       },
-      "beforeShow.fb": function beforeShowFb(e, instance, current, firstRun) {
+      "beforeShow.fb": function (e, instance, current, firstRun) {
         var gallery;
 
         if (!current || current.opts.hash === false) {
@@ -6302,7 +6070,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
           instance.hashTimer = null;
         }, 300);
       },
-      "beforeClose.fb": function beforeCloseFb(e, instance, current) {
+      "beforeClose.fb": function (e, instance, current) {
         if (!current || current.opts.hash === false) {
           return;
         }
@@ -6362,11 +6130,10 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
 
 
 (function (document, $) {
-  "use strict";
 
   var prevTime = new Date().getTime();
   $(document).on({
-    "onInit.fb": function onInitFb(e, instance, current) {
+    "onInit.fb": function (e, instance, current) {
       instance.$refs.stage.on("mousewheel DOMMouseScroll wheel MozMousePixelScroll", function (e) {
         var current = instance.current,
             currTime = new Date().getTime();
@@ -6394,16 +6161,208 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
     }
   });
 })(document, jQuery);
-"use strict";
+
+/**
+ * File navigation.js.
+ *
+ * Handles toggling the navigation menu for small screens and enables TAB key
+ * navigation support for dropdown menus.
+ */
+(function () {
+  var container, button, menu, links, i, len;
+  container = document.getElementById('site-navigation');
+
+  if (!container) {
+    return;
+  }
+
+  button = container.getElementsByTagName('button')[0];
+
+  if ('undefined' === typeof button) {
+    return;
+  }
+
+  menu = container.getElementsByTagName('ul')[0]; // Hide menu toggle button if menu is empty and return early.
+
+  if ('undefined' === typeof menu) {
+    button.style.display = 'none';
+    return;
+  }
+
+  menu.setAttribute('aria-expanded', 'false');
+
+  if (-1 === menu.className.indexOf('nav-menu')) {
+    menu.className += ' nav-menu';
+  }
+
+  button.onclick = function () {
+    if (-1 !== container.className.indexOf('toggled')) {
+      container.className = container.className.replace(' toggled', '');
+      button.setAttribute('aria-expanded', 'false');
+      menu.setAttribute('aria-expanded', 'false');
+    } else {
+      container.className += ' toggled';
+      button.setAttribute('aria-expanded', 'true');
+      menu.setAttribute('aria-expanded', 'true');
+    }
+  }; // Get all the link elements within the menu.
+
+
+  links = menu.getElementsByTagName('a'); // Each time a menu link is focused or blurred, toggle focus.
+
+  for (i = 0, len = links.length; i < len; i++) {
+    links[i].addEventListener('focus', toggleFocus, true);
+    links[i].addEventListener('blur', toggleFocus, true);
+  }
+  /**
+   * Sets or removes .focus class on an element.
+   */
+
+
+  function toggleFocus() {
+    var self = this; // Move up through the ancestors of the current link until we hit .nav-menu.
+
+    while (-1 === self.className.indexOf('nav-menu')) {
+      // On li elements toggle the class .focus.
+      if ('li' === self.tagName.toLowerCase()) {
+        // console.log(self.className.indexOf( 'focus' ))
+        if (-1 !== self.className.indexOf('focus')) {
+          self.className = self.className.replace(' focus', '');
+        } else {
+          self.className += ' focus';
+        }
+      }
+
+      self = self.parentElement;
+    }
+  }
+  /**
+   * Toggles `focus` class to allow submenu access on tablets.
+   */
+
+
+  (function (container) {
+    var touchStartFn,
+        i,
+        parentLink = container.querySelectorAll('.menu-item-has-children > a, .page_item_has_children > a');
+
+    if ('ontouchstart' in window) {
+      touchStartFn = function (e) {
+        var menuItem = this.parentNode,
+            i;
+
+        if (!menuItem.classList.contains('focus')) {
+          // e.preventDefault();
+          for (i = 0; i < menuItem.parentNode.children.length; ++i) {
+            if (menuItem === menuItem.parentNode.children[i]) {
+              continue;
+            }
+
+            menuItem.parentNode.children[i].classList.remove('focus');
+          }
+
+          menuItem.classList.add('focus');
+        } else {
+          menuItem.classList.remove('focus');
+        }
+      };
+
+      for (i = 0; i < parentLink.length; ++i) {
+        parentLink[i].addEventListener('touchstart', touchStartFn, false);
+      }
+    }
+  })(container);
+})();
+
+(function ($) {
+
+  function initMainNavigation(container) {
+    //check if $navcontent in functions.php is false
+    // 	if ( navcontent.has_navigation == 'true') {
+    // 		// Add dropdown toggle that displays child menu items.
+    // 		var dropdownToggle = '<div class="dropdown-toggle" aria-expanded="false" aria-label="Toggle Menu">'+navcontent.iconOpen+'<span class="screen-reader-text">Expand</span></div>'
+    // }
+    // 	// container.find( '.menu-item-has-children > .sub-menu, .page_item_has_children > .sub-menu' ).before( dropdownToggle );
+    // 	container.find( '.menu-item-has-children > a, .page_item_has_children > a' ).after( dropdownToggle );
+    // Toggle buttons and submenu items with active children menu items.
+    // container.find( '.current-menu-ancestor > button' ).addClass( 'toggled-on' );
+    // container.find( '.current-menu-ancestor > .sub-menu' ).addClass( 'toggled-on' );
+    // Add menu items with submenus to aria-haspopup="true".
+    container.find('.menu-item-has-children, .page_item_has_children').attr('aria-haspopup', 'true');
+    container.find('.dropdown-toggle').click(function (e) {
+      // if ( 	$('body').hasClass('menu-open')) {
+      // 	$('body').removeClass('menu-open');
+      // } else {
+      // 	$('body').addClass('menu-open');
+      // }
+      var _this = $(this),
+          screenReaderSpan = _this.find('.screen-reader-text'); // if ( document.body.clientWidth < 1024 || 'ontouchstart' in window   ) {
+      //     e.preventDefault();
+      //     // $(this).unbind(e);
+      // }
+
+
+      _this.parent().parent().toggleClass('toggled-on');
+
+      _this.prev('.children, .sub-menu').toggleClass('toggled-on'); // jscs:disable
+
+
+      _this.attr('aria-expanded', _this.attr('aria-expanded') === 'false' ? 'true' : 'false'); // jscs:enable
+
+
+      screenReaderSpan.text(screenReaderSpan.text() === navcontent.expand ? navcontent.collapse : navcontent.expand); // if (_this.parent().hasClass('toggled-on') ) {
+      // 	_this.find('.svg-wrapper').html(navcontent.iconClose);
+      // } else {
+      // 	_this.find('.svg-wrapper').html(navcontent.iconOpen);
+      // }
+    });
+  }
+
+  initMainNavigation($('.main-navigation'));
+})(jQuery);
+
+/**
+ * File skip-link-focus-fix.js.
+ *
+ * Helps with accessibility for keyboard only users.
+ *
+ * Learn more: https://git.io/vWdr2
+ */
+(function () {
+  var isWebkit = navigator.userAgent.toLowerCase().indexOf('webkit') > -1,
+      isOpera = navigator.userAgent.toLowerCase().indexOf('opera') > -1,
+      isIe = navigator.userAgent.toLowerCase().indexOf('msie') > -1;
+
+  if ((isWebkit || isOpera || isIe) && document.getElementById && window.addEventListener) {
+    window.addEventListener('hashchange', function () {
+      var id = location.hash.substring(1),
+          element;
+
+      if (!/^[A-z0-9_-]+$/.test(id)) {
+        return;
+      }
+
+      element = document.getElementById(id);
+
+      if (element) {
+        if (!/^(?:a|select|input|button|textarea)$/i.test(element.tagName)) {
+          element.tabIndex = -1;
+        }
+
+        element.focus();
+      }
+    }, false);
+  }
+})();
 
 console.log('🥑 %cMade by Monk', 'background: #616a2e; color: #f4e9e2; padding: 5px 17px; border-radius: 3px;');
 console.log(' %chttp://monk.com.au ', 'padding: 5px 13px;');
 jQuery(function ($) {
   //page
   var $hamburger = $(".hamburger"),
-      $site = $("html,body"),
-      $content = $('.site-content'),
-      //menu
+      $site = $("html,body");
+      $('.site-content');
+      var //menu
   $menu = $(".main-navigation"),
       $menuitems = $(".menu-item"),
       $screenOverlay = $(".screen-overlay"),
@@ -6453,8 +6412,8 @@ jQuery(function ($) {
     var headerHeight = document.querySelector('#masthead').clientHeight;
 
     if (window.innerWidth !== currentWidth) {
-      var _viewportHeight = window.innerHeight;
-      document.documentElement.style.setProperty('--vh', _viewportHeight + 'px');
+      let viewportHeight = window.innerHeight;
+      document.documentElement.style.setProperty('--vh', viewportHeight + 'px');
       document.documentElement.style.setProperty('--header', headerHeight + 'px');
     } else {
       document.documentElement.style.setProperty('--vh', currentHeight + 'px');
@@ -6526,7 +6485,39 @@ jQuery(function ($) {
   */
 
   $('.slider').each(function () {
-    var _this = $(this);
+    let _this = $(this);
+
+    var args = {
+      pageDots: false,
+      wrapAround: true,
+      cellSelector: '.slide',
+      percentPosition: true,
+      contain: true,
+      setGallerySize: false,
+      resize: true,
+      imagesLoaded: true,
+      cellAlign: 'left',
+      freeScroll: false,
+      prevNextButtons: false // autoPlay: 4000,
+      // selectedAttraction: 0.008,
+      // friction: 0.16
+
+    };
+
+    var $carousel = _this.flickity(args); //Destroy
+    // $carousel.flickity('destroy');
+    //Re-init
+
+
+    $carousel.flickity(args); // $carousel.flickity('reloadCells')
+    // $(this).on('click', function () {
+    // 	$carousel.flickity('next')
+    // });
+    // $carousel.on('dragStart.flickity', () => $carousel.find('.slide').css('pointer-events', 'none'));
+    // $carousel.on('dragEnd.flickity', () => $carousel.find('.slide').css('pointer-events', 'all'));
+  });
+  $('.info-slider').each(function () {
+    let _this = $(this);
 
     var args = {
       pageDots: false,
@@ -6550,43 +6541,10 @@ jQuery(function ($) {
     //Re-init
 
 
-    $carousel.flickity(args); // $carousel.flickity('reloadCells')
-
-    $(this).on('click', function () {
-      $carousel.flickity('next');
-    }); // $carousel.on('dragStart.flickity', () => $carousel.find('.slide').css('pointer-events', 'none'));
-    // $carousel.on('dragEnd.flickity', () => $carousel.find('.slide').css('pointer-events', 'all'));
-  });
-  $('.info-slider').each(function () {
-    var _this = $(this);
-
-    var args = {
-      pageDots: false,
-      wrapAround: true,
-      cellSelector: '.slide',
-      percentPosition: true,
-      contain: true,
-      setGallerySize: false,
-      resize: true,
-      imagesLoaded: true,
-      cellAlign: 'left',
-      freeScroll: false,
-      prevNextButtons: false,
-      autoPlay: 4000,
-      selectedAttraction: 0.008,
-      friction: 0.16
-    };
-
-    var $carousel = _this.flickity(args); //Destroy
-
-
-    $carousel.flickity('destroy'); //Re-init
-
-    $carousel.flickity(args);
-    $carousel.flickity('reloadCells');
+    $carousel.flickity(args); // $carousel.flickity('reloadCells');
   });
   $('.gallery-slider').each(function () {
-    var _this = $(this);
+    let _this = $(this);
 
     var args = {
       pageDots: false,
@@ -6661,8 +6619,6 @@ jQuery(function ($) {
 
             $target.focus(); // Set focus again
           }
-
-          ;
         });
       }
     }
@@ -6708,7 +6664,7 @@ jQuery(function ($) {
   -ˋˏ *.·:·.⟐.·:·.* ˎˊ-
   */
 
-  var scrollDistance = function scrollDistance(callback, refresh) {
+  var scrollDistance = function (callback, refresh) {
     // Make sure a valid callback was provided
     if (!callback || typeof callback !== 'function') return; // Variables
 
@@ -6801,3 +6757,4 @@ jQuery(function ($) {
   // var ex2 = document.getElementsByClassName("blocks-gallery-item");
   // // console.log(ex1, ex2);
 });
+//# sourceMappingURL=script-807118f5.js.map

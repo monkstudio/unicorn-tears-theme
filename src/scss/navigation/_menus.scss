@@ -12,7 +12,7 @@
 
 
 		ul {
-			// box-shadow: 0 3px 10px rgba($brand-darkgrey, 0.3);
+			// box-shadow: 0 3px 10px rgba($grey8, 0.3);
 			// float: left;
 			position: absolute;
 			top: 100%;
@@ -83,8 +83,8 @@
         margin: 0 1em;
 		&:hover > a,
 		&.focus > a {
-            background-color: $brand-secondary;
-            color: $brand-primary;
+            background-color: $accent;
+            color: $primary;
 		}
 	}
 

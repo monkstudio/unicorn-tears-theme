@@ -10,7 +10,7 @@
 
 //an arrow
 // .arrow {
-// 	border: 1px solid $brand-primary;
+// 	border: 1px solid $primary;
 // 	border-width: 0 0 1px 1px;
 // 	width: 10px;
 // 	height: 10px;
@@ -40,14 +40,14 @@
 //     margin-top: 4px;
 //     width: 1px;
 //     height: 13px;
-//     background-color: $brand-primary;
+//     background-color: $primary;
 
 //     &:before,
 //     &:after {
 //         left: 1px;
 //         width: 12px;
 //         height: 1px;
-//         background-color: $brand-primary;
+//         background-color: $primary;
 //     }
 
 //     &:before {
@@ -68,13 +68,13 @@
 //     margin-top: 3px;
 //     width: 0;
 //     height: 0;
-//     border-left: solid 11px $brand-primary;
+//     border-left: solid 11px $primary;
 //     border-top: solid 7px transparent;
 //     border-bottom: solid 7px transparent;
 // }
 //close {
 //.close.icon {
-//    color: $brand-primary;
+//    color: $primary;
 //    position: absolute;
 //    margin-top: 0;
 //    margin-left: 0;
@@ -106,7 +106,7 @@
 //}
 ////plus
 .plus.icon {
-   color: $brand-primary;
+   color: $primary;
 //    position: absolute;
 //    margin-left: 3px;
 //    margin-top: 10px;
@@ -136,7 +136,7 @@
 //
 ////menu
 //.menu.icon {
-//    color: $brand-primary;
+//    color: $primary;
 //    position: absolute;
 //    margin-left: 2px;
 //    margin-top: 10px;
@@ -167,7 +167,7 @@
 //
 ////tick
 //.check.icon {
-//    color: $brand-primary;
+//    color: $primary;
 //    position: absolute;
 //    margin-left: 3px;
 //    margin-top: 4px;
@@ -182,7 +182,7 @@
 //
 ////search
 //.search.icon {
-//    color: $brand-primary;
+//    color: $primary;
 //    position: absolute;
 //    margin-top: 2px;
 //    margin-left: 3px;
@@ -207,7 +207,7 @@
 //
 ////pin
 //.pin-solid.icon {
-//    color: $brand-primary;
+//    color: $primary;
 //    position: absolute;
 //    margin-left: 4px;
 //    margin-top: 2px;
@@ -235,7 +235,7 @@
 //
 ////filled heart
 //.heart-solid.icon {
-//    color: $brand-primary;
+//    color: $primary;
 //    position: absolute;
 //    margin-top: 6px;
 //    margin-left: 5px;
@@ -277,7 +277,7 @@
 //}
 ////heart outline
 //.heart.icon {
-//        color: $brand-primary;
+//        color: $primary;
 //        position: absolute;
 //        margin-top: 6px;
 //        margin-left: 5px;

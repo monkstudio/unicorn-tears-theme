@@ -19,11 +19,11 @@ $menu-width: 250px;
     }
 
     &::-webkit-scrollbar-track {
-        background-color: $brand-secondary;
+        background-color: $accent;
     }
 
     &::-webkit-scrollbar-thumb {
-      background-color: $brand-primary;
+      background-color: $primary;
     }
 
 
@@ -36,7 +36,7 @@ $menu-width: 250px;
 		transition:.5s ease all;
         transform: translate(-#{$menu-width},0);
 		z-index: 100;
-        background-color: $brand-secondary;
+        background-color: $accent;
         text-align: center;
         overflow: auto;
 	}
@@ -130,7 +130,7 @@ $menu-width: 250px;
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(darken($brand-primary,20%), 0);
+    background: rgba(darken($primary,20%), 0);
     visibility: hidden;
     transition: .3s linear all;
     transform: translate3d(0,0,0);
@@ -144,7 +144,7 @@ $menu-width: 250px;
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(darken($brand-primary,20%), 0.6);
+    background: rgba(darken($primary,20%), 0.6);
     transition: .3s linear all;
     z-index: 100;
     visibility: visible;

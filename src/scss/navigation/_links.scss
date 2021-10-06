@@ -4,7 +4,7 @@ a {
 	transition: .3s ease all;
 	&:hover,
 	&:active {
-		color: $brand-secondary;
+		color: var(--accent);
 		text-decoration: underline;
 		transition: .3s ease all;
 	}

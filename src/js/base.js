@@ -1,23 +1,28 @@
 console.log('🥑 %cMade by Monk', 'background: #616a2e; color: #f4e9e2; padding: 5px 17px; border-radius: 3px;');
 console.log(' %chttp://monk.com.au ', 'padding: 5px 13px;');
 
+import  './vendor/flickity.min.js';
+import  './vendor/jquery.fancybox.js';
 
-jQuery(function ($){
+import  './navigation.js';
+import  './skip-link-focus-fix.js';
+
+jQuery(function ($) {
 
 	//page
 	var $hamburger = $(".hamburger"),
-		$site = $("html,body"),
-		$content = $('.site-content'),
+			$site = $("html,body"),
+			$content = $('.site-content'),
 
-		//menu
-		$menu = $(".main-navigation"),
-		$menuitems = $(".menu-item"),
-		$screenOverlay = $(".screen-overlay"),
+			//menu
+			$menu = $(".main-navigation"),
+			$menuitems = $(".menu-item"),
+			$screenOverlay = $(".screen-overlay"),
 
-		//media
-		$lightbox = $('.lightbox'),
-		currentWidth = $(window).width(),
-		currentHeight = $(window).height();
+			//media
+			$lightbox = $('.lightbox'),
+			currentWidth = $(window).width(),
+			currentHeight = $(window).height();
 
 	/*
 	-ˋˏ *.·:·.⟐.·:·.* ˎˊ-
@@ -143,9 +148,9 @@ jQuery(function ($){
 			cellAlign: 'left',
 			freeScroll: false,
 			prevNextButtons: false,
-			autoPlay: 4000,
-			selectedAttraction: 0.008,
-			friction: 0.16
+			// autoPlay: 4000,
+			// selectedAttraction: 0.008,
+			// friction: 0.16
 		};
 
 		var $carousel = _this.flickity(args);
@@ -155,9 +160,9 @@ jQuery(function ($){
 		$carousel.flickity(args);
 		// $carousel.flickity('reloadCells')
 
-		$(this).on('click', function () {
-			$carousel.flickity('next')
-		});
+		// $(this).on('click', function () {
+		// 	$carousel.flickity('next')
+		// });
 
 		// $carousel.on('dragStart.flickity', () => $carousel.find('.slide').css('pointer-events', 'none'));
 		// $carousel.on('dragEnd.flickity', () => $carousel.find('.slide').css('pointer-events', 'all'));
@@ -184,10 +189,10 @@ jQuery(function ($){
 
 		var $carousel = _this.flickity(args);
 		//Destroy
-		$carousel.flickity('destroy');
+		// $carousel.flickity('destroy');
 		//Re-init
 		$carousel.flickity(args);
-		$carousel.flickity('reloadCells');
+		// $carousel.flickity('reloadCells');
 	});
 
 	$('.gallery-slider').each(function () {

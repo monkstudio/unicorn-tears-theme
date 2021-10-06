@@ -8,13 +8,13 @@ input[type="submit"],
 	border:none;
 	padding: 10px 30px;
 	transition:.3s ease all;
-	background-color:$brand-primary;
+	background-color:$primary;
 	color: #FFF;
 	display: table;
 	margin: 1.5em 0;
 
 	&:hover {
-		background-color:$brand-secondary;
+		background-color:$accent;
 		border: none;
 		transition:.3s ease all;
 		cursor:pointer;

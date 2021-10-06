@@ -21,7 +21,7 @@
         min-width: 0;
 		height: 100%;
 		overflow-x:hidden;
-		background-color: $brand-lightgrey;//keep the same value as the toggled style to maintain opacity during the transition
+		background-color: var(--grey1);//keep the same value as the toggled style to maintain opacity during the transition
         transition-delay: .3s;
         z-index: 100;
 
@@ -44,7 +44,7 @@
         }
 
         .toggled & {
-            background-color:rgba($brand-darkgrey, .98);
+            background-color:rgba(var(--grey8), .98);
             transition:.5s linear all;
             z-index: 100;
             width: 50%;

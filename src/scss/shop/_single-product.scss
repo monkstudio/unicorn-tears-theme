@@ -86,7 +86,7 @@
 	}
 
 	&.in-stock {
-		color: $brand-primary;
+		color: $primary;
 		display: block;
     margin: 5vh 0 10px;
 	}
@@ -107,14 +107,14 @@
 .woocommerce-breadcrumb {
 	@extend %allcaps;
 	margin: 0px 0 8vh;
-	color: $brand-darkgrey;
+	color: $grey8;
 	@include media("<=tablet") {
 		margin: 30px 0;
 	}
 	a {
-			color: $brand-darkgrey;
+			color: $grey8;
 			&:hover {
-					color: $brand-primary;
+					color: $primary;
 			}
 	}
 }
@@ -149,7 +149,7 @@ form.cart {
 
 .accordion {
 	svg {
-		fill: $brand-primary;
+		fill: $primary;
 	}
 	a {
 		margin-right: 1em;

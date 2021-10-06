@@ -3,9 +3,9 @@ button,
 input,
 select,
 textarea {
-	color: $brand-primary;
-	font-family: $brand-font;
-	@include font-size(1.6);
+	color: $primary;
+	font-family: $font-stack-copy;
+	font-size: $font-size-copy;
 	letter-spacing: .01em;
 	line-height: 1.4;
 }

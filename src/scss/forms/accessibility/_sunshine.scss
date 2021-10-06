@@ -8,7 +8,7 @@
 //        padding: 0.4em 0.25em;
         width: 100%;
 //        background: transparent;
-        color: $brand-secondary;
+        color: $accent;
         padding: 25px 10px 5px;
     }
 
@@ -22,7 +22,7 @@
         vertical-align: middle;
         padding: 15px 10px;
         width: 100%;
-        color: $brand-primary;
+        color: $primary;
         font-weight: bold;
         -webkit-font-smoothing: antialiased;
         user-select: none;
@@ -60,7 +60,7 @@
             padding: 5px;
             font-size: 92%;
             transition: .3s ease all;
-            color: $brand-lightgrey;
+            color: var(--grey1);
             font-size: 70%;
         }
     }

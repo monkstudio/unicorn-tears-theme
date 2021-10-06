@@ -57,7 +57,7 @@
 		top: 0;
 		position: absolute;
 		left: 0;
-		color: $brand-primary;
+		color: $primary;
 	}
 }
 
@@ -82,7 +82,7 @@ p.stars {
 			line-height: 1;
 			font-family: "star";
 			content: "\53";
-			color: $brand-primary;
+			color: $primary;
 			text-indent: 0;
 			opacity: .25;
 		}
@@ -90,7 +90,7 @@ p.stars {
 		&:hover {
 			~ a:before {
 				content: "\53";
-				color: $brand-primary;
+				color: $primary;
 				opacity: .25;
 			}
 		}
@@ -100,7 +100,7 @@ p.stars {
 		a {
 			&:before {
 				content: "\53";
-				color: $brand-primary;
+				color: $primary;
 				opacity: 1;
 			}
 		}
@@ -110,13 +110,13 @@ p.stars {
 		a.active {
 			&:before {
 				content: "\53";
-				color: $brand-primary;
+				color: $primary;
 				opacity: 1;
 			}
 
 			~ a:before {
 				content: "\53";
-				color: $brand-primary;
+				color: $primary;
 				opacity: .25;
 			}
 		}
@@ -124,7 +124,7 @@ p.stars {
 		a:not(.active) {
 			&:before {
 				content: "\53";
-				color: $brand-primary;
+				color: $primary;
 				opacity: 1;
 			}
 		}

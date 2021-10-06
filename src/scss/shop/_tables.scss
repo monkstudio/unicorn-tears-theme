@@ -160,7 +160,7 @@ table.shop_table_responsive {
 		}
 	}
 	tr {
-		border-bottom: 1px solid $brand-lightgrey;
+		border-bottom: 1px solid var(--grey1);
 		@include media("<=tablet") {
 			padding: 10px 0;
 		}
@@ -181,7 +181,7 @@ table.shop_table_responsive {
 .select2-container--default .select2-selection--single,
 .select2-dropdown {
 	border-radius: 0;
-	border-color: $brand-primary;
+	border-color: $primary;
 }
 
 .woocommerce-shipping-methods {

@@ -46,7 +46,7 @@ $feature-height-sm:600px;
     }
 
     &.slider {
-        background-color: $brand-secondary;
+        background-color: $accent;
 
         .slide {
             position: relative;
@@ -147,7 +147,7 @@ $feature-height-sm:600px;
         z-index: 0;
         height: auto;
         position: relative;
-        // background-color: $brand-secondary;
+        // background-color: $accent;
         max-width: 800px;
         margin: 20px auto;
 
@@ -159,9 +159,9 @@ $feature-height-sm:600px;
 }
 
 .monk-block {
-    margin: $grid-padding auto;
+    margin: $size-xxxlarge auto;
     @include media("<=laptop") {
-        margin: $grid-padding-md auto;
+        margin: $size-xxxlarge auto;
     }
 }
 .monk-two-columns-image {
@@ -419,7 +419,7 @@ $feature-height-sm:600px;
         &:hover,
         &:focus,
         &:focus-within {
-            background-color: $brand-primary;
+            background-color: $primary;
             cursor: pointer;
             z-index: 900;
 
@@ -457,8 +457,8 @@ Modals
 */
 // .modal {
 //     background-color: #FFF;
-//     color: $brand-primary;
-//     padding: $grid-padding;
+//     color: $primary;
+//     padding: $size-xxxlarge;
 //     width: 80%;
 //     height: auto;
 //     @include center;
@@ -478,7 +478,7 @@ Modals
 //     // transform: translateY(-100%);
 
 //     @include media("<=tablet") {
-//         padding: 100px $grid-padding-sm 50px;
+//         padding: 100px $size-sm 50px;
 //         height: 100%;
 //         width: 100%;
 //         max-width: initial;

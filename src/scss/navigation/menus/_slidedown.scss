@@ -20,7 +20,7 @@
 		width: 100%;
 		max-height: 0;
 		overflow-y:hidden;
-		background-color:$brand-secondary;
+		background-color:var(--accent);
 
         .menu {
             text-align: center;
@@ -31,7 +31,7 @@
         }
 
 		.toggled & {
-			background-color:$brand-secondary;
+			background-color:var(--accent);
 			transition:.5s linear all;
 			z-index: 100;
 			width: 100%;

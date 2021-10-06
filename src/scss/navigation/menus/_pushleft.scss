@@ -17,7 +17,7 @@ $menu-width: 250px;
 		transition:.5s ease all;
 		transform: translate($menu-width,0);
 		z-index: 100;
-        background-color: $brand-secondary;
+        background-color: var(--accent);
         text-align: center;
 
         .toggled & {

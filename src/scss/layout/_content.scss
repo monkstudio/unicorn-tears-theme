@@ -1,15 +1,15 @@
 
 .container {
-    max-width:$grid-width;
+    max-width:var(--grid-width);
     margin: auto;
-    padding: 0 $grid-padding;
+    padding: 0 $size-xxxlarge;
     width: 100%;
 
     @include media("<=laptop") {
-        padding: 0 $grid-padding-md;
+        padding: 0 $size-xxxlarge;
     }
     @include media("<=tablet") {
-        padding: 0 $grid-padding-sm;
+        padding: 0 $size-xxxlarge;
     }
     &.compact {
         max-width: 80ch;
@@ -19,7 +19,7 @@
 .row {
     display: grid;
     grid-template-columns: repeat( auto-fit, minmax(250px, 1fr) );
-    grid-gap: $grid-gutter;
+    grid-gap: var(--grid-gutter);
 }
 
 .content {

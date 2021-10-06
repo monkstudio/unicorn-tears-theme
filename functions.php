@@ -119,18 +119,25 @@ function unicorn_tears_scripts() {
 	// wp_deregister_script( 'jquery-migrate' );
 	// wp_register_script( 'jquery-migrate', "https://code.jquery.com/jquery-migrate-3.0.0.min.js", array(), '3.0.0' );
 	// wp_register_script( 'aos', "https://unpkg.com/aos@2.3.1/dist/aos.js" );
+	$scripts = glob('wp-content/themes/unicorn-tears/dist/js/script-*.js');
+	$script = pathinfo($scripts[0])['basename'];
+	$script_min = pathinfo($scripts[1])['basename'];
+
+	// $styles = glob('wp-content/themes/unicorn-tears/dist/css/style-*.css');
+	// $style = pathinfo($styles[0])['basename'];
+	// $style_min = pathinfo($styles[1])['basename'];
 
 	//localize data
 	// Register the scripts
 	if(ON_MONK) {
 	//if any es6 scripts are used
 	// wp_register_script( 'unicorn-tears-scripts', get_template_directory_uri() . '/dist/js/imports.js', array('jquery'), null, true);
-			wp_register_style( 'unicorn-tears-styles', get_template_directory_uri() . '/dist/css/style.css',  '', date("dmY") );
-			wp_register_script( 'unicorn-tears-scripts', get_template_directory_uri() . '/dist/js/script.js', array('jquery'), date("dmY"), true);
+			wp_register_style( 'unicorn-tears-styles', get_template_directory_uri() . '/dist/css/style.css',  null);
+			wp_register_script( 'unicorn-tears-scripts', get_template_directory_uri() . '/dist/js/' . $script, array('jquery'), null, true);
 	} else {
 	// wp_register_script( 'unicorn-tears-scripts', get_template_directory_uri() . '/dist/js/imports.js', array('jquery'), null, true);
-			wp_register_style( 'unicorn-tears-styles', get_template_directory_uri() . '/dist/css/style.min.css', '', date("dmY")  );
-			wp_register_script( 'unicorn-tears-scripts', get_template_directory_uri() . '/dist/js/script.min.js', array('jquery'), date("dmY"), true);
+			wp_register_style( 'unicorn-tears-styles', get_template_directory_uri() . '/dist/css/style.min.css', null );
+			wp_register_script( 'unicorn-tears-scripts', get_template_directory_uri() . '/dist/js/' . $script_min, array('jquery'), null, true);
 	};
 
 
@@ -145,6 +152,7 @@ function unicorn_tears_scripts() {
 	// wp_enqueue_script('aos');
 	// wp_enqueue_script('google-maps', 'https://maps.googleapis.com/maps/api/js?key=key', ['jquery'], date("dmY"), true );
 	wp_enqueue_script('unicorn-tears-scripts');
+	wp_enqueue_script('unicorn-tears-scripts-es');
 
 	if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
 			wp_enqueue_script( 'comment-reply' );

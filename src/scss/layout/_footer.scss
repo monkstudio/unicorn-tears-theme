@@ -1,10 +1,10 @@
 .site-footer {
-  padding: $grid-padding-md 0;
+  padding: $size-xxxlarge 0;
 }
 
 .separator {
   opacity: .5;
-  color: $brand-primary;
+  color: $primary;
   margin: 0 .5em;
 }
 
@@ -18,7 +18,7 @@
   left: 0;
   pointer-events: none;
   z-index: -1;
-  background-color: rgba($brand-primary,.5);
+  background-color: rgba($primary,.5);
   visibility: hidden;
   opacity: 0;
   transition: .3s ease opacity;

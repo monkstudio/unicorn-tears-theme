@@ -18,7 +18,7 @@ $feature = get_field('feature_options',$ID);
     <?php else : ?>
         <?php get_template_part( 'template-parts/modules/module', 'page-title' ); ?>
     <?php endif; ?>
-    
+
     <?php
     if ( !empty($ID) && !empty($feature) ) : //get feature options
         if ( (has_post_thumbnail($ID) && $feature === 'image') ) : ?>
@@ -147,7 +147,8 @@ $feature = get_field('feature_options',$ID);
                                                 'loop': 0,
                                                 'mute':1,
                                                 'playlist': '<?php echo $videoid; ?>',
-                                                'wmode': 'opaque'
+                                                'wmode': 'opaque',
+                                                'vq': 'hd1080'
                                             },
                                             events: {
                                                 'onReady': onPlayerReady,

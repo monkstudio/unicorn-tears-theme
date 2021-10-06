@@ -12,7 +12,7 @@ html {
 }
 
 body {
-	background-color: $background-color;
+	background-color: $bg-color;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 }
@@ -31,7 +31,7 @@ q {
 }
 
 hr {
-	background-color: $brand-secondary;
+	background-color: $accent;
 	border: 0;
 	height: 1px;
 	margin: 30px 0;
@@ -51,7 +51,7 @@ img {
 }
 
 @import "lists";
-//@include scrollbars(.3em, $brand-primary, #FFF);
+//@include scrollbars(.3em, $primary, #FFF);
 
 //gmaps
 //.acf-map {

@@ -13,11 +13,12 @@ module.exports = {
 	styleMinified:'/dist/css/style.min.css',
 
 	// JS
-	jsImports:'/src/js/imports/imports.js',
+	//any entry points go inside here
+	scripts : {
+		script : 'base.js'
+	},
 	jsSRC:'/src/js',
 	jsDST:'/dist/js',
-	jsCompiled:'/dist/js/script.js',
-	jsMinified:'/dist/js/script.min.css',
 
 	// Images
 	imgSRC:'/src/images',
@@ -41,7 +42,7 @@ module.exports = {
 	watchSTATIC:'/**/*.+(html|php)',
 
 	BROWSER_SUPPORT: [
-		'last 2 versions',
+		'last 2 version',
 		'> 1%',
 		'ie >= 11',
 	]

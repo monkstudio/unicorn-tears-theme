@@ -864,7 +864,7 @@ body.compensate-for-scrollbar {
 }
 
 .fancybox-thumbs__list a::before {
-    border: 6px solid $brand-secondary;
+    border: 6px solid var(--accent);
     bottom: 0;
     content: '';
     left: 0;

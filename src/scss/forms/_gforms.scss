@@ -91,12 +91,12 @@
                 position: relative;
                 top: -2px;
                 right: -2px;
-                color: $brand-primary;
+                color: $primary;
             }
 
             &_error {
                 .validation_message {
-                    background-color: $brand-primary;
+                    background-color: $primary;
                     color: #FFF;
                     //                    border-radius: 3px;
                     padding: 5px 15px;
@@ -172,14 +172,14 @@
 
         .validation_message {
             // @extend .alert !optional;
-            background-color: $brand-primary;
+            background-color: $primary;
             color: #FFF;
             padding: 5px;
         }
     }
 
     &_page_footer {
-        background: $brand-lightgrey;
+        background: var(--grey1);
 
         // .button {
         //     @extend .btn-link !optional;
@@ -212,10 +212,10 @@
     background: #FFF;
     padding: 10px;
     text-align: center;
-    border: 2px solid $brand-secondary;
+    border: 2px solid $accent;
     display: none;
     margin: -2px auto;
-    box-shadow: 0px 2px 15px rgba($brand-darkgrey, .6);
+    box-shadow: 0px 2px 15px rgba($grey8, .6);
 
     select {
         padding: 2px 10px;
@@ -358,7 +358,7 @@ label[for="stripe-card-cvc"]:after,
 // }
 
 .ginput_container_creditcard {
-	background-color: $muted;
+	background-color: var(--muted);
     padding: 20px; // border-radius: 5px;
 }
 
@@ -404,7 +404,7 @@ label[for="stripe-card-cvc"]:after,
     position: relative;
     display: block;
     width: 1.5em;
-    color: $brand-darkgrey;
+    color: $grey8;
 }
 
 .ginput_card_security_code_icon:before {

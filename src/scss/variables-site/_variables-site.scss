@@ -13,32 +13,123 @@
 // $columns-margin: 50px;;
 // $spacing-unit: 50px;
 
-//grid vars
+/* Vars */
+/* GRID */
 $grid-width: 1600px;
 $grid-gutter: 60px;
-$grid-padding: 100px;
-$grid-padding-md: 50px;
-$grid-padding-sm: 20px;
-$background-color: #FFF;
+
+/* COLORS */
+$primary: pink;
+$accent: gold;
+$muted: gold;
+
+$black: #000000;
+$black8: rgba(0, 0, 0, .7);
+$black3: rgba(0, 0, 0, .3);
+$white: #FFF;
+$white8: rgba(255, 255, 255, .7);
+$white4: rgba(255, 255, 255, .3);
+$grey8: #353535;
+$grey3: #797979;
+$grey1: #e9e9e9;
+
+/* Basic background */
+$bg-color: #FFF;
+
+/* Special */
+$hover: chartreuse;
+$error: firebrick;
+$success: green;
+$info: skyblue;
+
+/* TYPOGRAPHY */
+/* Font stack */
+$font-stack-copy:
+"HelveticaNeue-Light",
+"Helvetica Neue Light",
+"Helvetica Neue",
+Helvetica,
+Arial,
+"Lucida Grande",
+sans-serif;
+
+$font-stack-heading:
+"HelveticaNeue-Light",
+"Helvetica Neue Light",
+"Helvetica Neue",
+Helvetica,
+Arial,
+"Lucida Grande",
+sans-serif;
+
+$font-stack-code:
+ "Andale Mono WT",
+"Andale Mono",
+"Lucida Console",
+"Lucida Sans Typewriter",
+"DejaVu Sans Mono",
+"Bitstream Vera Sans Mono",
+"Liberation Mono",
+"Nimbus Mono L",
+Monaco,
+"Courier New",
+Courier,
+monospace;
 
 
-//colours
-//common
-$brand-lightgrey: lighten(#000,95%);
-$brand-darkgrey: lighten(#000,80%);
+/* Font sizes */
+$font-size-xsmall: 11px;
+$font-size-small: 12px;
+$font-size-large: 16px;
+$font-size-xlarge: 20px;
 
-//brand
-$brand-primary: #000;
-$brand-secondary:pink;
-$muted: lighten($brand-primary,20%);
-$brand-placeholder-color:$brand-lightgrey;
+/* Font weights */
+$font-weight-normal: 400;
+$font-weight-medium: 500;
+$font-weight-bold: 600;
 
-// WooCommerce color variables
- $woocommerce-color-error: #e2401c;
- $woocommerce-color-success: #0f834d;
- $woocommerce-color-info: #3D9CD2;
+/* Lineheight */
+$font-line-height: 1.4;
+/* Use For xsmall, small font sizes */
+$font-line-height-large: 1.2;
+/* Use For large, xlarge font sizes */
 
-//underscores styles
-$brand-font: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
-$brand-heading: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
-$brand-code: Consolas, "Andale Mono WT", "Andale Mono", "Lucida Console", "Lucida Sans Typewriter", "DejaVu Sans Mono", "Bitstream Vera Sans Mono", "Liberation Mono", "Nimbus Mono L", Monaco, "Courier New", Courier, monospace;
+/* Letterspacing */
+$font-letter-spacing-pos-xsmall: .005em;
+$font-letter-spacing-neg-xsmall: .01em;
+$font-letter-spacing-pos-small: 0;
+$font-letter-spacing-neg-small: .005em;
+$font-letter-spacing-pos-large: -.0025em;
+$font-letter-spacing-neg-large: .0025em;
+$font-letter-spacing-pos-xlarge: -.001em;
+$font-letter-spacing-neg-xlarge: -.001em;
+
+
+/* BORDER RADIUS */
+$border-radius-small: 2px;
+$border-radius-med: 5px;
+$border-radius-large: 6px;
+
+
+/* SHADOWS */
+$shadow-hud: 0 5px 17px rgba(0, 0, 0, .2),
+0 2px 7px rgba(0, 0, 0, .15);
+$shadow-floating-window: 0 2px 14px rgba(0, 0, 0, .15);
+
+
+/* SPACING + SIZING */
+$size-xxxsmall: 4px;
+$size-xxsmall: 8px;
+$size-xsmall: 16px;
+$size-small: 24px;
+$size-medium: 32px;
+$size-large: 40px;
+$size-xlarge: 48px;
+$size-xxlarge: 64px;
+$size-xxxlarge: 80px;
+
+$font-size-copy: min(max(1.4rem, 2vw), 2rem);
+$font-size-xs: min(max(1.4rem, 1.5vw), 2rem);
+$font-size-s: min(max(1.8rem, 1.5vw), 3rem);
+$font-size-m: min(max(2.2rem, 2vw), 5rem);
+$font-size-l: min(max(3rem, 5vw), 7rem);

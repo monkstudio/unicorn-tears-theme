@@ -69,8 +69,8 @@
 // Column width with margin
 @mixin column-width($numberColumns: 3) {
     $width: map-get($columns, $numberColumns);
-    flex-basis: calc( #{$width} - #{$grid-gutter * ($numberColumns - 1) / $numberColumns});
-    // margin-right: #{$grid-gutter};
+    flex-basis: calc( #{$width} - #{var(--grid-gutter) * ($numberColumns - 1) / $numberColumns});
+    // margin-right: #{var(--grid-gutter)};
     // &:nth-child(#{$numberColumns}n + #{$numberColumns}) {
     //     margin-right: 0;
     // }
@@ -81,10 +81,10 @@
 /// @author Hugo Giraudel
 /// @param {Length} $size - Horizontal scrollbar's height and vertical scrollbar's width
 /// @param {Color} $foreground-color - Scrollbar's color
-/// @param {Color} $background-color [mix($foreground-color, white, 50%)] - Scrollbar's color
+/// @param {Color} $bg-color [mix($foreground-color, white, 50%)] - Scrollbar's color
 /// @example scss - Scrollbar styling
 ///   @include scrollbars(.5em, slategray);
-@mixin scrollbars($size, $foreground-color, $background-color) {
+@mixin scrollbars($size, $foreground-color, $bg-color) {
 
     // For Google Chrome
     ::-webkit-scrollbar {
@@ -97,12 +97,12 @@
     }
 
     ::-webkit-scrollbar-track {
-        background: $background-color;
+        background: $bg-color;
     }
 
     // For Internet Explorer
     body {
         scrollbar-face-color: $foreground-color;
-        scrollbar-track-color: $background-color;
+        scrollbar-track-color: $bg-color;
     }
 }
