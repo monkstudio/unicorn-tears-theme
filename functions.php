@@ -152,6 +152,10 @@ function unicorn_tears_scripts() {
 	wp_enqueue_script('jquery');
 	// wp_enqueue_script('aos');
 	// wp_enqueue_script('google-maps', 'https://maps.googleapis.com/maps/api/js?key=key', ['jquery'], date("dmY"), true );
+
+	wp_enqueue_script('gsap', 'https://cdnjs.cloudflare.com/ajax/libs/gsap/3.8.0/gsap.min.js');
+	wp_enqueue_script('gsap-scrollTrigger', 'https://cdnjs.cloudflare.com/ajax/libs/gsap/3.8.0/ScrollTrigger.min.js');
+
 	wp_enqueue_script('unicorn-tears-scripts');
 	wp_enqueue_script('unicorn-tears-scripts-es');
 
@@ -194,6 +198,16 @@ function unicorn_tears_scripts() {
 }
 
 add_action( 'wp_enqueue_scripts', 'unicorn_tears_scripts' );
+
+
+function add_type_attribute($tag, $handle, $src) {
+	if ( 'unicorn-tears-scripts' !== $handle ) {
+			return $tag;
+	}
+	$tag = '<script type="module" src="' . esc_url( $src ) . '"></script>';
+	return $tag;
+}
+add_filter('script_loader_tag', 'add_type_attribute' , 10, 3);
 
 // function add_jquery_cdn_attributes( $html, $handle ) {
 // if ( 'jquery' === $handle ) {
@@ -279,7 +293,7 @@ function maphtml() {
 		if( !empty($location) ):
 		?>
 			<div class="acf-map">
-				<?php foreach ( $location as $marker) :var_dump($marker); ?>
+				<?php foreach ( $location as $marker) :?>
 					<div class="marker" data-lat="<?php echo $marker['location']['lat']; ?>" data-lng="<?php echo $marker['location']['lng']; ?>">
 						<p class="address"><?php echo $marker['location']['address']; ?></p>
 					</div>

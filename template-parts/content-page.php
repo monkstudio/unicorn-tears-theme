@@ -9,6 +9,7 @@
 
 ?>
 
+<?php get_template_part( 'template-parts/modules/module', 'page-title' ); ?>
 
 <section id="page-content">
     <?php if ( is_post_type_archive()) {

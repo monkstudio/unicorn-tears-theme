@@ -19,9 +19,9 @@ $grid-width: 1600px;
 $grid-gutter: 60px;
 
 /* COLORS */
-$primary: pink;
-$accent: gold;
-$muted: gold;
+$primary: black;
+$accent: green;
+$muted: lightgreen;
 
 $black: #000000;
 $black8: rgba(0, 0, 0, .7);
@@ -106,30 +106,30 @@ $font-letter-spacing-neg-xlarge: -.001em;
 
 
 /* BORDER RADIUS */
-$border-radius-small: 2px;
-$border-radius-med: 5px;
-$border-radius-large: 6px;
+$border-radius-small: .1em;
+$border-radius-med: .5em;
+$border-radius-large: 1.5em;
 
 
 /* SHADOWS */
-$shadow-hud: 0 5px 17px rgba(0, 0, 0, .2),
-0 2px 7px rgba(0, 0, 0, .15);
+$shadow-hud: 0 5px 17px rgba(0, 0, 0, .2), 0 2px 7px rgba(0, 0, 0, .15);
 $shadow-floating-window: 0 2px 14px rgba(0, 0, 0, .15);
 
 
 /* SPACING + SIZING */
 $size-xxxsmall: 4px;
 $size-xxsmall: 8px;
-$size-xsmall: 16px;
-$size-small: 24px;
-$size-medium: 32px;
+$size-xsmall: 15px;
+$size-small: 20px;
+$size-medium: 30px;
 $size-large: 40px;
-$size-xlarge: 48px;
-$size-xxlarge: 64px;
-$size-xxxlarge: 80px;
+$size-xlarge: 50px;
+$size-xxlarge: 80px;
+$size-xxxlarge: 100px;
 
-$font-size-copy: min(max(1.4rem, 2vw), 2rem);
-$font-size-xs: min(max(1.4rem, 1.5vw), 2rem);
-$font-size-s: min(max(1.8rem, 1.5vw), 3rem);
-$font-size-m: min(max(2.2rem, 2vw), 5rem);
-$font-size-l: min(max(3rem, 5vw), 7rem);
+/* TYPOGRAPHY */
+$font-size-copy: clamp(1.4rem, 2vw, 2rem);
+$font-size-xs: clamp(1.4rem, 1.5vw, 2rem);
+$font-size-s: clamp(1.8rem, 1.5vw, 3rem);
+$font-size-m: clamp(2.2rem, 2vw, 5rem);
+$font-size-l: clamp(3rem, 5vw, 7rem);

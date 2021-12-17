@@ -25,6 +25,14 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
         <?php wp_head(); ?>
+
+        <script type="text/javascript">
+            var tag = document.createElement('script');
+                tag.src = "https://www.youtube.com/iframe_api";
+                var firstScriptTag = document.getElementsByTagName('script')[0];
+                firstScriptTag.parentNode.insertBefore(tag, firstScriptTag),
+                playerList = [];
+        </script>
     </head>
     <body <?php body_class(); ?>>
     <?php wp_body_open(); ?>

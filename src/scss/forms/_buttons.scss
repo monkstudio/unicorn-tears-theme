@@ -6,20 +6,24 @@ input[type="submit"],
 .button {
 	appearance: none;
 	border:none;
-	padding: 10px 30px;
+	padding: .5em 2em;
 	transition:.3s ease all;
-	background-color:$primary;
-	color: #FFF;
+	background-color:$accent;
+	color: $white;
 	display: table;
 	margin: 1.5em 0;
 
 	&:hover {
-		background-color:$accent;
+		background-color:$primary;
 		border: none;
 		transition:.3s ease all;
 		cursor:pointer;
 	}
 	svg {
 		fill: currentColor;
+	}
+
+	&.centered {
+		margin: 1.5em auto;
 	}
 }

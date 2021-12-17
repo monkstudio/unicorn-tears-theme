@@ -36,8 +36,7 @@
 		padding: 1em;
 
 		.attribute {
-			font-family: var(--font-stack-heading);
-			font-size: var(--font-size-xs);
+			font-family: $font-stack-heading;
 			line-height: 1.2;
 			text-transform: capitalize;
 		}
@@ -71,12 +70,12 @@
 .panel-title-wrapper {
 	display: flex;
 	align-items: center;
-	background-color: var(--grey1);
+	background-color: $grey1;
 	padding: 7px 10px;
 }
 
 .panel-body {
-	font-family: var(--font-stack-heading);
+	font-family: $font-stack-heading;
 	padding: 10px 25px;
 	font-weight: 800;
 	break-inside: avoid;

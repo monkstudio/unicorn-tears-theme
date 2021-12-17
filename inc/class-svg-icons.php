@@ -194,25 +194,6 @@ class SVG_Icons {
         <path fill="currentColor" fill-rule="nonzero" d="M12 2c5.52 0 10 4.48 10 10s-4.48 10-10 10S2 17.52 2 12 6.48 2 12 2zM6 14a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm6 0a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm6 0a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"/>
     </g>
 </svg>',
-'arrow_right' => '<svg width="34" height="18" viewBox="0 0 34 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M1.5 9.00806H33" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M25.5 16.5081L33 9.00806L25.5 1.50806" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-</svg>',
-'arrow_down' => '<svg width="30" height="16" viewBox="0 0 30 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M29 1L15 15L1 0.999999" stroke-linecap="round" stroke-linejoin="round"/>
-</svg>',
-'arrow_left' => '<svg width="34" height="18" viewBox="0 0 34 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-<g>
-<path d="M32.5 9.00806H1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M8.5 16.5081L1 9.00806L8.5 1.50806" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-</g>
-</svg>',
-'arrow_up' => '<svg width="30" height="16" viewBox="0 0 30 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M1 15L15 0.999999L29 15" stroke-linecap="round" stroke-linejoin="round"/>
-</svg>',
-'search' => '<svg width="12" height="13" viewBox="0 0 12 13" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M11.9297 11.4922C11.9766 11.5391 12 11.6094 12 11.6797C12 11.7734 11.9766 11.8438 11.9297 11.8906L11.3906 12.4062C11.3203 12.4766 11.25 12.5 11.1797 12.5C11.0859 12.5 11.0391 12.4766 10.9922 12.4062L8.13281 9.57031C8.08594 9.52344 8.0625 9.45312 8.0625 9.38281V9.05469C7.61719 9.42969 7.125 9.73438 6.58594 9.94531C6.02344 10.1562 5.46094 10.25 4.875 10.25C3.98438 10.25 3.16406 10.0391 2.41406 9.59375C1.66406 9.17188 1.07812 8.58594 0.65625 7.83594C0.210938 7.08594 0 6.26562 0 5.375C0 4.48438 0.210938 3.6875 0.65625 2.9375C1.07812 2.1875 1.66406 1.60156 2.41406 1.15625C3.16406 0.734375 3.98438 0.5 4.875 0.5C5.76562 0.5 6.5625 0.734375 7.3125 1.15625C8.0625 1.60156 8.64844 2.1875 9.09375 2.9375C9.51562 3.6875 9.75 4.48438 9.75 5.375C9.75 5.98438 9.63281 6.54688 9.42188 7.08594C9.21094 7.64844 8.92969 8.14062 8.55469 8.5625H8.88281C8.95312 8.5625 9.02344 8.58594 9.07031 8.63281L11.9297 11.4922ZM4.875 9.125C5.53125 9.125 6.16406 8.96094 6.75 8.63281C7.3125 8.30469 7.78125 7.83594 8.10938 7.25C8.4375 6.6875 8.625 6.05469 8.625 5.375C8.625 4.71875 8.4375 4.08594 8.10938 3.5C7.78125 2.9375 7.3125 2.46875 6.75 2.14062C6.16406 1.8125 5.53125 1.625 4.875 1.625C4.19531 1.625 3.5625 1.8125 3 2.14062C2.41406 2.46875 1.94531 2.9375 1.61719 3.5C1.28906 4.08594 1.125 4.71875 1.125 5.375C1.125 6.05469 1.28906 6.6875 1.61719 7.25C1.94531 7.83594 2.41406 8.30469 3 8.63281C3.5625 8.96094 4.19531 9.125 4.875 9.125Z"/>
-</svg>',
 'target_blank' => '<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M16 11V17C16 17.5304 15.7893 18.0391 15.4142 18.4142C15.0391 18.7893 14.5304 19 14 19H3C2.46957 19 1.96086 18.7893 1.58579 18.4142C1.21071 18.0391 1 17.5304 1 17V6C1 5.46957 1.21071 4.96086 1.58579 4.58579C1.96086 4.21071 2.46957 4 3 4H9" stroke-linecap="round" stroke-linejoin="round"/>
 <path d="M13 1H19V7" stroke-linecap="round" stroke-linejoin="round"/>
@@ -235,10 +216,6 @@ class SVG_Icons {
 <path d="M1 1L25.513 25.513" stroke-width="3"/>
 <path d="M1 25.513L25.513 1" stroke-width="3"/>
 </svg>',
-'arrow' => '
-<svg width="13" height="7" viewBox="0 0 13 7" xmlns="http://www.w3.org/2000/svg">
-<path d="M1 1L6.5 6L12 1" />
-</svg>',
 'email' => '
 <svg width="32" height="22" viewBox="0 0 32 22" fill="none" xmlns="http://www.w3.org/2000/svg">
 <rect x="1.32617" y="1" width="29.3478" height="19.5652" rx="1.95652" stroke-width="1.95652" stroke-linecap="round" stroke-linejoin="round"/>
@@ -246,16 +223,35 @@ class SVG_Icons {
 <path d="M11.1913 8.14136L6.21777 12.7392" stroke-width="1.95652" stroke-linecap="round" stroke-linejoin="round"/>
 <path d="M30.1912 1.67041L17.7829 10.2269C16.7097 10.9679 15.2901 10.9679 14.2169 10.2269L1.80859 1.67041" stroke-width="1.95652" stroke-linecap="round" stroke-linejoin="round"/>
 </svg>',
+'search' => '<svg width="12" height="13" viewBox="0 0 12 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M11.9297 11.4922C11.9766 11.5391 12 11.6094 12 11.6797C12 11.7734 11.9766 11.8438 11.9297 11.8906L11.3906 12.4062C11.3203 12.4766 11.25 12.5 11.1797 12.5C11.0859 12.5 11.0391 12.4766 10.9922 12.4062L8.13281 9.57031C8.08594 9.52344 8.0625 9.45312 8.0625 9.38281V9.05469C7.61719 9.42969 7.125 9.73438 6.58594 9.94531C6.02344 10.1562 5.46094 10.25 4.875 10.25C3.98438 10.25 3.16406 10.0391 2.41406 9.59375C1.66406 9.17188 1.07812 8.58594 0.65625 7.83594C0.210938 7.08594 0 6.26562 0 5.375C0 4.48438 0.210938 3.6875 0.65625 2.9375C1.07812 2.1875 1.66406 1.60156 2.41406 1.15625C3.16406 0.734375 3.98438 0.5 4.875 0.5C5.76562 0.5 6.5625 0.734375 7.3125 1.15625C8.0625 1.60156 8.64844 2.1875 9.09375 2.9375C9.51562 3.6875 9.75 4.48438 9.75 5.375C9.75 5.98438 9.63281 6.54688 9.42188 7.08594C9.21094 7.64844 8.92969 8.14062 8.55469 8.5625H8.88281C8.95312 8.5625 9.02344 8.58594 9.07031 8.63281L11.9297 11.4922ZM4.875 9.125C5.53125 9.125 6.16406 8.96094 6.75 8.63281C7.3125 8.30469 7.78125 7.83594 8.10938 7.25C8.4375 6.6875 8.625 6.05469 8.625 5.375C8.625 4.71875 8.4375 4.08594 8.10938 3.5C7.78125 2.9375 7.3125 2.46875 6.75 2.14062C6.16406 1.8125 5.53125 1.625 4.875 1.625C4.19531 1.625 3.5625 1.8125 3 2.14062C2.41406 2.46875 1.94531 2.9375 1.61719 3.5C1.28906 4.08594 1.125 4.71875 1.125 5.375C1.125 6.05469 1.28906 6.6875 1.61719 7.25C1.94531 7.83594 2.41406 8.30469 3 8.63281C3.5625 8.96094 4.19531 9.125 4.875 9.125Z"/>
+</svg>',
+'arrow' => '
+<svg width="13" height="7" viewBox="0 0 13 7" xmlns="http://www.w3.org/2000/svg">
+<path d="M1 1L6.5 6L12 1" />
+</svg>',
 'arrow_left_alt' => '
-<svg width="50" height="39" viewBox="0 0 50 39" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M19 1L1 19.5L19 38" />
-<line y1="-0.5" x2="49" y2="-0.5" />
+<svg width="34" height="18" viewBox="0 0 34 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g>
+<path d="M32.5 9.00806H1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M8.5 16.5081L1 9.00806L8.5 1.50806" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
 </svg>',
 'arrow_right_alt' => '
-<svg width="50" height="39" viewBox="0 0 50 39" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M19 1L1 19.5L19 38" />
-<line y1="-0.5" x2="49" y2="-0.5" />
-</svg>'
+<svg width="34" height="18" viewBox="0 0 34 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M1.5 9.00806H33" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M25.5 16.5081L33 9.00806L25.5 1.50806" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>',
+'arrow_right' => '<svg width="11" height="20" viewBox="0 0 11 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M1 1L10 10L1 19" stroke="black"/>
+</svg>',
+'arrow_down' => '<svg width="30" height="16" viewBox="0 0 30 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M29 1L15 15L1 0.999999" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>',
+'arrow_left' => '',
+'arrow_up' => '<svg width="30" height="16" viewBox="0 0 30 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M1 15L15 0.999999L29 15" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>',
 
 	);
 

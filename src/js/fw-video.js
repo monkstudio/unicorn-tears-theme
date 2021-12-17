@@ -9,14 +9,15 @@ function video() {
   var video = document.querySelector('.video-wrapper');
 
   if (video !== null) {
-    var wrapperWidth = window.outerWidth,
-      videoWidth = video.offsetWidth,
-      videoHeight = video.offsetHeight; //this is to get around the elastic url bar on mobiles like ios...
+    var wrapper = video.parentElement,
+        wrapperWidth = wrapper.clientWidth,
+        videoWidth = video.offsetWidth,
+        videoHeight = video.offsetHeight; //this is to get around the elastic url bar on mobiles like ios...
 
     if (wrapperWidth < 768) {
-      var wrapperHeight = window.innerHeight + 100;
+      var wrapperHeight = wrapper.clientHeight + 200;
     } else {
-      var wrapperHeight = window.innerHeight;
+      var wrapperHeight = wrapper.clientHeight;
     }
 
     var scale = Math.max(wrapperWidth / videoWidth, wrapperHeight / videoHeight);

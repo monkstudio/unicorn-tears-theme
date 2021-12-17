@@ -1,15 +1,17 @@
 
 .container {
-    max-width:var(--grid-width);
+    max-width: $grid-width;
     margin: auto;
     padding: 0 $size-xxxlarge;
     width: 100%;
 
+
     @include media("<=laptop") {
-        padding: 0 $size-xxxlarge;
+        padding: 0 $size-medium;
     }
+
     @include media("<=tablet") {
-        padding: 0 $size-xxxlarge;
+        padding: 0 $size-xsmall;
     }
     &.compact {
         max-width: 80ch;
@@ -18,8 +20,12 @@
 
 .row {
     display: grid;
-    grid-template-columns: repeat( auto-fit, minmax(250px, 1fr) );
-    grid-gap: var(--grid-gutter);
+    grid-template-columns: repeat( auto-fit, minmax(300px, 1fr) );
+    grid-gap: $grid-gutter;
+
+    @include media("<=laptop") {
+        grid-gap: 0;
+    }
 }
 
 .content {

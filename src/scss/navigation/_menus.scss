@@ -10,6 +10,10 @@
         padding: 0;
         display: flex;
 
+        @include media("<=menu") {
+            display: block;
+        }
+
 
 		ul {
 			// box-shadow: 0 3px 10px rgba($grey8, 0.3);
@@ -18,7 +22,7 @@
 			top: 100%;
 			left: -999em;
 			z-index: 99999;
-            background-color: #FFF;
+            // background-color: #FFF;
             padding-left: 10px;
             min-width: 200px;
 
@@ -65,12 +69,17 @@
 		li:hover > ul,
         li.focus > ul,
         li.toggled-on > ul {
-            left: auto;
+            // left: auto;
+            left: -20px;
             display: block;
+		}
+
+        li:hover > ul {
             @include media("<=menu") {
                 display: none;
+                left: 0;
             }
-		}
+        }
 	}
 
 	li {
@@ -81,6 +90,10 @@
         flex-wrap: wrap;
         justify-content: space-between;
         margin: 0 1em;
+
+        @include media("<=menu") {
+            display: block;
+        }
 		&:hover > a,
 		&.focus > a {
             background-color: $accent;
@@ -107,30 +120,40 @@
 
     .sub-menu {
         width: 200px;
-        padding: 0;
         margin: 0;
+        padding: 0;
+        background-color: $white;
 
         // display: none;
         @include media("<=menu") {
             width: 100%;
+            padding: 0;
+            margin: .3em 0;
+            display: none;
         }
 
         li {
             width: 100%;
             margin: 0;
+            padding: .5em 1em;
+
+            @include media("<=menu") {
+                padding: .5em 0;
+            }
         }
 
     }
     .toggled-on,
     .focus {
-    //     .sub-menu {
-    //         display: block;
-    //     }
+        .sub-menu {
+            display: block;
+        }
         .dropdown-toggle {
             transform: rotate(180deg);
         }
     }
     .dropdown-toggle {
+        margin: 0 .3em;
         padding: 1em;
         background-color: transparent;
         display: inline-flex;
@@ -152,39 +175,6 @@
     }
 }
 
-
-// .cross.icon {
-//    color:currentColor;
-//     width: 21px;
-//     height: 21px;
-//     display: block;
-//     position: relative;
-//    &:before {
-//        content: '';
-//        position: absolute;
-//        top: 50%;
-//        left: 0;
-//        width: 21px;
-//        height: 1px;
-//        background-color: currentColor;
-//    }
-
-//    &:after {
-//        content: '';
-//        position: absolute;
-//        top: 50%;
-//        left: 0;
-//        width: 21px;
-//        height: 1px;
-//        background-color: currentColor;
-//        transform: rotate(90deg);
-//    }
-//    .toggled-on & {
-//        &:after {
-//            content: none;
-//        }
-//    }
-// }
 .comment-navigation,
 .posts-navigation,
 .post-navigation {
@@ -228,7 +218,7 @@
 		display: none;
 	}
 	.main-navigation ul {
-		display: flex;
+		display: block;
     }
 }
 

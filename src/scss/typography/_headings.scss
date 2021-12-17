@@ -1,6 +1,6 @@
 h1, h2, h3, h4, h5, h6 {
     font-weight: normal;
-    line-height: $font-line-height-large;
+    line-height: 1.2;
     margin: 0 0 .8em;
 }
 //variables found in _variables.scss
@@ -24,12 +24,12 @@ h4 {
     font-size: clamp(2rem, 3vw, 3rem);
     margin: 0 0 .5em;
 }
-h5 {    
+h5 {
     @include font-size(1.8);
     font-size:clamp(1.6rem, 4vw, 2.4rem);
     margin: 0 0 .5em;
 }
-h6 {    
+h6 {
     font-size:clamp(1.2rem, 3vw, 1.8rem);
     margin: 0 0 .5em;
 }

@@ -174,12 +174,12 @@
             // @extend .alert !optional;
             background-color: $primary;
             color: #FFF;
-            padding: 5px;
+            // padding: 5px;
         }
     }
 
     &_page_footer {
-        background: var(--grey1);
+        background: $grey1;
 
         // .button {
         //     @extend .btn-link !optional;
@@ -358,7 +358,7 @@ label[for="stripe-card-cvc"]:after,
 // }
 
 .ginput_container_creditcard {
-	background-color: var(--muted);
+	background-color: $muted;
     padding: 20px; // border-radius: 5px;
 }
 

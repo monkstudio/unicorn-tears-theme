@@ -16,58 +16,60 @@ input[type="color"] {
 	color: $primary;
 	appearance: none;
 	border: none;
-	border-bottom: 1px solid currentColor;
-	padding: 10px;
+	border: 1px solid currentColor;
+	padding: .5em 1em;
 	width: 100%;
-	background-color: #FFF;
+	background-color: transparent;
 }
 
 input[type="radio"] {
-    display: inline-block;
+	display: inline-block;
 }
 
 select {
 	appearance: none;
 	background: none;
-	padding: 10px;
-	border: 1px solid $primary;
+	padding: .5em 1em;
+	border: 1px solid currentColor;
 	border-radius: 0;
 	width: 100%;
 }
 
 textarea {
 	max-height: 200px;
-	border: 1px solid $primary;
+	border: 1px solid currentColor;
 	width: 100%;
-	padding: 10px;
+	padding: .5em 1em;
 }
 
 label {
-    margin: .5em 0;
-    display: block;
-    font-weight: bold;
+	margin: .5em 0;
+	display: block;
+	font-weight: bold;
 }
 
 
 
 [type=checkbox] {
-  position: absolute; // take it out of document flow
-  opacity: 0; // hide it
-	& + span {
-		display: inline-flex;
-    align-items: center;
-	}
-	& + label,
-	& + span {
-    position: relative;
-    cursor: pointer;
-    padding: 0;
-  }
+	position: absolute; // take it out of document flow
+	opacity: 0; // hide it
 
-  // Box.
-	& + label:before,
-	& + span:before {
-    content: '';
+	&+span {
+		display: inline-flex;
+		align-items: center;
+	}
+
+	&+label,
+	&+span {
+		position: relative;
+		cursor: pointer;
+		padding: 0;
+	}
+
+	// Box.
+	&+label:before,
+	&+span:before {
+		content: '';
 		margin-right: 10px;
 		display: inline-block;
 		vertical-align: text-top;
@@ -75,54 +77,55 @@ label {
 		height: 20px;
 		border: 1px solid currentColor;
 	}
-  // Box hover
-  // &:hover + label:before {
-  //   background-color: var(--grey1);
-  // }
 
-  // Box focus
-	&:focus + label:before,
-	&:focus + span:before {
-    box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.12);
-  }
+	// Box hover
+	// &:hover + label:before {
+	//   background-color: var(--grey1);
+	// }
 
-  // Box checked
-  &:checked + label:before {
-    background: $accent;
-  }
+	// Box focus
+	&:focus+label:before,
+	&:focus+span:before {
+		box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.12);
+	}
 
-  // Disabled state label.
-	&:disabled + label,
-	&:disabled + span {
-    background-color:$accent;
-    cursor: auto;
-  }
+	// Box checked
+	&:checked+label:before {
+		background: $accent;
+	}
 
-  // Disabled box.
-	&:disabled + label:before,
-	&:disabled + span:before {
-    box-shadow: none;
-    background-color:var(--grey1);
-  }
+	// Disabled state label.
+	&:disabled+label,
+	&:disabled+span {
+		background-color: $accent;
+		cursor: auto;
+	}
 
-  // Checkmark. Could be replaced with an image
-	&:checked + label:after,
-	&:checked + span:after {
-    content: '';
-    position: absolute;
-    left: 4px;
-    top: 10px;
-    background-color: currentColor;
-    width: 2px;
-    height: 2px;
-    box-shadow:
-      	2px 0 0 currentColor,
-      	4px 0 0 currentColor,
-      	4px -2px 0 currentColor,
-      	4px -4px 0 currentColor,
-      	4px -6px 0 currentColor,
-		4px -8px 0 currentColor,
-		4px -10px 0 currentColor;
-    transform: rotate(45deg);
-  }
+	// Disabled box.
+	&:disabled+label:before,
+	&:disabled+span:before {
+		box-shadow: none;
+		background-color: var(--grey1);
+	}
+
+	// Checkmark. Could be replaced with an image
+	&:checked+label:after,
+	&:checked+span:after {
+		content: '';
+		position: absolute;
+		left: 4px;
+		top: 10px;
+		background-color: currentColor;
+		width: 2px;
+		height: 2px;
+		box-shadow:
+			2px 0 0 currentColor,
+			4px 0 0 currentColor,
+			4px -2px 0 currentColor,
+			4px -4px 0 currentColor,
+			4px -6px 0 currentColor,
+			4px -8px 0 currentColor,
+			4px -10px 0 currentColor;
+		transform: rotate(45deg);
+	}
 }

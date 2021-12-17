@@ -1,16 +1,18 @@
 //get project directory starting from public_html
-const projectDirectory = '';
+// const projectDirectory = '';
 
 module.exports = {
-	projectDirectory: projectDirectory,
+	// projectDirectory: projectDirectory,
 	faviconFile: '/src/faviconData.json',
 
-	// Sass
-	plainstyleSRC:'/**/!(style|*.min)*.css',
+	// CSS
+	//any plain css stylesheets can go here = they will be compiled to dist/css
+	plainCSS: {
+		test : '/src/css/test.css'
+	},
+	//the main sass stylesheet goes here
 	styleSRC:'/src/scss/**/*.scss',
 	styleDST:'/dist/css',
-	styleCompiled:'/dist/css/style.css',
-	styleMinified:'/dist/css/style.min.css',
 
 	// JS
 	//any entry points go inside here
@@ -33,7 +35,6 @@ module.exports = {
 
 	// Watch
 	watchJS:'/src/js/!(imports)**',
-	watchJSIMPORTS:'/src/js/imports/**/*.js',
 	watchSCSS:'/src/scss/**/*.scss',
 	watchCSS:'/!(dist)/**/*.css',
 	watchIMG:'/src/images/*.+(png|jpg|jpeg|gif|svg)',

@@ -22,16 +22,13 @@ function unicorn_tears_body_classes( $classes ) {
 		$classes[] = 'hfeed';
 	}
 
-	// Adds a class of hfeed to non-singular pages.
-	if ( has_post_thumbnail() ) {
-		$classes[] = 'has-featureimg';
-	}
-
+	//page features
+	$feature = get_field('feature_options');
 	// Check for post thumbnail.
-	if ( has_post_thumbnail() ) {
-		$classes[] = 'has-post-thumbnail';
+	if ( has_post_thumbnail() && $feature === 'image' ||  $feature === 'video' ||  $feature === 'slider') {
+		$classes[] = 'has-feature';
 	} else {
-		$classes[] = 'missing-post-thumbnail';
+		$classes[] = 'missing-feature';
 	}
 
 	// Check if we're showing comments.
@@ -53,24 +50,22 @@ function unicorn_tears_body_classes( $classes ) {
 		$classes[] = 'has-no-pagination';
 	}
 
+	//make a class out of the page slug - handy instead of page ids
+	$query = get_queried_object();
+	if ( isset($query->slug)) {
+		$classes[] = 'page-'.$query->slug;
+	} elseif(isset($query->post_name)) {
+		$classes[] = 'page-'.$query->post_name;
+	}elseif(isset($query->name)) {
+		$classes[] = 'page-'.$query->name;
+	}
 
-	// generate a class based on the current page template
-  if ( is_page_template() ) {
-    $classes[] = basename( get_page_template_slug(), '-template' );
-  }
-
-  $query = get_queried_object();
-  if ( isset($query->slug)) {
-    $classes[] = 'page-'.$query->slug;
-  } elseif(isset($query)) {
-    $classes[] = 'page-'.$query->post_name;
-  }
-
-  if ( wp_is_mobile() ) {
-  $classes[] = 'is-touch';
-  } else {
-  $classes[] = 'no-touch';
-  }
+	//check if page is loaded on a mobile device
+	if ( wp_is_mobile() ) {
+	$classes[] = 'is-touch';
+	} else {
+	$classes[] = 'no-touch';
+	}
 
 	return $classes;
 }
@@ -85,6 +80,16 @@ function unicorn_tears_pingback_header() {
 	}
 }
 add_action( 'wp_head', 'unicorn_tears_pingback_header' );
+
+
+//custom menu classes - modify conditional to suit
+// function add_additional_class_on_li($classes, $item, $args) {
+// 	if($item->post_title === 'Models' && is_singular('models') || $item->post_title === 'Models' && is_page('shortlist')) {
+// 			$classes[] = 'current-menu-item';
+// 	}
+// 	return $classes;
+// }
+// add_filter('nav_menu_css_class', 'add_additional_class_on_li', 1, 3);
 
 
 /**

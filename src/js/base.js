@@ -1,24 +1,25 @@
 console.log('🥑 %cMade by Monk', 'background: #616a2e; color: #f4e9e2; padding: 5px 17px; border-radius: 3px;');
 console.log(' %chttps://monk.com.au ', 'padding: 5px 13px;');
 
-import  './skip-link-focus-fix';
-import  './smoothscroll';
-import  './navigation';
-import  './scrollyclasses';
-import  './viewport-height';
-import  './fw-video';
-import  './sliders';
-import  './accordions';
-import  './fancybox';
+import './skip-link-focus-fix';
+import './smoothscroll';
+import './navigation';
+import './scrollyclasses';
+import './viewport-height';
+import './fw-video';
+import './sliders';
+import './accordions';
+import './fancybox';
+import './gsapanims';
 
 jQuery(function ($) {
 
 	//page
 	var $hamburger = $(".hamburger"),
-			$site = $("body"),
-			$menu = $(".main-navigation"),
-			$menuitems = $(".menu-item"),
-			$screenOverlay = $(".screen-overlay");
+		$site = $("body"),
+		$menu = $(".main-navigation"),
+		$menuitems = $(".menu-item"),
+		$screenOverlay = $(".screen-overlay");
 
 	/*
 	-ˋˏ *.·:·.⟐.·:·.* ˎˊ-
@@ -36,6 +37,7 @@ jQuery(function ($) {
 		// 	$('#mobile-menu .label').text('Menu')
 		// }
 	});
+
 	//close menu with an outside click (basically anywhere on .site-content)
 	function closeMenu() {
 		$site.removeClass("menu-open");
@@ -43,9 +45,10 @@ jQuery(function ($) {
 		$menuitems.removeClass('toggled-on');
 		$hamburger.removeClass("is-active");
 	}
+
 	$screenOverlay.on('click', closeMenu);
 
-	$(document).bind('keydown', function (e) {
+	$(document).on('keydown', function (e) {
 		if (e.which == 27) {
 			closeMenu();
 		}
@@ -63,7 +66,7 @@ jQuery(function ($) {
 	// 		$(this).addClass('fadein');
 	// 	}
 	// });
-  // AOS.init();
+	// AOS.init();
 
 
 

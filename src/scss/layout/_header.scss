@@ -2,7 +2,15 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 20px var(--size-xxxlarge);
+    padding: $size-small $size-xxxlarge;
+
+    @include media("<=laptop") {
+        padding: $size-small $size-medium;
+    }
+
+    @include media("<=tablet") {
+        padding: $size-small $size-xsmall;
+    }
 }
 
 .site-branding {
